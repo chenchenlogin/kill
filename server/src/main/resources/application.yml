@@ -1,0 +1,141 @@
+datasource:
+    #当前数据源操作类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    # mysq1驱动包
+    driver-class-name: com.mysql.jdbc.Driver
+    password: root
+    url: jdbc:mysql://60.205.230.70:3306/db_second_kill?useUnicode=true&amp;characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+    username: root
+    dbcp2:
+        #数据库连接池的最小维持连接数
+        min-idle: 5
+        #初始化连接数
+        initial-size: 5
+        #最大连接数
+        max-total: 5
+        #等待连接获取的最大超时时间
+        max-wait-millis: 20000
+#logging:
+#    file: kill
+#    level:
+#        com:
+#            debug:
+#                kill: DEBUG
+#            fasterxml:
+#                jackson: INFO
+#        org:
+#            springframework: INFO
+#    path: /srv/tomcat/kill/logs
+#mail:
+#    kill:
+#        item:
+#            success:
+#                content: '您好，您已成功抢购到商品: <strong style="color: red">%s</strong> ，复制该链接并在浏览器采用新的页面打开，即可查看抢购详情：${system.domain.url}/kill/record/detail/%s，并请您在1个小时内完成订单的支付，超时将失效该订单哦！祝你生活愉快！'
+#                subject: 商品抢购成功
+#   send:
+#        from: 1974544863@qq.com
+mq:
+    env: test
+    kill:
+        item:
+            success:
+                email:
+                    exchange: ${mq.env}.kill.item.success.email.exchange
+                    queue: ${mq.env}.kill.item.success.email.queue
+                    routing:
+                        key: ${mq.env}.kill.item.success.email.routing.key
+                kill:
+                    dead:
+                        exchange: ${mq.env}.kill.item.success.kill.dead.exchange
+                        prod:
+                            exchange: ${mq.env}.kill.item.success.kill.dead.prod.exchange
+                            routing:
+                                key: ${mq.env}.kill.item.success.kill.dead.prod.routing.key
+                        queue: ${mq.env}.kill.item.success.kill.dead.queue
+                        real:
+                            queue: ${mq.env}.kill.item.success.kill.dead.real.queue
+                        routing:
+                            key: ${mq.env}.kill.item.success.kill.dead.routing.key
+                    expire: 1800000
+multipart:
+    max-file-size: 10Mb
+    max-request-size: 20Mb
+mybatis:
+#    checkConfigLocation: true
+#    config-location: classpath:mybatis-config.xml
+    mapper-locations: classpath:mappers/*.xml
+    type-aliases-package: com.xinghuo.pojo
+    configuration:
+        map-underscore-to-camel-case: true
+        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+        cache-enabled: false
+redis:
+    config:
+        host: redis://60.205.230.70:6379
+scheduler:
+    expire:
+        orders:
+            time: 30
+shiro:
+    encrypt:
+        password:
+            salt: 11299c42bf954c0abb373efbae3f6b26
+spring:
+    jackson:
+        date-format: yyyy-MM-dd HH:mm:ss
+        time-zone: GMT+8
+    jmx:
+        enabled: false
+#       启用邮件服务
+#    mail:
+#        host: smtp.qq.com
+#        password: cmtvsjvhonkjdaje
+#        properties:
+#            mail:
+#                smtp:
+#                    auth: true
+#                    starttls:
+#                        enable: true
+#                        required: true
+#        username: 1974544863@qq.com
+    rabbitmq:
+        host: 60.205.230.70
+        listener:
+            simple:
+                concurrency: 5
+                max-concurrency: 15
+                prefetch: 10
+        password: root
+        port: 5672
+        username: root
+        virtual-host: /
+    redis:
+        host: 60.203.205.70
+        port: 6379
+        password:
+        database: 1
+        pool:
+            # 连接超时时间 单位 ms（毫秒）
+            timeout: 3000
+            #max-active: 2000
+            #max-idle: 8
+            #max-wait: -1
+            #min-idle: 2
+
+#logging:
+#    level: debug
+
+#pagehelper分页插件配置
+pagehelper:
+    helper-dialect: mysql
+    reasonable: true
+    support-methods-arguments: true
+    params: count=countSq
+visualPath : http://60.205.230.70/
+savepath : /usr/share/nginx/html/public/
+zk:
+    host: 127.0.0.1:2181
+    namespace: kill
+
+
+

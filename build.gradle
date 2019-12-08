@@ -1,0 +1,61 @@
+
+
+
+allprojects {
+    group = 'com.xinghuofirst.kill'
+    version = '1.0.1'
+    apply plugin: 'idea'
+
+}
+
+
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+    }
+    repositories {
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenLocal()
+        maven {
+            url = 'http://repo.maven.apache.org/maven2'
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+
+// 子模块/项目的统一配置
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    // 指定编码格式
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+    repositories {
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+        mavenLocal()
+        maven {
+            url = 'http://repo.maven.apache.org/maven2'
+        }
+    }
+
+    dependencies {
+
+        compile group: 'com.auth0', name: 'java-jwt', version: '3.8.0'
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.2.RELEASE'
+        compile group: 'org.springframework.boot', name: 'spring-boot-test-autoconfigure', version: '2.2.2.RELEASE'
+        compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.2.2.RELEASE'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.1.2.RELEASE'
+        compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.2.2.RELEASE'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.2.2.RELEASE'
+
+
+
+    }
+
+}
+
+
+

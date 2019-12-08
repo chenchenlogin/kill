@@ -1,0 +1,5 @@
+rootProject.name = 'kill'
+include 'model'
+include 'api'
+include 'server'
+
