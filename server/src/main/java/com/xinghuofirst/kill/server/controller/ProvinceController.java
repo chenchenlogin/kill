@@ -10,8 +10,12 @@ package com.xinghuofirst.kill.server.controller;
 
 
 import com.xinghuofirst.kill.model.entity.Province;
+import com.xinghuofirst.kill.model.mapper.ActivityRepository;
 import com.xinghuofirst.kill.server.service.ProvinceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +28,4 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class ProvinceController {
-
-
-
-
 }

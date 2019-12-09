@@ -24,21 +24,14 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
 
     /**
-    *@Author:Yuyue
-    *@Description:按照省份查询用户资源
-    *@Date:12:41  2019/12/9
-    *@Param:
-    *@Return:
-    */
-    Integer selectBusinessByProvince(String province);
-
-    /**
      *@Author:Yuyue
-     *@Description:查看某次活动中被秒杀的商户信息
-     *@Date:19:46  2019/12/9
+     *@Description:按照省份查询用户资源
+     *@Date:12:41  2019/12/9
      *@Param:
      *@Return:
      */
-    Business findSuccessBusiness(Integer personId,Integer activityId);
+    Integer selectBusinessByProvince(String province);
+
+
 }
 

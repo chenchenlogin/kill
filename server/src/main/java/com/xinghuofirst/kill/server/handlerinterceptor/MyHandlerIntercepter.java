@@ -22,16 +22,16 @@ import java.util.Map;
 @Component
 @Configuration
 public class MyHandlerIntercepter implements HandlerInterceptor {
-    @Override
+  /*  @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
        String token = request.getHeader("token");
        if(token == null || token == "undefined") return false;
        try {
            Map<String,String> map = TokenUtil.verifyToken(token);
-           /*判断当前redis中的此用户是否处于登陆状态 否则 则强制重新登陆*/
+           *//*判断当前redis中的此用户是否处于登陆状态 否则 则强制重新登陆*//*
            if(!RedisUtil.hasKey(map.get("username")))  return false;
-           /*token验证成功后将token中的信息封装到request域中*/
+           *//*token验证成功后将token中的信息封装到request域中*//*
            request.setAttribute("request_parameters",map);
        }catch (Exception e){
             returnJson(response,"no_token_use");//用户需要重新登陆
@@ -66,6 +66,6 @@ public class MyHandlerIntercepter implements HandlerInterceptor {
             if (writer != null)
                 writer.close();
         }
-    }
+    }*/
 
 }

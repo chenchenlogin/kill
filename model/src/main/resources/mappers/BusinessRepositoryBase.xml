@@ -11,13 +11,20 @@
         <result column="province" property="province" jdbcType="VARCHAR" />
         <result column="install_status" property="installStatus" jdbcType="INTEGER" />
         <result column="silent_status" property="silentStatus" jdbcType="INTEGER" />
+        <result column="idcard" property="idcard" jdbcType="VARCHAR" />
     </resultMap>
 
 
     <sql id="Base_Column_List" >
-        `business_id`,`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`
+        `business_id`,`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`,`idcard`
     </sql>
 
+    <select id="selectBusinessByProvince" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select COUNT(*) from business
+        WHERE silent_status=0
+        AND install_status &lt; 2
+        AND province like concat('%', #{province,jdbcType=VARCHAR}, '%')
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from `business`
@@ -26,8 +33,8 @@
 
 
     <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.Business" >
-        insert into `business` (`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`)
-        values (#{businessNumber,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{sex,jdbcType=CHAR},#{province,jdbcType=VARCHAR},#{installStatus,jdbcType=INTEGER},#{silentStatus,jdbcType=INTEGER})
+        insert into `business` (`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`,`idcard`)
+        values (#{businessNumber,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{sex,jdbcType=CHAR},#{province,jdbcType=VARCHAR},#{installStatus,jdbcType=INTEGER},#{silentStatus,jdbcType=INTEGER},#{idcard,jdbcType=VARCHAR})
     </insert>
 
 
@@ -55,6 +62,9 @@
             <if test="silentStatus != null or silentStatus == 0" >
                 `silent_status`,
             </if>
+            <if test="idcard != null" >
+                `idcard`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="businessNumber != null" >
@@ -77,6 +87,9 @@
             </if>
             <if test="silentStatus != null or silentStatus == 0" >
                 #{silentStatus,jdbcType=INTEGER},
+            </if>
+            <if test="idcard != null" >
+                #{idcard,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -106,6 +119,9 @@
             <if test="silentStatus != null or silentStatus == 0" >
                 `silent_status` = #{silentStatus,jdbcType=INTEGER},
             </if>
+            <if test="idcard != null" >
+                `idcard` = #{idcard,jdbcType=VARCHAR},
+            </if>
         </set>
         where `business_id` = #{businessId,jdbcType=INTEGER}
     </update>
@@ -119,7 +135,8 @@
         `sex` = #{sex,jdbcType=CHAR},
         `province` = #{province,jdbcType=VARCHAR},
         `install_status` = #{installStatus,jdbcType=INTEGER},
-        `silent_status` = #{silentStatus,jdbcType=INTEGER}
+        `silent_status` = #{silentStatus,jdbcType=INTEGER},
+        `idcard` = #{idcard,jdbcType=VARCHAR}
         where `business_id` = #{businessId,jdbcType=INTEGER}
     </update>
 
@@ -158,6 +175,9 @@
             <if test="silentStatus != null or silentStatus == 0" >
                 and `silent_status` = #{silentStatus,jdbcType=INTEGER}
             </if>
+            <if test="idcard != null" >
+                and `idcard` = #{idcard,jdbcType=VARCHAR}
+            </if>
 
             <if test="null != likes">
                 <foreach collection="likes.keys" item="k" separator=" ">
@@ -184,6 +204,9 @@
                     </if>
                     <if test='k == "silentStatus" and likes[k] != null'>
                         and `silent_status` like concat('%', #{likes.silentStatus,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "idcard" and likes[k] != null'>
+                        and `idcard` like concat('%', #{likes.idcard,jdbcType=VARCHAR}, '%')
                     </if>
                 </foreach>
             </if>
@@ -243,6 +266,12 @@
                             #{itemValue}
                         </foreach>
                     </if>
+                    <if test='k == "idcard" and includes[k] != null'>
+                        and `idcard` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
                 </foreach>
             </if>
         </where>
@@ -273,6 +302,9 @@
             </if>
             <if test="silentStatus != null or silentStatus == 0" >
                 and `silent_status` like concat('%', #{silentStatus,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="idcard != null" >
+                and `idcard` like concat('%', #{idcard,jdbcType=VARCHAR}, '%')
             </if>
         </where>
     </sql>
@@ -305,6 +337,9 @@
                 </if>
                 <if test='k == "silentStatus"'>
                     `silent_status`
+                </if>
+                <if test='k == "idcard"'>
+                    `idcard`
                 </if>
                 <if test='orders[k] == "asc"'>
                     ASC
