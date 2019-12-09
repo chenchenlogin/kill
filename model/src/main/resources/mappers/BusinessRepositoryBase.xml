@@ -26,17 +26,14 @@
 
 
     <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.Business" >
-        insert into `business` (`business_id`,`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`)
-        values (#{businessId,jdbcType=INTEGER},#{businessNumber,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{sex,jdbcType=CHAR},#{province,jdbcType=VARCHAR},#{installStatus,jdbcType=INTEGER},#{silentStatus,jdbcType=INTEGER})
+        insert into `business` (`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`)
+        values (#{businessNumber,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{sex,jdbcType=CHAR},#{province,jdbcType=VARCHAR},#{installStatus,jdbcType=INTEGER},#{silentStatus,jdbcType=INTEGER})
     </insert>
 
 
     <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.Business" >
         insert into `business`
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="businessId != null or businessId == 0" >
-                `business_id`,
-            </if>
             <if test="businessNumber != null" >
                 `business_number`,
             </if>
@@ -60,9 +57,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="businessId != null or businessId == 0" >
-                #{businessId,jdbcType=INTEGER},
-            </if>
             <if test="businessNumber != null" >
                 #{businessNumber,jdbcType=VARCHAR},
             </if>

@@ -12,6 +12,14 @@
         <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
+    <!--抢购商品，剩余数量减一-->
+    <update id="updateSurpus" parameterType="java.lang.Integer">
+    UPDATE activity
+    SET surplus = surplus - 1
+    WHERE
+        activity_id= #{activityId}
+  </update>
+
 
     <sql id="Base_Column_List" >
         `kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`
@@ -25,17 +33,14 @@
 
 
     <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
-        insert into `kill_success` (`kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`)
-        values (#{killId,jdbcType=INTEGER},#{killNumber,jdbcType=VARCHAR},#{personId,jdbcType=INTEGER},#{businessId,jdbcType=INTEGER},#{activityId,jdbcType=INTEGER},#{busPhone,jdbcType=VARCHAR},#{killTime,jdbcType=TIMESTAMP})
+        insert into `kill_success` (`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`)
+        values (#{killNumber,jdbcType=VARCHAR},#{personId,jdbcType=INTEGER},#{businessId,jdbcType=INTEGER},#{activityId,jdbcType=INTEGER},#{busPhone,jdbcType=VARCHAR},#{killTime,jdbcType=TIMESTAMP})
     </insert>
 
 
     <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
         insert into `kill_success`
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="killId != null or killId == 0" >
-                `kill_id`,
-            </if>
             <if test="killNumber != null" >
                 `kill_number`,
             </if>
@@ -56,9 +61,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="killId != null or killId == 0" >
-                #{killId,jdbcType=INTEGER},
-            </if>
             <if test="killNumber != null" >
                 #{killNumber,jdbcType=VARCHAR},
             </if>

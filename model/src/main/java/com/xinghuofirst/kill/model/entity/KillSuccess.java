@@ -30,17 +30,17 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-public class KillSuccess implements Serializable {
+public class KillSuccess  implements Serializable {
     /** 秒杀id **/
     private Integer killId;
     /** 秒杀编码 **/
     private String killNumber;
-    /** 人员id **/
-    private Integer personId;
-    /** 商户id **/
-    private Integer businessId;
-    /** 活动id **/
-    private Integer activityId;
+    /** 商户 **/
+    private Business business;
+    /** 活动 **/
+    private Activity activity;
+    /** 人员 **/
+    private Person person;
     /** 商户联系方式 **/
     private String busPhone;
     /** 秒杀时间 **/

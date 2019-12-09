@@ -12,7 +12,16 @@
         <result column="surplus" property="surplus" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
-
+    <!--根据秒杀活动跟鑫管家Id查询抢购数量  于悦-->
+    <select id="countByActivityPersonId" resultType="java.lang.Integer">
+        SELECT
+        COUNT(1) AS total
+        FROM
+                kill_success
+        WHERE
+        activity_id = #{activityId}
+        AND person_id = #{personId}
+  </select>
 
     <sql id="Base_Column_List" >
         `activity_id`,`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`
@@ -26,17 +35,14 @@
 
 
     <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.Activity" >
-        insert into `activity` (`activity_id`,`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`)
-        values (#{activityId,jdbcType=INTEGER},#{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},#{quentity,jdbcType=INTEGER},#{surplus,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+        insert into `activity` (`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`)
+        values (#{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},#{quentity,jdbcType=INTEGER},#{surplus,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
     </insert>
 
 
     <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.Activity" >
         insert into `activity`
         <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="activityId != null or activityId == 0" >
-                `activity_id`,
-            </if>
             <if test="startTime != null" >
                 `start_time`,
             </if>
@@ -60,9 +66,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="activityId != null or activityId == 0" >
-                #{activityId,jdbcType=INTEGER},
-            </if>
             <if test="startTime != null" >
                 #{startTime,jdbcType=TIMESTAMP},
             </if>
