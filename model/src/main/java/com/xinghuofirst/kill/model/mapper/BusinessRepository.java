@@ -22,14 +22,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
-    /**
-    *@Author:Yuyue
-    *@Description:添加白名单
-    *@Date:12:04  2019/12/9
-    *@Param:
-    *@Return:
-    */
-    int insertWhiteBusiness(Business business);
 
     /**
     *@Author:Yuyue
@@ -39,5 +31,14 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
     *@Return:
     */
     Integer selectBusinessByProvince(String province);
+
+    /**
+     *@Author:Yuyue
+     *@Description:查看某次活动中被秒杀的商户信息
+     *@Date:19:46  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    Business findSuccessBusiness(Integer personId,Integer activityId);
 }
 
