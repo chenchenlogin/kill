@@ -8,6 +8,7 @@
  */
 package com.xinghuofirst.kill.model.mapper;
 
+import com.xinghuofirst.kill.model.entity.Business;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,6 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface BusinessRepository {
+public interface BusinessRepository extends BaseRepository<Business, Integer> {
 }
+

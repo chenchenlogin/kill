@@ -8,8 +8,11 @@
  */
 package com.xinghuofirst.kill.model.mapper;
 
+import com.xinghuofirst.kill.model.entity.Activity;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @description:
@@ -19,5 +22,13 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface ActivityRepository  {
+public interface ActivityRepository extends BaseRepository<Activity, Integer> {
+    /**
+     *@Author:Yuyue
+     *@Description:查询之后的活动
+     *@Date:11:19  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    public List<Activity> selectAfterActivity();
 }

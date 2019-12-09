@@ -8,6 +8,7 @@
  */
 package com.xinghuofirst.kill.model.mapper;
 
+import com.xinghuofirst.kill.model.entity.Province;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -19,5 +20,5 @@ import org.springframework.stereotype.Repository;
  */
 @Mapper
 @Repository
-public interface ProvinceRepository  {
+public interface ProvinceRepository extends BaseRepository<Province, Integer> {
 }

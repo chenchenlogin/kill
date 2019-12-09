@@ -48,4 +48,6 @@ public class Business implements Serializable {
     private Integer installStatus;
     /** 0沉默用户  1白名单 **/
     private Integer silentStatus;
+    /** 身份证号 **/
+    private String idcard;
 }
