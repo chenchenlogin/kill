@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+    </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="com.xinghuofirst.kill.api.main" target="1.8" />
+      <module name="com.xinghuofirst.kill.api.test" target="1.8" />
+      <module name="com.xinghuofirst.kill.model.main" target="1.8" />
+      <module name="com.xinghuofirst.kill.model.test" target="1.8" />
+      <module name="com.xinghuofirst.kill.server.main" target="1.8" />
+      <module name="com.xinghuofirst.kill.server.test" target="1.8" />
       <module name="kill.main" target="1.8" />
       <module name="kill.test" target="1.8" />
     </bytecodeTargetLevel>
