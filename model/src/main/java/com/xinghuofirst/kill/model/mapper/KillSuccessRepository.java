@@ -10,7 +10,10 @@ package com.xinghuofirst.kill.model.mapper;
 
 import com.xinghuofirst.kill.model.entity.KillSuccess;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @description:
@@ -21,4 +24,21 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integer> {
+    /**
+    *@Author:Yuyue
+    *@Description:剩余库存-1
+    *@Date:12:02  2019/12/9
+    *@Param:
+    *@Return:
+    */
+    int updateSurpus(@Param("killId") Integer activityId);
+
+    /**
+    *@Author:Yuyue
+    *@Description:鑫管家查询秒杀成功用户列表
+    *@Date:12:44  2019/12/9
+    *@Param: 
+    *@Return: 
+    */
+    List<KillSuccess> selectKillSuccessByPersonId(Integer personId);
 }

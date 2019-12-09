@@ -12,6 +12,14 @@
         <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
     </resultMap>
 
+    <!--抢购商品，剩余数量减一-->
+    <update id="updateSurpus" parameterType="java.lang.Integer">
+    UPDATE activity
+    SET surplus = surplus - 1
+    WHERE
+        activity_id= #{activityId}
+  </update>
+
 
     <sql id="Base_Column_List" >
         `kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`
