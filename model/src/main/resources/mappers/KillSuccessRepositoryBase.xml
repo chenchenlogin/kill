@@ -10,6 +10,33 @@
         <result column="activity_id" property="activityId" jdbcType="INTEGER" />
         <result column="bus_phone" property="busPhone" jdbcType="VARCHAR" />
         <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
+        <association property="person" javaType="com.xinghuofirst.kill.model.entity.Person">
+            <id column="user_id" property="userId" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="role" property="role" jdbcType="INTEGER" />
+            <result column="province" property="province" jdbcType="VARCHAR" />
+            <result column="email" property="email" jdbcType="VARCHAR" />
+        </association>
+        <association property="business" javaType="com.xinghuofirst.kill.model.entity.Business">
+            <id column="business_id" property="businessId" jdbcType="INTEGER" />
+            <result column="business_number" property="businessNumber" jdbcType="VARCHAR" />
+            <result column="phone" property="phone" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+            <result column="sex" property="sex" jdbcType="CHAR" />
+            <result column="province" property="province" jdbcType="VARCHAR" />
+            <result column="install_status" property="installStatus" jdbcType="INTEGER" />
+            <result column="silent_status" property="silentStatus" jdbcType="INTEGER" />
+        </association>
+        <association property="activity" javaType="com.xinghuofirst.kill.model.entity.Activity">
+            <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+            <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+            <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+            <result column="province" property="province" jdbcType="VARCHAR" />
+            <result column="description" property="description" jdbcType="VARCHAR" />
+            <result column="quentity" property="quentity" jdbcType="INTEGER" />
+            <result column="surplus" property="surplus" jdbcType="INTEGER" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        </association>
     </resultMap>
 
     <!--抢购商品，剩余数量减一-->

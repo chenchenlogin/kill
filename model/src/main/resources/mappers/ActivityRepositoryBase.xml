@@ -12,6 +12,11 @@
         <result column="surplus" property="surplus" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+
+   <!-- <select id="selectAfterActivity" >
+
+    </select>-->
+
     <!--根据秒杀活动跟鑫管家Id查询抢购数量  于悦-->
     <select id="countByActivityPersonId" resultType="java.lang.Integer">
         SELECT
