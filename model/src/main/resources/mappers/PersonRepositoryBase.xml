@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinghuofirst.kill.model.mapper.PersonRepository" >
+
+    <resultMap id="BaseResultMap" type="com.xinghuofirst.kill.model.entity.Person" >
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="role" property="role" jdbcType="INTEGER" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `user_id`,`user_name`,`password`,`role`,`province`,`email`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `person`
+        where `user_id` = #{userId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.Person" >
+        insert into `person` (`user_id`,`user_name`,`password`,`role`,`province`,`email`)
+        values (#{userId,jdbcType=INTEGER},#{userName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{role,jdbcType=INTEGER},#{province,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.Person" >
+        insert into `person`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null or userId == 0" >
+                `user_id`,
+            </if>
+            <if test="userName != null" >
+                `user_name`,
+            </if>
+            <if test="password != null" >
+                `password`,
+            </if>
+            <if test="role != null or role == 0" >
+                `role`,
+            </if>
+            <if test="province != null" >
+                `province`,
+            </if>
+            <if test="email != null" >
+                `email`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null or userId == 0" >
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null or role == 0" >
+                #{role,jdbcType=INTEGER},
+            </if>
+            <if test="province != null" >
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xinghuofirst.kill.model.entity.Person" >
+        update `person`
+        <set >
+            <if test="userName != null" >
+                `user_name` = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="role != null or role == 0" >
+                `role` = #{role,jdbcType=INTEGER},
+            </if>
+            <if test="province != null" >
+                `province` = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                `email` = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `user_id` = #{userId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.xinghuofirst.kill.model.entity.Person" >
+        update `person` set
+        `user_name` = #{userName,jdbcType=VARCHAR},
+        `password` = #{password,jdbcType=VARCHAR},
+        `role` = #{role,jdbcType=INTEGER},
+        `province` = #{province,jdbcType=VARCHAR},
+        `email` = #{email,jdbcType=VARCHAR}
+        where `user_id` = #{userId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `person`
+        where `user_id` = #{userId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="userId != null or userId == 0" >
+                and `user_id` = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null" >
+                and `user_name` = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null" >
+                and `password` = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="role != null or role == 0" >
+                and `role` = #{role,jdbcType=INTEGER}
+            </if>
+            <if test="province != null" >
+                and `province` = #{province,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null" >
+                and `email` = #{email,jdbcType=VARCHAR}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "userId" and likes[k] != null'>
+                        and `user_id` like concat('%', #{likes.userId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "userName" and likes[k] != null'>
+                        and `user_name` like concat('%', #{likes.userName,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "password" and likes[k] != null'>
+                        and `password` like concat('%', #{likes.password,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "role" and likes[k] != null'>
+                        and `role` like concat('%', #{likes.role,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "province" and likes[k] != null'>
+                        and `province` like concat('%', #{likes.province,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "email" and likes[k] != null'>
+                        and `email` like concat('%', #{likes.email,jdbcType=VARCHAR}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "userId" and includes[k] != null'>
+                        and `user_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "userName" and includes[k] != null'>
+                        and `user_name` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "password" and includes[k] != null'>
+                        and `password` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "role" and includes[k] != null'>
+                        and `role` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "province" and includes[k] != null'>
+                        and `province` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "email" and includes[k] != null'>
+                        and `email` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="userId != null or userId == 0" >
+                and `user_id` like concat('%', #{userId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="userName != null" >
+                and `user_name` like concat('%', #{userName,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="password != null" >
+                and `password` like concat('%', #{password,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="role != null or role == 0" >
+                and `role` like concat('%', #{role,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="province != null" >
+                and `province` like concat('%', #{province,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="email != null" >
+                and `email` like concat('%', #{email,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "userId"'>
+                    `user_id`
+                </if>
+                <if test='k == "userName"'>
+                    `user_name`
+                </if>
+                <if test='k == "password"'>
+                    `password`
+                </if>
+                <if test='k == "role"'>
+                    `role`
+                </if>
+                <if test='k == "province"'>
+                    `province`
+                </if>
+                <if test='k == "email"'>
+                    `email`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Person" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `person`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.Person" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `person`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.Person" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `person`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.xinghuofirst.kill.model.entity.Person" resultType="java.lang.Integer" >
+        select count(1)
+        from `person`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.Person" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `person`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.xinghuofirst.kill.model.entity.Person" resultType="java.lang.Integer" >
+        select count(1)
+        from `person`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

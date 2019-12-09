@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinghuofirst.kill.model.mapper.ProvinceRepository" >
+
+    <resultMap id="BaseResultMap" type="com.xinghuofirst.kill.model.entity.Province" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="province_number" property="provinceNumber" jdbcType="VARCHAR" />
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `id`,`province_number`,`province_name`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `province`
+        where `id` = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.Province" >
+        insert into `province` (`id`,`province_number`,`province_name`)
+        values (#{id,jdbcType=INTEGER},#{provinceNumber,jdbcType=VARCHAR},#{provinceName,jdbcType=VARCHAR})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.Province" >
+        insert into `province`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null or id == 0" >
+                `id`,
+            </if>
+            <if test="provinceNumber != null" >
+                `province_number`,
+            </if>
+            <if test="provinceName != null" >
+                `province_name`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null or id == 0" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="provinceNumber != null" >
+                #{provinceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null" >
+                #{provinceName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xinghuofirst.kill.model.entity.Province" >
+        update `province`
+        <set >
+            <if test="provinceNumber != null" >
+                `province_number` = #{provinceNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null" >
+                `province_name` = #{provinceName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.xinghuofirst.kill.model.entity.Province" >
+        update `province` set
+        `province_number` = #{provinceNumber,jdbcType=VARCHAR},
+        `province_name` = #{provinceName,jdbcType=VARCHAR}
+        where `id` = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `province`
+        where `id` = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="id != null or id == 0" >
+                and `id` = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="provinceNumber != null" >
+                and `province_number` = #{provinceNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="provinceName != null" >
+                and `province_name` = #{provinceName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "id" and likes[k] != null'>
+                        and `id` like concat('%', #{likes.id,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "provinceNumber" and likes[k] != null'>
+                        and `province_number` like concat('%', #{likes.provinceNumber,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "provinceName" and likes[k] != null'>
+                        and `province_name` like concat('%', #{likes.provinceName,jdbcType=VARCHAR}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "id" and includes[k] != null'>
+                        and `id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "provinceNumber" and includes[k] != null'>
+                        and `province_number` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "provinceName" and includes[k] != null'>
+                        and `province_name` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="id != null or id == 0" >
+                and `id` like concat('%', #{id,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="provinceNumber != null" >
+                and `province_number` like concat('%', #{provinceNumber,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="provinceName != null" >
+                and `province_name` like concat('%', #{provinceName,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "id"'>
+                    `id`
+                </if>
+                <if test='k == "provinceNumber"'>
+                    `province_number`
+                </if>
+                <if test='k == "provinceName"'>
+                    `province_name`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Province" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `province`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.Province" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `province`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.Province" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `province`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.xinghuofirst.kill.model.entity.Province" resultType="java.lang.Integer" >
+        select count(1)
+        from `province`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.Province" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `province`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.xinghuofirst.kill.model.entity.Province" resultType="java.lang.Integer" >
+        select count(1)
+        from `province`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

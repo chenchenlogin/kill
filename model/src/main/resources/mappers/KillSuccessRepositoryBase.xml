@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinghuofirst.kill.model.mapper.KillSuccessRepository" >
+
+    <resultMap id="BaseResultMap" type="com.xinghuofirst.kill.model.entity.KillSuccess" >
+        <id column="kill_id" property="killId" jdbcType="INTEGER" />
+        <result column="kill_number" property="killNumber" jdbcType="VARCHAR" />
+        <result column="person_id" property="personId" jdbcType="INTEGER" />
+        <result column="business_id" property="businessId" jdbcType="INTEGER" />
+        <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+        <result column="bus_phone" property="busPhone" jdbcType="VARCHAR" />
+        <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `kill_success`
+        where `kill_id` = #{killId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
+        insert into `kill_success` (`kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`)
+        values (#{killId,jdbcType=INTEGER},#{killNumber,jdbcType=VARCHAR},#{personId,jdbcType=INTEGER},#{businessId,jdbcType=INTEGER},#{activityId,jdbcType=INTEGER},#{busPhone,jdbcType=VARCHAR},#{killTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
+        insert into `kill_success`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="killId != null or killId == 0" >
+                `kill_id`,
+            </if>
+            <if test="killNumber != null" >
+                `kill_number`,
+            </if>
+            <if test="personId != null or personId == 0" >
+                `person_id`,
+            </if>
+            <if test="businessId != null or businessId == 0" >
+                `business_id`,
+            </if>
+            <if test="activityId != null or activityId == 0" >
+                `activity_id`,
+            </if>
+            <if test="busPhone != null" >
+                `bus_phone`,
+            </if>
+            <if test="killTime != null" >
+                `kill_time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="killId != null or killId == 0" >
+                #{killId,jdbcType=INTEGER},
+            </if>
+            <if test="killNumber != null" >
+                #{killNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="personId != null or personId == 0" >
+                #{personId,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null or businessId == 0" >
+                #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="activityId != null or activityId == 0" >
+                #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="busPhone != null" >
+                #{busPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="killTime != null" >
+                #{killTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
+        update `kill_success`
+        <set >
+            <if test="killNumber != null" >
+                `kill_number` = #{killNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="personId != null or personId == 0" >
+                `person_id` = #{personId,jdbcType=INTEGER},
+            </if>
+            <if test="businessId != null or businessId == 0" >
+                `business_id` = #{businessId,jdbcType=INTEGER},
+            </if>
+            <if test="activityId != null or activityId == 0" >
+                `activity_id` = #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="busPhone != null" >
+                `bus_phone` = #{busPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="killTime != null" >
+                `kill_time` = #{killTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where `kill_id` = #{killId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
+        update `kill_success` set
+        `kill_number` = #{killNumber,jdbcType=VARCHAR},
+        `person_id` = #{personId,jdbcType=INTEGER},
+        `business_id` = #{businessId,jdbcType=INTEGER},
+        `activity_id` = #{activityId,jdbcType=INTEGER},
+        `bus_phone` = #{busPhone,jdbcType=VARCHAR},
+        `kill_time` = #{killTime,jdbcType=TIMESTAMP}
+        where `kill_id` = #{killId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `kill_success`
+        where `kill_id` = #{killId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="killId != null or killId == 0" >
+                and `kill_id` = #{killId,jdbcType=INTEGER}
+            </if>
+            <if test="killNumber != null" >
+                and `kill_number` = #{killNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="personId != null or personId == 0" >
+                and `person_id` = #{personId,jdbcType=INTEGER}
+            </if>
+            <if test="businessId != null or businessId == 0" >
+                and `business_id` = #{businessId,jdbcType=INTEGER}
+            </if>
+            <if test="activityId != null or activityId == 0" >
+                and `activity_id` = #{activityId,jdbcType=INTEGER}
+            </if>
+            <if test="busPhone != null" >
+                and `bus_phone` = #{busPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="killTime != null" >
+                and `kill_time` = #{killTime,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "killId" and likes[k] != null'>
+                        and `kill_id` like concat('%', #{likes.killId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "killNumber" and likes[k] != null'>
+                        and `kill_number` like concat('%', #{likes.killNumber,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "personId" and likes[k] != null'>
+                        and `person_id` like concat('%', #{likes.personId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "businessId" and likes[k] != null'>
+                        and `business_id` like concat('%', #{likes.businessId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "activityId" and likes[k] != null'>
+                        and `activity_id` like concat('%', #{likes.activityId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "busPhone" and likes[k] != null'>
+                        and `bus_phone` like concat('%', #{likes.busPhone,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "killTime" and likes[k] != null'>
+                        and `kill_time` like concat('%', #{likes.killTime,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                    <if test='k == "killTime" and dates[k] != null'>
+                        and ( `kill_time` >= date(#{dates.killTime.begin})
+                        and date(#{dates.killTime.end}) >= `kill_time` )
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "killId" and includes[k] != null'>
+                        and `kill_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "killNumber" and includes[k] != null'>
+                        and `kill_number` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "personId" and includes[k] != null'>
+                        and `person_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "businessId" and includes[k] != null'>
+                        and `business_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "activityId" and includes[k] != null'>
+                        and `activity_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "busPhone" and includes[k] != null'>
+                        and `bus_phone` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "killTime" and includes[k] != null'>
+                        and `kill_time` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="killId != null or killId == 0" >
+                and `kill_id` like concat('%', #{killId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="killNumber != null" >
+                and `kill_number` like concat('%', #{killNumber,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="personId != null or personId == 0" >
+                and `person_id` like concat('%', #{personId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="businessId != null or businessId == 0" >
+                and `business_id` like concat('%', #{businessId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="activityId != null or activityId == 0" >
+                and `activity_id` like concat('%', #{activityId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="busPhone != null" >
+                and `bus_phone` like concat('%', #{busPhone,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="killTime != null" >
+                and `kill_time` like concat('%', #{killTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "killId"'>
+                    `kill_id`
+                </if>
+                <if test='k == "killNumber"'>
+                    `kill_number`
+                </if>
+                <if test='k == "personId"'>
+                    `person_id`
+                </if>
+                <if test='k == "businessId"'>
+                    `business_id`
+                </if>
+                <if test='k == "activityId"'>
+                    `activity_id`
+                </if>
+                <if test='k == "busPhone"'>
+                    `bus_phone`
+                </if>
+                <if test='k == "killTime"'>
+                    `kill_time`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `kill_success`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `kill_success`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `kill_success`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultType="java.lang.Integer" >
+        select count(1)
+        from `kill_success`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `kill_success`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultType="java.lang.Integer" >
+        select count(1)
+        from `kill_success`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>

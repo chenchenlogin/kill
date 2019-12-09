@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinghuofirst.kill.model.mapper.ActivityRepository" >
+
+    <resultMap id="BaseResultMap" type="com.xinghuofirst.kill.model.entity.Activity" >
+        <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="province" property="province" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="quentity" property="quentity" jdbcType="INTEGER" />
+        <result column="surplus" property="surplus" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List" >
+        `activity_id`,`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`
+    </sql>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from `activity`
+        where `activity_id` = #{activityId,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.xinghuofirst.kill.model.entity.Activity" >
+        insert into `activity` (`activity_id`,`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`)
+        values (#{activityId,jdbcType=INTEGER},#{startTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{province,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},#{quentity,jdbcType=INTEGER},#{surplus,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+
+    <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.Activity" >
+        insert into `activity`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="activityId != null or activityId == 0" >
+                `activity_id`,
+            </if>
+            <if test="startTime != null" >
+                `start_time`,
+            </if>
+            <if test="endTime != null" >
+                `end_time`,
+            </if>
+            <if test="province != null" >
+                `province`,
+            </if>
+            <if test="description != null" >
+                `description`,
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                `quentity`,
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                `surplus`,
+            </if>
+            <if test="createTime != null" >
+                `create_time`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="activityId != null or activityId == 0" >
+                #{activityId,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null" >
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null" >
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="province != null" >
+                #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                #{quentity,jdbcType=INTEGER},
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                #{surplus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.xinghuofirst.kill.model.entity.Activity" >
+        update `activity`
+        <set >
+            <if test="startTime != null" >
+                `start_time` = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null" >
+                `end_time` = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="province != null" >
+                `province` = #{province,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                `description` = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                `quentity` = #{quentity,jdbcType=INTEGER},
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                `surplus` = #{surplus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                `create_time` = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where `activity_id` = #{activityId,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.xinghuofirst.kill.model.entity.Activity" >
+        update `activity` set
+        `start_time` = #{startTime,jdbcType=TIMESTAMP},
+        `end_time` = #{endTime,jdbcType=TIMESTAMP},
+        `province` = #{province,jdbcType=VARCHAR},
+        `description` = #{description,jdbcType=VARCHAR},
+        `quentity` = #{quentity,jdbcType=INTEGER},
+        `surplus` = #{surplus,jdbcType=INTEGER},
+        `create_time` = #{createTime,jdbcType=TIMESTAMP}
+        where `activity_id` = #{activityId,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        where `activity_id` = #{activityId,jdbcType=INTEGER}
+    </select>
+
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="activityId != null or activityId == 0" >
+                and `activity_id` = #{activityId,jdbcType=INTEGER}
+            </if>
+            <if test="startTime != null" >
+                and `start_time` = #{startTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="endTime != null" >
+                and `end_time` = #{endTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="province != null" >
+                and `province` = #{province,jdbcType=VARCHAR}
+            </if>
+            <if test="description != null" >
+                and `description` = #{description,jdbcType=VARCHAR}
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                and `quentity` = #{quentity,jdbcType=INTEGER}
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                and `surplus` = #{surplus,jdbcType=INTEGER}
+            </if>
+            <if test="createTime != null" >
+                and `create_time` = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+
+            <if test="null != likes">
+                <foreach collection="likes.keys" item="k" separator=" ">
+                    <if test='k == "activityId" and likes[k] != null'>
+                        and `activity_id` like concat('%', #{likes.activityId,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "startTime" and likes[k] != null'>
+                        and `start_time` like concat('%', #{likes.startTime,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "endTime" and likes[k] != null'>
+                        and `end_time` like concat('%', #{likes.endTime,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                    <if test='k == "province" and likes[k] != null'>
+                        and `province` like concat('%', #{likes.province,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "description" and likes[k] != null'>
+                        and `description` like concat('%', #{likes.description,jdbcType=VARCHAR}, '%')
+                    </if>
+                    <if test='k == "quentity" and likes[k] != null'>
+                        and `quentity` like concat('%', #{likes.quentity,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "surplus" and likes[k] != null'>
+                        and `surplus` like concat('%', #{likes.surplus,jdbcType=INTEGER}, '%')
+                    </if>
+                    <if test='k == "createTime" and likes[k] != null'>
+                        and `create_time` like concat('%', #{likes.createTime,jdbcType=TIMESTAMP}, '%')
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != dates">
+                <foreach collection="dates.keys" item="k" separator=" ">
+                    <if test='k == "startTime" and dates[k] != null'>
+                        and ( `start_time` >= date(#{dates.startTime.begin})
+                        and date(#{dates.startTime.end}) >= `start_time` )
+                    </if>
+                    <if test='k == "endTime" and dates[k] != null'>
+                        and ( `end_time` >= date(#{dates.endTime.begin})
+                        and date(#{dates.endTime.end}) >= `end_time` )
+                    </if>
+                    <if test='k == "createTime" and dates[k] != null'>
+                        and ( `create_time` >= date(#{dates.createTime.begin})
+                        and date(#{dates.createTime.end}) >= `create_time` )
+                    </if>
+                </foreach>
+            </if>
+
+            <if test="null != includes">
+                <foreach collection="includes.keys" item="k" separator=" ">
+                    <if test='k == "activityId" and includes[k] != null'>
+                        and `activity_id` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "startTime" and includes[k] != null'>
+                        and `start_time` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "endTime" and includes[k] != null'>
+                        and `end_time` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "province" and includes[k] != null'>
+                        and `province` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "description" and includes[k] != null'>
+                        and `description` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "quentity" and includes[k] != null'>
+                        and `quentity` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "surplus" and includes[k] != null'>
+                        and `surplus` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                    <if test='k == "createTime" and includes[k] != null'>
+                        and `create_time` in
+                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                            #{itemValue}
+                        </foreach>
+                    </if>
+                </foreach>
+            </if>
+        </where>
+    </sql>
+
+    <sql id="findPageWithWhereLike" >
+        <where> 1=1
+            <if test="activityId != null or activityId == 0" >
+                and `activity_id` like concat('%', #{activityId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="startTime != null" >
+                and `start_time` like concat('%', #{startTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="endTime != null" >
+                and `end_time` like concat('%', #{endTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="province != null" >
+                and `province` like concat('%', #{province,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="description != null" >
+                and `description` like concat('%', #{description,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                and `quentity` like concat('%', #{quentity,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                and `surplus` like concat('%', #{surplus,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="createTime != null" >
+                and `create_time` like concat('%', #{createTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+        </where>
+    </sql>
+
+
+    <sql id="findPageWithOrder">
+        <if test="null != orders" >
+            ORDER BY
+            <foreach collection="orders.keys" item="k" separator=",">
+                <if test='k == "activityId"'>
+                    `activity_id`
+                </if>
+                <if test='k == "startTime"'>
+                    `start_time`
+                </if>
+                <if test='k == "endTime"'>
+                    `end_time`
+                </if>
+                <if test='k == "province"'>
+                    `province`
+                </if>
+                <if test='k == "description"'>
+                    `description`
+                </if>
+                <if test='k == "quentity"'>
+                    `quentity`
+                </if>
+                <if test='k == "surplus"'>
+                    `surplus`
+                </if>
+                <if test='k == "createTime"'>
+                    `create_time`
+                </if>
+                <if test='orders[k] == "asc"'>
+                    ASC
+                </if>
+                <if test='orders[k] == "desc"'>
+                    DESC
+                </if>
+            </foreach>
+        </if>
+    </sql>
+
+
+    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <include refid="findPageWithWhere" />
+        limit 1
+    </select>
+
+
+    <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+    </select>
+
+
+    <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <include refid="findPageWithWhere" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCount" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultType="java.lang.Integer" >
+        select count(1)
+        from `activity`
+        <include refid="findPageWithWhere" />
+    </select>
+
+    <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <include refid="findPageWithWhereLike" />
+        <include refid="findPageWithOrder" />
+        limit #{start},#{pageSize}
+    </select>
+
+
+    <select id="findPageWithCountLike" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultType="java.lang.Integer" >
+        select count(1)
+        from `activity`
+        <include refid="findPageWithWhereLike" />
+    </select>
+
+
+</mapper>
