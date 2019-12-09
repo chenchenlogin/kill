@@ -13,6 +13,9 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.1.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.1.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: '2.1.1.RELEASE'
-    
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-amqp', version: '2.1.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.1.1.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.1.1.RELEASE'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8'
 }
 
