@@ -195,133 +195,6 @@
     </select>
 
 
-    <sql id="findPageWithWhereLike" >
-        <where> 1=1
-            <if test="activityId != null or activityId == 0" >
-                and `activity_id` = #{activityId,jdbcType=INTEGER}
-            </if>
-            <if test="startTime != null" >
-                and `start_time` = #{startTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="endTime != null" >
-                and `end_time` = #{endTime,jdbcType=TIMESTAMP}
-            </if>
-            <if test="province != null" >
-                and `province` = #{province,jdbcType=VARCHAR}
-            </if>
-            <if test="description != null" >
-                and `description` = #{description,jdbcType=VARCHAR}
-            </if>
-            <if test="quentity != null or quentity == 0" >
-                and `quentity` = #{quentity,jdbcType=INTEGER}
-            </if>
-            <if test="surplus != null or surplus == 0" >
-                and `surplus` = #{surplus,jdbcType=INTEGER}
-            </if>
-            <if test="createTime != null" >
-                and `create_time` = #{createTime,jdbcType=TIMESTAMP}
-            </if>
-
-            <if test="null != likes">
-                <foreach collection="likes.keys" item="k" separator=" ">
-                    <if test='k == "activityId" and likes[k] != null'>
-                        and `activity_id` like concat('%', #{likes.activityId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "startTime" and likes[k] != null'>
-                        and `start_time` like concat('%', #{likes.startTime,jdbcType=TIMESTAMP}, '%')
-                    </if>
-                    <if test='k == "endTime" and likes[k] != null'>
-                        and `end_time` like concat('%', #{likes.endTime,jdbcType=TIMESTAMP}, '%')
-                    </if>
-                    <if test='k == "province" and likes[k] != null'>
-                        and `province` like concat('%', #{likes.province,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "description" and likes[k] != null'>
-                        and `description` like concat('%', #{likes.description,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "quentity" and likes[k] != null'>
-                        and `quentity` like concat('%', #{likes.quentity,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "surplus" and likes[k] != null'>
-                        and `surplus` like concat('%', #{likes.surplus,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "createTime" and likes[k] != null'>
-                        and `create_time` like concat('%', #{likes.createTime,jdbcType=TIMESTAMP}, '%')
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != dates">
-                <foreach collection="dates.keys" item="k" separator=" ">
-                    <if test='k == "startTime" and dates[k] != null'>
-                        and ( `start_time` >= date(#{dates.startTime.begin})
-                        and date(#{dates.startTime.end}) >= `start_time` )
-                    </if>
-                    <if test='k == "endTime" and dates[k] != null'>
-                        and ( `end_time` >= date(#{dates.endTime.begin})
-                        and date(#{dates.endTime.end}) >= `end_time` )
-                    </if>
-                    <if test='k == "createTime" and dates[k] != null'>
-                        and ( `create_time` >= date(#{dates.createTime.begin})
-                        and date(#{dates.createTime.end}) >= `create_time` )
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != includes">
-                <foreach collection="includes.keys" item="k" separator=" ">
-                    <if test='k == "activityId" and includes[k] != null'>
-                        and `activity_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "startTime" and includes[k] != null'>
-                        and `start_time` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "endTime" and includes[k] != null'>
-                        and `end_time` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "province" and includes[k] != null'>
-                        and `province` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "description" and includes[k] != null'>
-                        and `description` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "quentity" and includes[k] != null'>
-                        and `quentity` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "surplus" and includes[k] != null'>
-                        and `surplus` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "createTime" and includes[k] != null'>
-                        and `create_time` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                </foreach>
-            </if>
-        </where>
-    </sql>
 
     <sql id="findPageWithWhere" >
         <where> 1=1
@@ -420,6 +293,135 @@
             </if>
         </where>
     </sql>
+
+    <!--
+        <sql id="findPageWithWhereLike" >
+            <where> 1=1
+                <if test="activityId != null or activityId == 0" >
+                    and `activity_id` = #{activityId,jdbcType=INTEGER}
+                </if>
+                <if test="startTime != null" >
+                    and `start_time` = #{startTime,jdbcType=TIMESTAMP}
+                </if>
+                <if test="endTime != null" >
+                    and `end_time` = #{endTime,jdbcType=TIMESTAMP}
+                </if>
+                <if test="province != null" >
+                    and `province` = #{province,jdbcType=VARCHAR}
+                </if>
+                <if test="description != null" >
+                    and `description` = #{description,jdbcType=VARCHAR}
+                </if>
+                <if test="quentity != null or quentity == 0" >
+                    and `quentity` = #{quentity,jdbcType=INTEGER}
+                </if>
+                <if test="surplus != null or surplus == 0" >
+                    and `surplus` = #{surplus,jdbcType=INTEGER}
+                </if>
+                <if test="createTime != null" >
+                    and `create_time` = #{createTime,jdbcType=TIMESTAMP}
+                </if>
+
+                <if test="null != likes">
+                    <foreach collection="likes.keys" item="k" separator=" ">
+                        <if test='k == "activityId" and likes[k] != null'>
+                            and `activity_id` like concat('%', #{likes.activityId,jdbcType=INTEGER}, '%')
+                        </if>
+                        <if test='k == "startTime" and likes[k] != null'>
+                            and `start_time` like concat('%', #{likes.startTime,jdbcType=TIMESTAMP}, '%')
+                        </if>
+                        <if test='k == "endTime" and likes[k] != null'>
+                            and `end_time` like concat('%', #{likes.endTime,jdbcType=TIMESTAMP}, '%')
+                        </if>
+                        <if test='k == "province" and likes[k] != null'>
+                            and `province` like concat('%', #{likes.province,jdbcType=VARCHAR}, '%')
+                        </if>
+                        <if test='k == "description" and likes[k] != null'>
+                            and `description` like concat('%', #{likes.description,jdbcType=VARCHAR}, '%')
+                        </if>
+                        <if test='k == "quentity" and likes[k] != null'>
+                            and `quentity` like concat('%', #{likes.quentity,jdbcType=INTEGER}, '%')
+                        </if>
+                        <if test='k == "surplus" and likes[k] != null'>
+                            and `surplus` like concat('%', #{likes.surplus,jdbcType=INTEGER}, '%')
+                        </if>
+                        <if test='k == "createTime" and likes[k] != null'>
+                            and `create_time` like concat('%', #{likes.createTime,jdbcType=TIMESTAMP}, '%')
+                        </if>
+                    </foreach>
+                </if>
+
+                <if test="null != dates">
+                    <foreach collection="dates.keys" item="k" separator=" ">
+                        <if test='k == "startTime" and dates[k] != null'>
+                            and ( `start_time` >= date(#{dates.startTime.begin})
+                            and date(#{dates.startTime.end}) >= `start_time` )
+                        </if>
+                        <if test='k == "endTime" and dates[k] != null'>
+                            and ( `end_time` >= date(#{dates.endTime.begin})
+                            and date(#{dates.endTime.end}) >= `end_time` )
+                        </if>
+                        <if test='k == "createTime" and dates[k] != null'>
+                            and ( `create_time` >= date(#{dates.createTime.begin})
+                            and date(#{dates.createTime.end}) >= `create_time` )
+                        </if>
+                    </foreach>
+                </if>
+
+                <if test="null != includes">
+                    <foreach collection="includes.keys" item="k" separator=" ">
+                        <if test='k == "activityId" and includes[k] != null'>
+                            and `activity_id` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "startTime" and includes[k] != null'>
+                            and `start_time` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "endTime" and includes[k] != null'>
+                            and `end_time` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "province" and includes[k] != null'>
+                            and `province` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "description" and includes[k] != null'>
+                            and `description` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "quentity" and includes[k] != null'>
+                            and `quentity` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "surplus" and includes[k] != null'>
+                            and `surplus` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                        <if test='k == "createTime" and includes[k] != null'>
+                            and `create_time` in
+                            <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
+                                #{itemValue}
+                            </foreach>
+                        </if>
+                    </foreach>
+                </if>
+            </where>
+        </sql>-->
 
 
     <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >

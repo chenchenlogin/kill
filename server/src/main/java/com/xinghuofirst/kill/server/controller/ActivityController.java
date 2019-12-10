@@ -62,37 +62,17 @@ public class ActivityController  {
             flag = false;
             flaseMess += "活动描述，";
         }
-        if (activity.getStartTime() == null ||activity.getStartTime().equals("")){
+        if (activity.getStartTime() == null || activity.getStartTime().equals("")) {
             flag = false;
             flaseMess += "活动开始时间，";
         }
         if (flag == false) {
-            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),flaseMess + "不能为空");
-            return  baseResponses;
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(), flaseMess + "不能为空");
+            return baseResponses;
         }
         if (activity.getEndTime() == null || activity.getEndTime().equals("")) {
             activity.setEndTime(DateUtil.addThreeMin(activity.getStartTime()));
         }
-
-    /**
-     * duanlian
-     * 判断归属地是否相同
-     *
-     * **/
-    @RequestMapping("/isProvince" )
-    private BaseResponse isProvince(HttpServletRequest request) {
-        Activity activity = activityService.selectNowActivity();
-        String activityProvince = activity.getProvince();
-        Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
-        String personProvince = maps.get("province");
-        if (!personProvince.equals(activityProvince)) {
-            return new BaseResponse(600, "您的归属地，不在本次活动范围内，请期待后续活动");
-        }else{
-            return new BaseResponse(200,"进入成功");
-        }
-    }
-
-
         if (activity.getEndTime().before(activity.getStartTime())){
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");
             return  baseResponses;
@@ -109,6 +89,27 @@ public class ActivityController  {
         baseResponses = new BaseResponse(StatusCode.Success.getCode(),"创建活动成功");
         return baseResponses;
     }
+    /**
+     * duanlian
+     * 判断归属地是否相同
+     *
+     * **/
+    @RequestMapping("/isProvince")
+    private BaseResponse isProvince(HttpServletRequest request) {
+        Activity activity = activityService.selectNowActivity();
+        String activityProvince = activity.getProvince();
+        Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
+        String personProvince = maps.get("province");
+        if (!personProvince.equals(activityProvince)) {
+            return new BaseResponse(600, "您的归属地，不在本次活动范围内，请期待后续活动");
+        }else{
+            return new BaseResponse(200,"进入成功");
+        }
+    }
+
+
+
+
     @RequestMapping("activityHaving")
     public BaseResponse activityHavingController(HttpServletRequest request) {
         BaseResponse  baseResponses = null;

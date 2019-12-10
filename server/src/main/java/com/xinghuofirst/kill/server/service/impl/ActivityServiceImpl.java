@@ -40,12 +40,8 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Activity showNextService() {
         return activityRepository.selectNextActivity();
-    }
 
-public class ActivityServiceImpl  implements ActivityService {
-    @Autowired
-    @Resource
-    ActivityRepository activityRepository;
+    }
 
     /**
      *
@@ -58,8 +54,6 @@ public class ActivityServiceImpl  implements ActivityService {
     }
 
 
-
-
     @Override
     public Activity showBeforeLastService() {
         return activityRepository.selectLastActivity();
@@ -69,4 +63,6 @@ public class ActivityServiceImpl  implements ActivityService {
     public Activity showNowActivityService() {
         return activityRepository.selectNowActivity();
     }
+
+
 }
