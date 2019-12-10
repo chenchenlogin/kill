@@ -1,10 +1,15 @@
 package com.xinghuofirst.kill.server.service.impl;
 
 import com.xinghuofirst.kill.model.entity.Activity;
+
+import com.xinghuofirst.kill.model.entity.KillSuccess;
+
 import com.xinghuofirst.kill.model.mapper.ActivityRepository;
 import com.xinghuofirst.kill.server.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 import java.util.List;
 
@@ -16,6 +21,7 @@ import java.util.List;
  * @version: V1.0
  */
 @Service
+
 public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
@@ -35,6 +41,24 @@ public class ActivityServiceImpl implements ActivityService {
     public Activity showNextService() {
         return activityRepository.selectNextActivity();
     }
+
+public class ActivityServiceImpl  implements ActivityService {
+    @Autowired
+    @Resource
+    ActivityRepository activityRepository;
+
+    /**
+     *
+     * @param
+     * @return duanlian  省份是否相同
+     */
+    @Override
+    public Activity selectNowActivity(){
+        return activityRepository.selectNowActivity();
+    }
+
+
+
 
     @Override
     public Activity showBeforeLastService() {

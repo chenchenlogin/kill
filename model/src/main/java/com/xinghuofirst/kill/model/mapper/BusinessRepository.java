@@ -9,6 +9,7 @@
 package com.xinghuofirst.kill.model.mapper;
 
 import com.xinghuofirst.kill.model.entity.Business;
+import com.xinghuofirst.kill.model.entity.KillSuccess;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -22,7 +23,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
-
+    /**
+     *@Author:Yuyue
+     *@Description:添加白名单
+     *@Date:12:04  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    int insertWhiteBusiness(Business business);
     /**
      *@Author:Yuyue
      *@Description:按照省份查询用户资源
@@ -32,6 +40,22 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
      */
     Integer selectBusinessByProvince(String province);
 
+    /**
+    *@Author:Yuyue
+    *@Description:查出来一个可被分配的用户
+    *@Date:13:44  2019/12/10
+    *@Param:
+    *@Return:
+    */
+    Integer selectPerson(String province);
 
+    /**
+    *@Author:Yuyue
+    *@Description:秒杀后，更新分配商户结果
+    *@Date:14:08  2019/12/10
+    *@Param:
+    *@Return:
+    */
+    Integer updateKillSuccess(String killNumber,Integer businessId);
 }
 

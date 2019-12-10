@@ -16,6 +16,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @description:
  * @author: 姜爽
@@ -26,16 +30,20 @@ import java.util.Map;
 @Slf4j
 public class ActivityController  {
 
-    @Autowired
-    ActivityService activityService;
 
+   
     @Autowired
     private BusinessService businessService;
+
+
+    @Autowired
+    private ActivityService activityService;
 
     @RequestMapping("/admin")
     public String get(){
         return "success";
     }
+
 
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
@@ -65,6 +73,25 @@ public class ActivityController  {
         if (activity.getEndTime() == null || activity.getEndTime().equals("")) {
             activity.setEndTime(DateUtil.addThreeMin(activity.getStartTime()));
         }
+
+    /**
+     * duanlian
+     * 判断归属地是否相同
+     *
+     * **/
+    @RequestMapping("/isProvince" )
+    private BaseResponse isProvince(HttpServletRequest request) {
+        Activity activity = activityService.selectNowActivity();
+        String activityProvince = activity.getProvince();
+        Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
+        String personProvince = maps.get("province");
+        if (!personProvince.equals(activityProvince)) {
+            return new BaseResponse(600, "您的归属地，不在本次活动范围内，请期待后续活动");
+        }else{
+            return new BaseResponse(200,"进入成功");
+        }
+    }
+
 
         if (activity.getEndTime().before(activity.getStartTime())){
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");

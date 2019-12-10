@@ -21,9 +21,20 @@ import java.util.List;
  * @version: V1.0
  */
 public interface KillSuccessService  {
+
     /**
      *@Description:鑫管家查询秒杀成功用户列表
      *@Return: 秒杀成功的信息
      */
     List<KillSuccess> selectKillSuccessByPersonIdService(Integer personId);
+
+
+
+    /** 查询用户资源* duanlian*/
+    int selectActivitySurplus(Integer activityId);
+    /** 判断是否有参加本次活动的资格 duanlian**/
+    int countByActivityPersonId(Integer personId,Integer activityId);
+    /** 查询用户剩余资源 duanlian**/
+    int updateSurpus  (Integer activityId);
+
 }

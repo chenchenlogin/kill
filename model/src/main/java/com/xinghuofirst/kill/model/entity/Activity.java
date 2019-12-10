@@ -48,6 +48,71 @@ public class Activity implements Serializable {
     private Integer quentity;
     /** 剩余库存，初始值等于配置用户数量 **/
     private Integer surplus;
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getQuentity() {
+        return quentity;
+    }
+
+    public void setQuentity(Integer quentity) {
+        this.quentity = quentity;
+    }
+
+    public Integer getSurplus() {
+        return surplus;
+    }
+
+    public void setSurplus(Integer surplus) {
+        this.surplus = surplus;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     /** 创建时间 **/
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;

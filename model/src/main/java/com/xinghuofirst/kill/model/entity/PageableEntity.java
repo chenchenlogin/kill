@@ -1,5 +1,8 @@
 package com.xinghuofirst.kill.model.entity;
 
+
+
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 

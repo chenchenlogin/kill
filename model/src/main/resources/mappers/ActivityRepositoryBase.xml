@@ -22,6 +22,7 @@
             AND now() &lt; start_time
         </where>
     </select>
+
     <!--查询上一场活动  于悦-->
     <select id="selectLastActivity" resultMap="BaseResultMap" >
         select
@@ -32,6 +33,7 @@
             ORDER BY end_time DESC  LIMIT 1
         </where>
     </select>
+
     <!--查询下一场活动  于悦-->
     <select id="selectNextActivity" resultMap="BaseResultMap" >
         select
@@ -185,7 +187,7 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `activity`
@@ -193,7 +195,7 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
+    <sql id="findPageWithWhereLike" >
         <where> 1=1
             <if test="activityId != null or activityId == 0" >
                 and `activity_id` = #{activityId,jdbcType=INTEGER}
@@ -320,6 +322,36 @@
             </if>
         </where>
     </sql>
+
+    <sql id="findPageWithWhere" >
+        <where> 1=1
+            <if test="activityId != null or activityId == 0" >
+                and `activity_id` like concat('%', #{activityId,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="startTime != null" >
+                and `start_time` like concat('%', #{startTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="endTime != null" >
+                and `end_time` like concat('%', #{endTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+            <if test="province != null" >
+                and `province` like concat('%', #{province,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="description != null" >
+                and `description` like concat('%', #{description,jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                and `quentity` like concat('%', #{quentity,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                and `surplus` like concat('%', #{surplus,jdbcType=INTEGER}, '%')
+            </if>
+            <if test="createTime != null" >
+                and `create_time` like concat('%', #{createTime,jdbcType=TIMESTAMP}, '%')
+            </if>
+        </where>
+    </sql>
+
 
 
     <sql id="findPageWithOrder">
