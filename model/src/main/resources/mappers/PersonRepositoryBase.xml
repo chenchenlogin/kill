@@ -110,7 +110,7 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
+    <sql id="findPageWithWhereLike" >
         <where> 1=1
             <if test="userId != null or userId == 0" >
                 and `user_id` = #{userId,jdbcType=INTEGER}
@@ -202,7 +202,7 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
+    <sql id="findPageWithWhere" >
         <where> 1=1
             <if test="userId != null or userId == 0" >
                 and `user_id` like concat('%', #{userId,jdbcType=INTEGER}, '%')

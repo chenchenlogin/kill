@@ -19,7 +19,7 @@
         `business_id`,`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`,`idcard`
     </sql>
 
-    <select id="selectPerson" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    <select id="selectPerson" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT business_id
         FROM `business` AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(business_id) FROM `business`)-(SELECT MIN(business_id) FROM `business`))+
         (SELECT MIN(business_id) FROM `business`)) AS id) AS t2
@@ -161,7 +161,7 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
+    <sql id="findPageWithWhereLike" >
         <where> 1=1
             <if test="businessId != null or businessId == 0" >
                 and `business_id` = #{businessId,jdbcType=INTEGER}
@@ -289,7 +289,7 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
+    <sql id="findPageWithWhere" >
         <where> 1=1
             <if test="businessId != null or businessId == 0" >
                 and `business_id` like concat('%', #{businessId,jdbcType=INTEGER}, '%')

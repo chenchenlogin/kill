@@ -263,7 +263,7 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
+    <sql id="findPageWithWhereLike" >
         <where> 1=1
             <if test="killId != null or killId == 0" >
                 and `kill_id` = #{killId,jdbcType=INTEGER}
@@ -371,7 +371,7 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
+    <sql id="findPageWithWhere" >
         <where> 1=1
             <if test="killId != null or killId == 0" >
                 and `kill_id` like concat('%', #{killId,jdbcType=INTEGER}, '%')
