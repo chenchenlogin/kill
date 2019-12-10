@@ -11,6 +11,7 @@ package com.xinghuofirst.kill.server.service;
 
 
 import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.server.dto.PersonAndActivity;
 
 /**
  * @description:
@@ -19,4 +20,9 @@ import com.xinghuofirst.kill.model.entity.KillSuccess;
  * @version: V1.0
  */
 public interface KillSuccessService  {
+    /**
+     * 鑫管家分配用户
+     * @param info
+     */
+    void assignPerson(PersonAndActivity info) throws Exception;
 }

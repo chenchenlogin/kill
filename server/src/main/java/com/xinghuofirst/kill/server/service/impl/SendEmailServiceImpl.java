@@ -4,7 +4,6 @@ import com.xinghuofirst.kill.model.entity.Person;
 import com.xinghuofirst.kill.model.mapper.PersonRepository;
 import com.xinghuofirst.kill.server.dto.PersonAndActivity;
 import com.xinghuofirst.kill.server.service.SendEmailService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.AmqpException;
@@ -16,10 +15,9 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.core.*;
 
-import static java.awt.SystemColor.info;
 
 /**
- * @description: TODO
+ * @description: TODO 进行异步邮件消息的通知
  * @author: 杜鹏
  * @date: 2019-12-09 14:30
  * @version: V1.0
@@ -34,28 +32,32 @@ public class SendEmailServiceImpl implements SendEmailService {
     @Autowired
     private Environment env;
 
-    /*@Autowired
-    private ItemKillSuccessMapper itemKillSuccessMapper;*/
-
     @Autowired
     private PersonRepository personRepository;
 
-
     /**
-     * 秒杀成功异步发送邮件通知消息
+     * @description: TODO 秒杀成功异步发送邮件通知消息
+     * @author: 杜鹏
+     * @param activityId 活动id
+     * @param personId 鑫管家id
+     * @param orderNo 秒杀编号
+     * @date: 2019-12-10 14:46
      */
     @Override
-    public void sendKillSuccessEmailMsg(Integer activityId,Integer persionId){
-        log.info("秒杀成功异步发送邮件通知消息-准备发送消息：{}",persionId);
-
+    public void sendKillSuccessEmailMsg(Integer activityId,Integer personId,String orderNo){
+        log.info("秒杀成功异步发送邮件通知消息-准备发送消息：{}",personId);
         try {
-            if (persionId!=null){
-                Person info = personRepository.selectById(persionId);
+            if (personId!=null){
+                //TODO:获取鑫管家信息
+                Person info = personRepository.selectById(personId);
                 PersonAndActivity personAndActivity = new PersonAndActivity();
                 personAndActivity.setUserName(info.getUserName());
                 personAndActivity.setActivityId(activityId);
                 personAndActivity.setEmail(info.getEmail());
-                personAndActivity.setUserId(persionId);
+                personAndActivity.setUserId(personId);
+                personAndActivity.setBusinessId(personId);
+                //TODO:添加秒杀编号（通过秒杀编号和商户id给鑫管家分配用户）
+                personAndActivity.setOrderNo(orderNo);
                 if (info!=null){
                     //TODO:rabbitmq发送消息的逻辑
                     rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
@@ -74,7 +76,7 @@ public class SendEmailServiceImpl implements SendEmailService {
                 }
             }
         }catch (Exception e){
-            log.error("秒杀成功异步发送邮件通知消息-发生异常，消息为：{}",persionId,e.fillInStackTrace());
+            log.error("秒杀成功异步发送邮件通知消息-发生异常，消息为：{}",personId,e.fillInStackTrace());
         }
     }
 }
