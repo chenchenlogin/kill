@@ -40,6 +40,14 @@ public interface ActivityRepository extends BaseRepository<Activity, Integer> {
      *@Return:
      */
     Activity selectNextActivity();
+    /**
+     *@Author:Yuyue
+     *@Description:查询上一场活动 @
+     *@Date:11:47  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    Activity selectLastActivity();
 
     /**
      *@Author:Yuyue
