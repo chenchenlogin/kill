@@ -19,6 +19,14 @@
         `business_id`,`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`,`idcard`
     </sql>
 
+    <select id="selectPerson" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT business_id
+        FROM `business` AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(business_id) FROM `business`)-(SELECT MIN(business_id) FROM `business`))+
+        (SELECT MIN(business_id) FROM `business`)) AS id) AS t2
+        WHERE t1.business_id >= t2.id and t1.install_status in (0,1) and t1.silent_status=0 and t1.province = #{province}
+        ORDER BY t1.business_id LIMIT 1;
+    </select>
+
     <select id="selectBusinessByProvince" parameterType="java.lang.String" resultType="java.lang.Integer">
         select COUNT(*) from business
         WHERE silent_status=0
@@ -95,6 +103,10 @@
     </insert>
 
 
+    <update id="updateKillSuccess" >
+        update kill_success SET business_id=#{businessId} where kill_number=#{killNumber}
+    </update>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.xinghuofirst.kill.model.entity.Business" >
         update `business`
         <set >
@@ -141,7 +153,7 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `business`

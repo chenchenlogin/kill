@@ -32,6 +32,22 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
      */
     Integer selectBusinessByProvince(String province);
 
+    /**
+    *@Author:Yuyue
+    *@Description:查出来一个可被分配的用户
+    *@Date:13:44  2019/12/10
+    *@Param:
+    *@Return:
+    */
+    Integer selectPerson(String province);
 
+    /**
+    *@Author:Yuyue
+    *@Description:秒杀后，更新分配商户结果
+    *@Date:14:08  2019/12/10
+    *@Param:
+    *@Return:
+    */
+    Integer updateKillSuccess(String killNumber,Integer businessId);
 }
 
