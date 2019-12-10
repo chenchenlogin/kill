@@ -14,14 +14,25 @@ import com.xinghuofirst.kill.server.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: yu_y<yu_y@suixingpay.com>
  * @date: 2019/12/09 09:46
  * @version: V1.0
  */
 @Service
-public class PersonServiceImpl {
+public class PersonServiceImpl implements  PersonService {
 
+    @Autowired
+    private PersonRepository personRepository;
 
+    @Override public Person userLogin(Person person) {
+        return personRepository.findOne(person);
+    }
+
+    @Override public void userLoginOut(Person person) {
+
+    }
 }

@@ -62,28 +62,28 @@ public class KillSuccess  implements Serializable {
         this.killNumber = killNumber;
     }
 
-    public Integer getPersonId() {
-        return personId;
+    public Business getBusiness() {
+        return business;
     }
 
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
+    public void setBusiness(Business business) {
+        this.business = business;
     }
 
-    public Integer getBusinessId() {
-        return businessId;
+    public Activity getActivity() {
+        return activity;
     }
 
-    public void setBusinessId(Integer businessId) {
-        this.businessId = businessId;
+    public void setActivity(Activity activity) {
+        this.activity = activity;
     }
 
-    public Integer getActivityId() {
-        return activityId;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public String getBusPhone() {

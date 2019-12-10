@@ -24,7 +24,7 @@
     </select>
 
     <!--查询上一场活动  于悦-->
-    <select id="selectNextActivity" resultMap="BaseResultMap" >
+    <select id="selectLastActivity" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `activity`
@@ -188,7 +188,7 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `activity`
@@ -196,7 +196,7 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
+    <sql id="findPageWithWhereLike" >
         <where> 1=1
             <if test="activityId != null or activityId == 0" >
                 and `activity_id` = #{activityId,jdbcType=INTEGER}
@@ -324,7 +324,7 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
+    <sql id="findPageWithWhere" >
         <where> 1=1
             <if test="activityId != null or activityId == 0" >
                 and `activity_id` like concat('%', #{activityId,jdbcType=INTEGER}, '%')

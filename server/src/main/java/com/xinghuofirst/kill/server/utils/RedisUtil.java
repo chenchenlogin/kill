@@ -2,6 +2,7 @@ package com.xinghuofirst.kill.server.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -16,11 +17,13 @@ import java.util.concurrent.TimeUnit;
  */
 
 
-
+@Component
 public class RedisUtil {
-    @Autowired
     private  static RedisTemplate<String, Object> redisTemplate;
-
+    @Autowired
+    public  void setRedisTemplate(RedisTemplate<String,Object> redisTemplate){
+                RedisUtil.redisTemplate=redisTemplate;
+        }
     public RedisUtil(RedisTemplate<String, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
@@ -87,7 +90,7 @@ public class RedisUtil {
      * @param key 键
      * @return 值
      */
-    public Object get(String key){
+    public static Object get(String key){
         return key==null?null:redisTemplate.opsForValue().get(key);
     }
 
@@ -111,7 +114,7 @@ public class RedisUtil {
      * 普通缓存放入并设置时间
      * @param key 键
      * @param value 值
-     * @param time 时间(秒) time要大于0 如果time小于等于0 将设置无限期
+     * @param time 时间(微秒) time要大于0 如果time小于等于0 将设置无限期
      * @return true成功 false 失败
      */
     public static boolean set(String key,Object value,long time){
@@ -161,7 +164,7 @@ public class RedisUtil {
      * @param item 项 不能为null
      * @return 值
      */
-    public Object hget(String key,String item){
+    public static Object hget(String key,String item){
         return redisTemplate.opsForHash().get(key, item);
     }
 

@@ -29,7 +29,6 @@ import java.lang.String;
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
-
 public class Business implements Serializable {
     /** 用户id **/
     private Integer businessId;
@@ -47,7 +46,7 @@ public class Business implements Serializable {
 0默认  1轮空2被秒杀装机
 3被秒杀，未被装机 **/
     private Integer installStatus;
-    /** 0沉默用户  1白名单 未知**/
+    /** 0沉默用户  1白名单 **/
     private Integer silentStatus;
     /** 身份证号 **/
     private String idcard;
@@ -123,5 +122,4 @@ public class Business implements Serializable {
     public void setIdcard(String idcard) {
         this.idcard = idcard;
     }
-
 }
