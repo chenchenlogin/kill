@@ -30,10 +30,13 @@ public class KillSuccessController {
     private KillSuccessService killSuccessService;
     @PostMapping("/getKillSuccess")
     public BaseResponse getKillSuccessMethod(Integer personId) {
+        BaseResponse baseResponses = null;
         List<KillSuccess> killSuccesses = killSuccessService.selectKillSuccessByPersonIdService(personId);
         if (killSuccesses.size() == 0 ) {
-            return  new BaseResponse(StatusCode.Fail.getCode(),"暂无秒杀到的用户信息",null);
+            baseResponses =  new BaseResponse(StatusCode.Fail.getCode(),"暂无秒杀到的用户信息",null);
+            return baseResponses;
         }
-        return new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",killSuccesses);
+        baseResponses = new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",killSuccesses);
+        return baseResponses;
     }
 }

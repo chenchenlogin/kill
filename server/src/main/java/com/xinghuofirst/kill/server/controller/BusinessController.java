@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:21
  * @version: V1.0
  */
@@ -28,11 +28,14 @@ public class BusinessController  {
 
     @PostMapping("/getCount")
     public BaseResponse getLocalCount(String province) {
+        BaseResponse  baseResponses = null;
         int countnum = businessService.selectBusinessByProvinceService(province);
         if (countnum <= 0) {
-            return  new BaseResponse(StatusCode.Fail.getCode(),"该地区无沉默用户信息",0);
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"该地区无沉默用户信息",0);
+            return baseResponses;
         }
-        return new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",countnum);
+        baseResponses =  new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",countnum);
+        return baseResponses;
     }
 
 }

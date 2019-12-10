@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:24
  * @version: V1.0
  */
@@ -38,57 +38,74 @@ public class ActivityController  {
 
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
+        BaseResponse baseResponses = null;
         if (activity == null || activity.getStartTime() == null ||activity.getProvince() == null ||activity.getEndTime() ==null ||activity.getQuentity() == null) {
-            return new BaseResponse(StatusCode.Fail.getCode(),"请输入准确的活动信息");
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"请输入准确的活动信息");
+            return baseResponses;
         }
         if (activity.getEndTime().before(activity.getStartTime())){
-            return new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");
+            return  baseResponses;
         } else if (false == DateKit.timeCompany(activity,activityService.showAll())) {
-            return new BaseResponse(StatusCode.Fail.getCode(),"该时间已有活动，请重新选择时间");
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"该时间已有活动，请重新选择时间");
+            return baseResponses;
         } else if (activity.getQuentity() > businessService.selectBusinessByProvinceService(activity.getProvince())) {
-            return new BaseResponse(StatusCode.Fail.getCode(),"库存用户信息不足请重新输入");
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"库存用户信息不足请重新输入");
+            return baseResponses;
         }
         activity.setCreateTime(new Date());
         activity.setSurplus(activity.getQuentity());
         activityService.insertActivity(activity);
-        return new BaseResponse(StatusCode.Success.getCode(),"创建活动成功");
+        baseResponses = new BaseResponse(StatusCode.Success.getCode(),"创建活动成功");
+        return baseResponses;
     }
     @RequestMapping("activityHaving")
     public BaseResponse activityHavingController(HttpServletRequest request) {
+        BaseResponse  baseResponses = null;
         if (activityService.showNextService() == null && !DateUtil.activityCompany(new Date(),activityService.showAll())) {
-            return new BaseResponse(StatusCode.Success.getCode(),"目前无活动，敬请期待");
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),"目前无活动，敬请期待");
+            return baseResponses;
         }
         if (activityService.showNextService() != null && !DateUtil.activityCompany(new Date(),activityService.showAll())) {
-            return new BaseResponse(StatusCode.Success.getCode(),
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),
                     "下一场活动开始城市为" + activityService.showNextService().getProvince() + "，" +
                             activityService.showNextService().getStartTime() + "时，敬请期待");
+            return baseResponses;
         }
         if (activityService.showNextService() != null &&
                 DateUtil.compare(DateUtil.dateToString(new Date()),DateUtil.dateToString(activityService.showNextService().getStartTime()))) {
             Map<String ,String> maps= (Map<String, String>) request.getAttribute("request_parameters");
-            return new BaseResponse(StatusCode.Success.getCode(),
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),
                         "下一场活动的开放城市为" + activityService.showNextService().getProvince());
+            return baseResponses;
         }
-        return new BaseResponse(StatusCode.Fail.getCode(),
+        baseResponses = new BaseResponse(StatusCode.Fail.getCode(),
                 "系统出差了,请等候专业人员维护");
+        return baseResponses;
     }
 
     @RequestMapping("enterActivity")
     public BaseResponse enterActivityController() {
+        BaseResponse  baseResponses = null;
         if (activityService.showNextService() == null &&
                 DateUtil.isEffectiveDate(new Date(),activityService.showBeforeLastService())) {
-            return new BaseResponse(StatusCode.Success.getCode(),"成功进入活动",activityService.showBeforeLastService());
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),"成功进入活动",activityService.showBeforeLastService());
+            return baseResponses;
         }
         if (activityService.showNextService() == null && activityService.showBeforeLastService() == null) {
-            return new BaseResponse(StatusCode.Success.getCode(),"暂无活动信息");
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),"暂无活动信息");
+            return baseResponses;
         }
         if (activityService.showNextService() == null && activityService.showBeforeLastService() != null) {
-            return new BaseResponse(StatusCode.Success.getCode(),"抱歉，本场活动已结束",activityService.showBeforeLastService());
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),"抱歉，本场活动已结束",activityService.showBeforeLastService());
+            return baseResponses;
         }
         if (activityService.showNextService() != null) {
-            return new BaseResponse(StatusCode.Success.getCode(),"“活动还未到开启时间",activityService.showNextService());
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),"“活动还未到开启时间",activityService.showNextService());
+            return baseResponses;
         }
-        return new BaseResponse(StatusCode.Fail.getCode(),"系统出差了,请等候专业人员维护");
+        baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"系统出差了,请等候专业人员维护");
+        return baseResponses;
     }
 
 }
