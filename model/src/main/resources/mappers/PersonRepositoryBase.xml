@@ -110,8 +110,8 @@
     </select>
 
 
-    <sql id="findPageWithWhereLike" >
-        <where> 1=1
+    <sql id="findPageWithWhere" >
+        <where>
             <if test="userId != null or userId == 0" >
                 and `user_id` = #{userId,jdbcType=INTEGER}
             </if>
@@ -130,80 +130,11 @@
             <if test="email != null" >
                 and `email` = #{email,jdbcType=VARCHAR}
             </if>
-
-            <if test="null != likes">
-                <foreach collection="likes.keys" item="k" separator=" ">
-                    <if test='k == "userId" and likes[k] != null'>
-                        and `user_id` like concat('%', #{likes.userId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "userName" and likes[k] != null'>
-                        and `user_name` like concat('%', #{likes.userName,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "password" and likes[k] != null'>
-                        and `password` like concat('%', #{likes.password,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "role" and likes[k] != null'>
-                        and `role` like concat('%', #{likes.role,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "province" and likes[k] != null'>
-                        and `province` like concat('%', #{likes.province,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "email" and likes[k] != null'>
-                        and `email` like concat('%', #{likes.email,jdbcType=VARCHAR}, '%')
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != dates">
-                <foreach collection="dates.keys" item="k" separator=" ">
-                </foreach>
-            </if>
-
-            <if test="null != includes">
-                <foreach collection="includes.keys" item="k" separator=" ">
-                    <if test='k == "userId" and includes[k] != null'>
-                        and `user_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "userName" and includes[k] != null'>
-                        and `user_name` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "password" and includes[k] != null'>
-                        and `password` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "role" and includes[k] != null'>
-                        and `role` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "province" and includes[k] != null'>
-                        and `province` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "email" and includes[k] != null'>
-                        and `email` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                </foreach>
-            </if>
         </where>
     </sql>
 
-    <sql id="findPageWithWhere" >
-        <where> 1=1
+    <sql id="findPageWithWhereLike" >
+        <where>
             <if test="userId != null or userId == 0" >
                 and `user_id` like concat('%', #{userId,jdbcType=INTEGER}, '%')
             </if>
@@ -226,38 +157,6 @@
     </sql>
 
 
-    <sql id="findPageWithOrder">
-        <if test="null != orders" >
-            ORDER BY
-            <foreach collection="orders.keys" item="k" separator=",">
-                <if test='k == "userId"'>
-                    `user_id`
-                </if>
-                <if test='k == "userName"'>
-                    `user_name`
-                </if>
-                <if test='k == "password"'>
-                    `password`
-                </if>
-                <if test='k == "role"'>
-                    `role`
-                </if>
-                <if test='k == "province"'>
-                    `province`
-                </if>
-                <if test='k == "email"'>
-                    `email`
-                </if>
-                <if test='orders[k] == "asc"'>
-                    ASC
-                </if>
-                <if test='orders[k] == "desc"'>
-                    DESC
-                </if>
-            </foreach>
-        </if>
-    </sql>
-
 
     <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Person" resultMap="BaseResultMap" >
         select
@@ -273,7 +172,6 @@
         <include refid="Base_Column_List" />
         from  `person`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
     </select>
 
 
@@ -282,8 +180,7 @@
         <include refid="Base_Column_List" />
         from  `person`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
-        limit #{start},#{pageSize}
+              limit #{start},#{pageSize}
     </select>
 
 
@@ -298,8 +195,7 @@
         <include refid="Base_Column_List" />
         from  `person`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
-        limit #{start},#{pageSize}
+               limit #{start},#{pageSize}
     </select>
 
 

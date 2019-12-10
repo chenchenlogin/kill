@@ -77,8 +77,8 @@
     </select>
 
 
-    <sql id="findPageWithWhereLike" >
-        <where> 1=1
+    <sql id="findPageWithWhere" >
+        <where>
             <if test="id != null or id == 0" >
                 and `id` = #{id,jdbcType=INTEGER}
             </if>
@@ -88,53 +88,11 @@
             <if test="provinceName != null" >
                 and `province_name` = #{provinceName,jdbcType=VARCHAR}
             </if>
-
-            <if test="null != likes">
-                <foreach collection="likes.keys" item="k" separator=" ">
-                    <if test='k == "id" and likes[k] != null'>
-                        and `id` like concat('%', #{likes.id,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "provinceNumber" and likes[k] != null'>
-                        and `province_number` like concat('%', #{likes.provinceNumber,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "provinceName" and likes[k] != null'>
-                        and `province_name` like concat('%', #{likes.provinceName,jdbcType=VARCHAR}, '%')
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != dates">
-                <foreach collection="dates.keys" item="k" separator=" ">
-                </foreach>
-            </if>
-
-            <if test="null != includes">
-                <foreach collection="includes.keys" item="k" separator=" ">
-                    <if test='k == "id" and includes[k] != null'>
-                        and `id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "provinceNumber" and includes[k] != null'>
-                        and `province_number` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "provinceName" and includes[k] != null'>
-                        and `province_name` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                </foreach>
-            </if>
         </where>
     </sql>
 
-    <sql id="findPageWithWhere" >
-        <where> 1=1
+    <sql id="findPageWithWhereLike" >
+        <where>
             <if test="id != null or id == 0" >
                 and `id` like concat('%', #{id,jdbcType=INTEGER}, '%')
             </if>
@@ -146,31 +104,6 @@
             </if>
         </where>
     </sql>
-
-
-    <sql id="findPageWithOrder">
-        <if test="null != orders" >
-            ORDER BY
-            <foreach collection="orders.keys" item="k" separator=",">
-                <if test='k == "id"'>
-                    `id`
-                </if>
-                <if test='k == "provinceNumber"'>
-                    `province_number`
-                </if>
-                <if test='k == "provinceName"'>
-                    `province_name`
-                </if>
-                <if test='orders[k] == "asc"'>
-                    ASC
-                </if>
-                <if test='orders[k] == "desc"'>
-                    DESC
-                </if>
-            </foreach>
-        </if>
-    </sql>
-
 
     <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Province" resultMap="BaseResultMap" >
         select
@@ -186,7 +119,6 @@
         <include refid="Base_Column_List" />
         from  `province`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
     </select>
 
 
@@ -195,7 +127,6 @@
         <include refid="Base_Column_List" />
         from  `province`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
         limit #{start},#{pageSize}
     </select>
 
@@ -211,7 +142,6 @@
         <include refid="Base_Column_List" />
         from  `province`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
         limit #{start},#{pageSize}
     </select>
 

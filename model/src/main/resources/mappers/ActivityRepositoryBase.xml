@@ -193,44 +193,6 @@
         where `activity_id` = #{activityId,jdbcType=INTEGER}
     </select>
 
-    <sql id="findPageWithOrder">
-        <if test="null != orders" >
-            ORDER BY
-            <foreach collection="orders.keys" item="k" separator=",">
-                <if test='k == "activityId"'>
-                    `activity_id`
-                </if>
-                <if test='k == "startTime"'>
-                    `start_time`
-                </if>
-                <if test='k == "endTime"'>
-                    `end_time`
-                </if>
-                <if test='k == "province"'>
-                    `province`
-                </if>
-                <if test='k == "description"'>
-                    `description`
-                </if>
-                <if test='k == "quentity"'>
-                    `quentity`
-                </if>
-                <if test='k == "surplus"'>
-                    `surplus`
-                </if>
-                <if test='k == "createTime"'>
-                    `create_time`
-                </if>
-                <if test='orders[k] == "asc"'>
-                    ASC
-                </if>
-                <if test='orders[k] == "desc"'>
-                    DESC
-                </if>
-            </foreach>
-        </if>
-    </sql>
-
    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />

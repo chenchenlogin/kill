@@ -172,7 +172,7 @@
     </select>
 
 
-    <sql id="findPageWithWhereLike" >
+    <sql id="findPageWithWhere" >
         <where>
             <if test="businessId != null or businessId == 0" >
                 and `business_id` = #{businessId,jdbcType=INTEGER}
@@ -204,8 +204,8 @@
             </where>
     </sql>
 
-    <sql id="findPageWithWhere" >
-        <where> 1=1
+    <sql id="findPageWithWhereLike" >
+        <where>
             <if test="businessId != null or businessId == 0" >
                 and `business_id` like concat('%', #{businessId,jdbcType=INTEGER}, '%')
             </if>
@@ -236,49 +236,6 @@
         </where>
     </sql>
 
-
-    <sql id="findPageWithOrder">
-        <if test="null != orders" >
-            ORDER BY
-            <foreach collection="orders.keys" item="k" separator=",">
-                <if test='k == "businessId"'>
-                    `business_id`
-                </if>
-                <if test='k == "businessNumber"'>
-                    `business_number`
-                </if>
-                <if test='k == "phone"'>
-                    `phone`
-                </if>
-                <if test='k == "name"'>
-                    `name`
-                </if>
-                <if test='k == "sex"'>
-                    `sex`
-                </if>
-                <if test='k == "province"'>
-                    `province`
-                </if>
-                <if test='k == "installStatus"'>
-                    `install_status`
-                </if>
-                <if test='k == "silentStatus"'>
-                    `silent_status`
-                </if>
-                <if test='k == "idcard"'>
-                    `idcard`
-                </if>
-                <if test='orders[k] == "asc"'>
-                    ASC
-                </if>
-                <if test='orders[k] == "desc"'>
-                    DESC
-                </if>
-            </foreach>
-        </if>
-    </sql>
-
-
     <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Business" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
@@ -292,7 +249,7 @@
         select
         <include refid="Base_Column_List" />
         from  `business`
-        <include refid="findPageWithWhere" />
+        <include refid="findPageWithWhereLike" />
 
     </select>
 
@@ -301,8 +258,7 @@
         select
         <include refid="Base_Column_List" />
         from  `business`
-        <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+        <include refid="findPageWithWhereLike" />
         limit #{start},#{pageSize}
     </select>
 
@@ -310,7 +266,7 @@
     <select id="findPageWithCount" parameterType="com.xinghuofirst.kill.model.entity.Business" resultType="java.lang.Integer" >
         select count(1)
         from `business`
-        <include refid="findPageWithWhere" />
+        <include refid="findPageWithWhereLike" />
     </select>
 
     <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.Business" resultMap="BaseResultMap" >
@@ -318,7 +274,6 @@
         <include refid="Base_Column_List" />
         from  `business`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
         limit #{start},#{pageSize}
     </select>
 

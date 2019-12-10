@@ -25,14 +25,6 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
     /**
      *@Author:Yuyue
-     *@Description:添加白名单
-     *@Date:12:04  2019/12/9
-     *@Param:
-     *@Return:
-     */
-    int insertWhiteBusiness(Business business);
-    /**
-     *@Author:Yuyue
      *@Description:按照省份查询用户资源
      *@Date:12:41  2019/12/9
      *@Param:
@@ -57,5 +49,14 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
     *@Return:
     */
     Integer updateKillSuccess(String killNumber,Integer businessId);
+
+   /**
+   *@Author:Yuyue
+   *@Description:被秒杀后修改商户安装状态2
+   *@Date:21:29  2019/12/10
+   *@Param:
+   *@Return:
+   */
+    Integer updateBusinessInstallStatus(Integer businessId);
 }
 

@@ -263,8 +263,8 @@
     </select>
 
 
-    <sql id="findPageWithWhereLike" >
-        <where> 1=1
+    <sql id="findPageWithWhere" >
+        <where>
             <if test="killId != null or killId == 0" >
                 and `kill_id` = #{killId,jdbcType=INTEGER}
             </if>
@@ -286,93 +286,11 @@
             <if test="killTime != null" >
                 and `kill_time` = #{killTime,jdbcType=TIMESTAMP}
             </if>
-
-            <if test="null != likes">
-                <foreach collection="likes.keys" item="k" separator=" ">
-                    <if test='k == "killId" and likes[k] != null'>
-                        and `kill_id` like concat('%', #{likes.killId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "killNumber" and likes[k] != null'>
-                        and `kill_number` like concat('%', #{likes.killNumber,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "personId" and likes[k] != null'>
-                        and `person_id` like concat('%', #{likes.personId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "businessId" and likes[k] != null'>
-                        and `business_id` like concat('%', #{likes.businessId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "activityId" and likes[k] != null'>
-                        and `activity_id` like concat('%', #{likes.activityId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "busPhone" and likes[k] != null'>
-                        and `bus_phone` like concat('%', #{likes.busPhone,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "killTime" and likes[k] != null'>
-                        and `kill_time` like concat('%', #{likes.killTime,jdbcType=TIMESTAMP}, '%')
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != dates">
-                <foreach collection="dates.keys" item="k" separator=" ">
-                    <if test='k == "killTime" and dates[k] != null'>
-                        and ( `kill_time` >= date(#{dates.killTime.begin})
-                        and date(#{dates.killTime.end}) >= `kill_time` )
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != includes">
-                <foreach collection="includes.keys" item="k" separator=" ">
-                    <if test='k == "killId" and includes[k] != null'>
-                        and `kill_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "killNumber" and includes[k] != null'>
-                        and `kill_number` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "personId" and includes[k] != null'>
-                        and `person_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "businessId" and includes[k] != null'>
-                        and `business_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "activityId" and includes[k] != null'>
-                        and `activity_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "busPhone" and includes[k] != null'>
-                        and `bus_phone` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "killTime" and includes[k] != null'>
-                        and `kill_time` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                </foreach>
-            </if>
         </where>
     </sql>
 
-    <sql id="findPageWithWhere" >
-        <where> 1=1
+    <sql id="findPageWithWhereLike" >
+        <where>
             <if test="killId != null or killId == 0" >
                 and `kill_id` like concat('%', #{killId,jdbcType=INTEGER}, '%')
             </if>
@@ -398,42 +316,6 @@
     </sql>
 
 
-    <sql id="findPageWithOrder">
-        <if test="null != orders" >
-            ORDER BY
-            <foreach collection="orders.keys" item="k" separator=",">
-                <if test='k == "killId"'>
-                    `kill_id`
-                </if>
-                <if test='k == "killNumber"'>
-                    `kill_number`
-                </if>
-                <if test='k == "personId"'>
-                    `person_id`
-                </if>
-                <if test='k == "businessId"'>
-                    `business_id`
-                </if>
-                <if test='k == "activityId"'>
-                    `activity_id`
-                </if>
-                <if test='k == "busPhone"'>
-                    `bus_phone`
-                </if>
-                <if test='k == "killTime"'>
-                    `kill_time`
-                </if>
-                <if test='orders[k] == "asc"'>
-                    ASC
-                </if>
-                <if test='orders[k] == "desc"'>
-                    DESC
-                </if>
-            </foreach>
-        </if>
-    </sql>
-
-
     <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMapKillSuccess" >
         select
         <include refid="Base_Column_List" />
@@ -448,7 +330,6 @@
         <include refid="Base_Column_List" />
         from  `kill_success`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
     </select>
 
 
@@ -457,7 +338,6 @@
         <include refid="Base_Column_List" />
         from  `kill_success`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
         limit #{start},#{pageSize}
     </select>
 
@@ -473,7 +353,6 @@
         <include refid="Base_Column_List" />
         from  `kill_success`
         <include refid="findPageWithWhereLike" />
-        <include refid="findPageWithOrder" />
         limit #{start},#{pageSize}
     </select>
 
@@ -483,6 +362,4 @@
         from `kill_success`
         <include refid="findPageWithWhereLike" />
     </select>
-
-
 </mapper>
