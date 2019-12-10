@@ -11,14 +11,6 @@ server:
 #        org:
 #            springframework: INFO
 #    path: /srv/tomcat/kill/logs
-#mail:
-#    kill:
-#        item:
-#            success:
-#                content: '您好，您已成功抢购到商品: <strong style="color: red">%s</strong> ，复制该链接并在浏览器采用新的页面打开，即可查看抢购详情：${system.domain.url}/kill/record/detail/%s，并请您在1个小时内完成订单的支付，超时将失效该订单哦！祝你生活愉快！'
-#                subject: 商品抢购成功
-#   send:
-#        from: 1974544863@qq.com
 mq:
     env: test
     kill:
@@ -83,29 +75,36 @@ spring:
         time-zone: GMT+8
     jmx:
         enabled: false
-#       启用邮件服务
-#    mail:
-#        host: smtp.qq.com
-#        password: cmtvsjvhonkjdaje
-#        properties:
-#            mail:
-#                smtp:
-#                    auth: true
-#                    starttls:
-#                        enable: true
-#                        required: true
-#        username: 1974544863@qq.com
-#    rabbitmq:
-#        host: 60.205.230.70
-#        listener:
-#            simple:
-#                concurrency: 5
-#                max-concurrency: 15
-#                prefetch: 10
-#        password: root
-#        port: 5672
-#        username: root
-#        virtual-host: /
+       #启用邮件服务
+    mail:
+        host: smtp.qq.com
+        username: 1913261064@qq.com
+        password: evvfkcujyvkybcdi
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+        send:
+            from: 1913261064@qq.com
+        kill:
+            item:
+                success:
+                    content: '鑫管家<strong style="color: red">%s</strong>您好，您已成功秒杀到用户，点击或复制该链接并在浏览器采用新的页面打开，即可查看用户详情：${system.domain.url}/kill/record/detail/?activityId=%s&personId=%s'
+                    subject: 用户抢购成功
+    rabbitmq:
+        host: 60.205.230.70
+        listener:
+            simple:
+                concurrency: 5
+                max-concurrency: 15
+                prefetch: 10
+        password: root
+        port: 5672
+        username: root
+        virtual-host: /
     redis:
         host: 60.205.230.70
         port: 6379
