@@ -40,4 +40,9 @@ public class ActivityServiceImpl implements ActivityService {
     public Activity showBeforeLastService() {
         return activityRepository.selectLastActivity();
     }
+
+    @Override
+    public Activity showNowActivityService() {
+        return activityRepository.selectNowActivity();
+    }
 }

@@ -10,11 +10,14 @@ package com.xinghuofirst.kill.server.controller;
 
 import com.xinghuofirst.kill.enums.StatusCode;
 import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.model.entity.Person;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.KillSuccessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -29,14 +32,18 @@ public class KillSuccessController {
     @Autowired
     private KillSuccessService killSuccessService;
     @PostMapping("/getKillSuccess")
-    public BaseResponse getKillSuccessMethod(Integer personId) {
+    public BaseResponse getKillSuccessMethod(@RequestBody Person person, HttpServletRequest request) {
         BaseResponse baseResponses = null;
-        List<KillSuccess> killSuccesses = killSuccessService.selectKillSuccessByPersonIdService(personId);
+        if (person.getUserId() == null ||person.getUserId().equals("")) {
+            baseResponses =  new BaseResponse(StatusCode.Fail.getCode(),"登录失效了，请重新登录");
+            return baseResponses;
+        }
+        List<KillSuccess> killSuccesses = killSuccessService.selectKillSuccessByPersonIdService(person.getUserId());
         if (killSuccesses.size() == 0 ) {
             baseResponses =  new BaseResponse(StatusCode.Fail.getCode(),"暂无秒杀到的用户信息",null);
             return baseResponses;
         }
-        baseResponses = new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",killSuccesses);
+        baseResponses = new BaseResponse(StatusCode.Success.getCode(),"曾秒杀到的沉默用户",killSuccesses);
         return baseResponses;
     }
 }

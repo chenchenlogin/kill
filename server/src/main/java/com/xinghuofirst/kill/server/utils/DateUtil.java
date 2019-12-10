@@ -22,7 +22,6 @@ public class DateUtil {
     }
     public static Date addThreeMin(Date datetemp) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("当前时间：" + sdf.format(datetemp));
         Date afterDate = new Date(datetemp.getTime() + 180000);
         return afterDate;
     }

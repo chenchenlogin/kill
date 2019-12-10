@@ -40,13 +40,32 @@ public class ActivityController  {
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
         BaseResponse baseResponses = null;
-        if (activity.getEndTime() == null) {
+        Boolean flag = true;
+        String flaseMess = "";
+        if (activity.getProvince() == null || activity.getProvince().equals("")) {
+            flag = false;
+            flaseMess += "省份，";
+        }
+        if (activity.getQuentity() == null || activity.getQuentity().equals("")) {
+            flag = false;
+            flaseMess += "用户数量，";
+        }
+        if (activity.getDescription() == null || activity.getDescription().equals("")) {
+            flag = false;
+            flaseMess += "活动描述，";
+        }
+        if (activity.getStartTime() == null ||activity.getStartTime().equals("")){
+            flag = false;
+            flaseMess += "活动开始时间，";
+        }
+        if (flag == false) {
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),flaseMess + "不能为空");
+            return  baseResponses;
+        }
+        if (activity.getEndTime() == null || activity.getEndTime().equals("")) {
             activity.setEndTime(DateUtil.addThreeMin(activity.getStartTime()));
         }
-        if (activity == null || activity.getStartTime() == null ||activity.getProvince() == null ||activity.getEndTime() ==null ||activity.getQuentity() == null) {
-            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"请输入准确的活动信息");
-            return baseResponses;
-        }
+
         if (activity.getEndTime().before(activity.getStartTime())){
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");
             return  baseResponses;
@@ -66,11 +85,12 @@ public class ActivityController  {
     @RequestMapping("activityHaving")
     public BaseResponse activityHavingController(HttpServletRequest request) {
         BaseResponse  baseResponses = null;
-        if (activityService.showNextService() == null && !DateUtil.activityCompany(new Date(),activityService.showAll())) {
+        if (activityService.showNextService() == null && activityService.showNowActivityService() == null
+            /*!DateUtil.activityCompany(new Date(),activityService.showAll())*/) {
             baseResponses = new BaseResponse(StatusCode.Success.getCode(),"目前无活动，敬请期待");
             return baseResponses;
         }
-        if (activityService.showNextService() != null && !DateUtil.activityCompany(new Date(),activityService.showAll())) {
+        if (activityService.showNextService() != null && activityService.showNowActivityService() == null) {
             baseResponses = new BaseResponse(StatusCode.Success.getCode(),
                     "下一场活动开始城市为" + activityService.showNextService().getProvince() + "，" +
                             activityService.showNextService().getStartTime() + "时，敬请期待");

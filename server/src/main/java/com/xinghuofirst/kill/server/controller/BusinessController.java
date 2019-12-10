@@ -9,10 +9,13 @@
 package com.xinghuofirst.kill.server.controller;
 
 import com.xinghuofirst.kill.enums.StatusCode;
+import com.xinghuofirst.kill.model.entity.Province;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @description:
@@ -27,9 +30,13 @@ public class BusinessController  {
     private BusinessService businessService;
 
     @PostMapping("/getCount")
-    public BaseResponse getLocalCount(String province) {
+    public BaseResponse getLocalCount(@RequestBody Province province, HttpServletRequest request) {
         BaseResponse  baseResponses = null;
-        int countnum = businessService.selectBusinessByProvinceService(province);
+        if (province.getProvinceName() == null ||province.getProvinceName().equals("")){
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"省份不能为空");
+            return baseResponses;
+        }
+        int countnum = businessService.selectBusinessByProvinceService(province.getProvinceName());
         if (countnum <= 0) {
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"该地区无沉默用户信息",0);
             return baseResponses;

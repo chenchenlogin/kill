@@ -15,4 +15,5 @@ public interface ActivityService  {
     List<Activity> showAll();
     Activity showNextService();
     Activity showBeforeLastService();
+    Activity showNowActivityService();
 }
