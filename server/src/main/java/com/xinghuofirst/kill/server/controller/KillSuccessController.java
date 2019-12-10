@@ -8,6 +8,7 @@
  */
 package com.xinghuofirst.kill.server.controller;
 
+import com.xinghuofirst.kill.model.entity.Activity;
 import com.xinghuofirst.kill.model.entity.KillSuccess;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.KillSuccessService;
@@ -38,27 +39,28 @@ public class KillSuccessController {
      */
 
     @RequestMapping("/isKill")
-    private BaseResponse isKill(HttpServletRequest request,Integer activityId){
+    private BaseResponse isKill(HttpServletRequest request, Activity activity){
         /** 查询用户资源**/
-       Integer source =  killSuccessService.selectBusiness();
+        Integer source =  killSuccessService.selectActivitySurplus(activity.getActivityId());
         Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
         Integer personId = Integer.parseInt(maps.get("userId")) ;
         /** 判断是否有参加本次活动的资格**/
-       KillSuccess killSuccesses =  killSuccessService.kiiSuccesById(personId);
-       while(source != 0){
-           if(killSuccesses.getActivity().getActivityId()==null){
-               /** 查询用户的剩余资源 **/
-               killSuccessService.updateSurpus(activityId);
-               /** 更新做标记，轮空**/
+        int killSuccesses =  killSuccessService.countByActivityPersonId(personId,activity.getActivityId());
+        while(source != 0){
+            if(killSuccesses  < 1){
+                /** 查询用户的剩余资源 **/
+                killSuccessService.updateSurpus(activity.getActivityId());
+                /** 更新做标记，轮空**/
 
-               /** 秒杀相关在此处写代码**/
-               return new BaseResponse(200,"成功参加活动");
+                /** 秒杀相关在此处写代码**/
+                return new BaseResponse(200,"成功参加活动");
 
-           }else{
-               return new BaseResponse(200,"已参加，等待结果公布");
-           }
-       }
+            }else{
+                return new BaseResponse(200,"已参加，等待结果公布");
+            }
+        }
         return new BaseResponse(200,"用户资源不充足");
     }
+
 
 }
