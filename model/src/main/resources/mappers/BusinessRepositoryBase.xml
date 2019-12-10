@@ -18,7 +18,7 @@
     <sql id="Base_Column_List" >
         `business_id`,`business_number`,`phone`,`name`,`sex`,`province`,`install_status`,`silent_status`,`idcard`
     </sql>
-
+    <!--查出来一个可被分配的用户 于悦-->
     <select id="selectPerson" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT business_id
         FROM `business` AS t1 JOIN (SELECT ROUND(RAND() * ((SELECT MAX(business_id) FROM `business`)-(SELECT MIN(business_id) FROM `business`))+
@@ -27,12 +27,23 @@
         ORDER BY t1.business_id LIMIT 1;
     </select>
 
+    <!--按照省份查询用户资源 于悦-->
     <select id="selectBusinessByProvince" parameterType="java.lang.String" resultType="java.lang.Integer">
         select COUNT(*) from business
         WHERE silent_status=0
         AND install_status &lt; 2
         AND province like concat('%', #{province,jdbcType=VARCHAR}, '%')
     </select>
+
+    <!--被秒杀后修改商户安装状态2 于悦-->
+    <update id="updateBusinessInstallStatus" parameterType="java.lang.Integer" >
+        update business
+        set install_status =2
+				where
+				business_id=#{businessId,jdbcType=INTEGER}
+    </update>
+
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from `business`
@@ -102,7 +113,7 @@
         </trim>
     </insert>
 
-
+    <!--秒杀后，更新分配商户结果 于悦-->
     <update id="updateKillSuccess" >
         update kill_success SET business_id=#{businessId} where kill_number=#{killNumber}
     </update>
@@ -162,7 +173,7 @@
 
 
     <sql id="findPageWithWhereLike" >
-        <where> 1=1
+        <where>
             <if test="businessId != null or businessId == 0" >
                 and `business_id` = #{businessId,jdbcType=INTEGER}
             </if>
@@ -190,103 +201,7 @@
             <if test="idcard != null" >
                 and `idcard` = #{idcard,jdbcType=VARCHAR}
             </if>
-
-            <if test="null != likes">
-                <foreach collection="likes.keys" item="k" separator=" ">
-                    <if test='k == "businessId" and likes[k] != null'>
-                        and `business_id` like concat('%', #{likes.businessId,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "businessNumber" and likes[k] != null'>
-                        and `business_number` like concat('%', #{likes.businessNumber,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "phone" and likes[k] != null'>
-                        and `phone` like concat('%', #{likes.phone,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "name" and likes[k] != null'>
-                        and `name` like concat('%', #{likes.name,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "sex" and likes[k] != null'>
-                        and `sex` like concat('%', #{likes.sex,jdbcType=CHAR}, '%')
-                    </if>
-                    <if test='k == "province" and likes[k] != null'>
-                        and `province` like concat('%', #{likes.province,jdbcType=VARCHAR}, '%')
-                    </if>
-                    <if test='k == "installStatus" and likes[k] != null'>
-                        and `install_status` like concat('%', #{likes.installStatus,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "silentStatus" and likes[k] != null'>
-                        and `silent_status` like concat('%', #{likes.silentStatus,jdbcType=INTEGER}, '%')
-                    </if>
-                    <if test='k == "idcard" and likes[k] != null'>
-                        and `idcard` like concat('%', #{likes.idcard,jdbcType=VARCHAR}, '%')
-                    </if>
-                </foreach>
-            </if>
-
-            <if test="null != dates">
-                <foreach collection="dates.keys" item="k" separator=" ">
-                </foreach>
-            </if>
-
-            <if test="null != includes">
-                <foreach collection="includes.keys" item="k" separator=" ">
-                    <if test='k == "businessId" and includes[k] != null'>
-                        and `business_id` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "businessNumber" and includes[k] != null'>
-                        and `business_number` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "phone" and includes[k] != null'>
-                        and `phone` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "name" and includes[k] != null'>
-                        and `name` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "sex" and includes[k] != null'>
-                        and `sex` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "province" and includes[k] != null'>
-                        and `province` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "installStatus" and includes[k] != null'>
-                        and `install_status` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "silentStatus" and includes[k] != null'>
-                        and `silent_status` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                    <if test='k == "idcard" and includes[k] != null'>
-                        and `idcard` in
-                        <foreach item="itemValue" collection="includes[k]" separator="," open="(" close=")" index="index">
-                            #{itemValue}
-                        </foreach>
-                    </if>
-                </foreach>
-            </if>
-        </where>
+            </where>
     </sql>
 
     <sql id="findPageWithWhere" >
@@ -378,7 +293,7 @@
         <include refid="Base_Column_List" />
         from  `business`
         <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+
     </select>
 
 

@@ -12,9 +12,8 @@
         <result column="surplus" property="surplus" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
-<!--
 
-    &lt;!&ndash;查询当前时间之后的活动,不包括正在进行的活动 于悦&ndash;&gt;
+    <!--查询当前时间之后的活动,不包括正在进行的活动 于悦-->
     <select id="selectAfterActivity" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
@@ -23,8 +22,7 @@
             AND now() &lt; start_time
         </where>
     </select>
-    -->
-   <!-- 查询上一场活动  于悦-->
+    <!--查询上一场活动  于悦-->
     <select id="selectLastActivity" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
@@ -195,39 +193,6 @@
         where `activity_id` = #{activityId,jdbcType=INTEGER}
     </select>
 
-
-
-    <sql id="findPageWithWhere" >
-        <where> 1=1
-            <if test="activityId != null or activityId == 0" >
-                and `activity_id` like concat('%', #{activityId,jdbcType=INTEGER}, '%')
-            </if>
-            <if test="startTime != null" >
-                and `start_time` like concat('%', #{startTime,jdbcType=TIMESTAMP}, '%')
-            </if>
-            <if test="endTime != null" >
-                and `end_time` like concat('%', #{endTime,jdbcType=TIMESTAMP}, '%')
-            </if>
-            <if test="province != null" >
-                and `province` like concat('%', #{province,jdbcType=VARCHAR}, '%')
-            </if>
-            <if test="description != null" >
-                and `description` like concat('%', #{description,jdbcType=VARCHAR}, '%')
-            </if>
-            <if test="quentity != null or quentity == 0" >
-                and `quentity` like concat('%', #{quentity,jdbcType=INTEGER}, '%')
-            </if>
-            <if test="surplus != null or surplus == 0" >
-                and `surplus` like concat('%', #{surplus,jdbcType=INTEGER}, '%')
-            </if>
-            <if test="createTime != null" >
-                and `create_time` like concat('%', #{createTime,jdbcType=TIMESTAMP}, '%')
-            </if>
-        </where>
-    </sql>
-
-
-
     <sql id="findPageWithOrder">
         <if test="null != orders" >
             ORDER BY
@@ -266,64 +231,6 @@
         </if>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
-        <where>
-            <if test="activityId != null or activityId == 0" >
-                and `activity_id` like concat('%', #{activityId}, '%')
-            </if>
-            <if test="startTime != null" >
-                and `start_time` like concat('%', #{startTime}, '%')
-            </if>
-            <if test="endTime != null" >
-                and `end_time` like concat('%', #{endTime}, '%')
-            </if>
-            <if test="province != null and province !='' " >
-                and `province` like concat('%', #{province}, '%')
-            </if>
-            <if test="description != null" >
-                and `description` like concat('%', #{description}, '%')
-            </if>
-            <if test="quentity != null or quentity == 0" >
-                and `quentity` like concat('%', #{quentity}, '%')
-            </if>
-            <if test="surplus != null or surplus == 0" >
-                and `surplus` like concat('%', #{surplus}, '%')
-            </if>
-            <if test="createTime != null" >
-                and `create_time` like concat('%', #{createTime}, '%')
-            </if>
-        </where>
-    </sql>
-
-
-      <!--  <sql id="findPageWithWhereLike" >
-            <where> 1=1
-                <if test="activityId != null or activityId == 0" >
-                    and `activity_id` = #{activityId,jdbcType=INTEGER}
-                </if>
-                <if test="startTime != null" >
-                    and `start_time` = #{startTime,jdbcType=TIMESTAMP}
-                </if>
-                <if test="endTime != null" >
-                    and `end_time` = #{endTime,jdbcType=TIMESTAMP}
-                </if>
-                <if test="province != null" >
-                    and `province` = #{province,jdbcType=VARCHAR}
-                </if>
-                <if test="description != null" >
-                    and `description` = #{description,jdbcType=VARCHAR}
-                </if>
-                <if test="quentity != null or quentity == 0" >
-                    and `quentity` = #{quentity,jdbcType=INTEGER}
-                </if>
-                <if test="surplus != null or surplus == 0" >
-                    and `surplus` = #{surplus,jdbcType=INTEGER}
-                </if>
-                <if test="createTime != null" >
-                    and `create_time` = #{createTime,jdbcType=TIMESTAMP}
-                </if>-->
-
-
    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
@@ -331,9 +238,6 @@
         <include refid="findPageWithWhereLike" />
         limit 1
     </select>
-    <sql id="Base_Column_List" >
-        `activity_id`,`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`
-    </sql>
     <sql id="findPageWithWhereLike" >
         <where>
             <if test="activityId != null or activityId == 0" >
