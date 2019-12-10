@@ -90,17 +90,17 @@ public class ActivityController  {
             baseResponses = new BaseResponse(StatusCode.Success.getCode(),"目前无活动，敬请期待");
             return baseResponses;
         }
-        if (activityService.showNextService() != null && activityService.showNowActivityService() == null) {
-            baseResponses = new BaseResponse(StatusCode.Success.getCode(),
-                    "下一场活动开始城市为" + activityService.showNextService().getProvince() + "，" +
-                            activityService.showNextService().getStartTime() + "时，敬请期待");
-            return baseResponses;
-        }
         if (activityService.showNextService() != null &&
                 DateUtil.compare(DateUtil.dateToString(new Date()),DateUtil.dateToString(activityService.showNextService().getStartTime()))) {
             Map<String ,String> maps= (Map<String, String>) request.getAttribute("request_parameters");
             baseResponses = new BaseResponse(StatusCode.Success.getCode(),
-                        "下一场活动的开放城市为" + activityService.showNextService().getProvince());
+                    "下一场活动的开放城市为" + activityService.showNextService().getProvince(),activityService.showNextService());
+            return baseResponses;
+        }
+        if (activityService.showNextService() != null && activityService.showNowActivityService() == null) {
+            baseResponses = new BaseResponse(StatusCode.Success.getCode(),
+                    "下一场活动开始城市为" + activityService.showNextService().getProvince() + "，" +
+                            activityService.showNextService().getStartTime() + "时，敬请期待");
             return baseResponses;
         }
         baseResponses = new BaseResponse(StatusCode.Fail.getCode(),
