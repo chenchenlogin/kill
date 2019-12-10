@@ -40,6 +40,7 @@ public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integ
      *@Param:
      *@Return:
      */
+    /** 查询用户剩余资源 duanlian**/
     int updateSurpus(@Param("activityId") Integer activityId);
 
     /**
@@ -51,10 +52,7 @@ public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integ
      */
     List<KillSuccess> selectKillSuccessByPersonId(Integer personId);
 
-    /** 通过用户id查询秒杀成功分配表**/
-    KillSuccess kiiSuccesById(Integer personId);
-    /** 查询用户资源 **/
-    Integer selectBusiness();
+
 
     /**
      *@Author:Yuyue

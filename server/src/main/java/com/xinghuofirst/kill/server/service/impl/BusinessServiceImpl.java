@@ -19,16 +19,20 @@ import javax.annotation.Resource;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:21
  * @version: V1.0
  */
 @Service
-public class BusinessServiceImpl implements BusinessService{
+
+public class BusinessServiceImpl implements BusinessService {
     @Autowired
-    @Resource
     private BusinessRepository businessRepository;
 
+    @Override
+    public Integer selectBusinessByProvinceService(String province) {
+        return businessRepository.selectBusinessByProvince(province);
+    }
     /**
      *
      * @param business
@@ -37,7 +41,8 @@ public class BusinessServiceImpl implements BusinessService{
      */
     @Override
     public int insertWhiteBusiness(Business business) {
-
         return businessRepository.insertWhiteBusiness(business);
     }
+
+
 }

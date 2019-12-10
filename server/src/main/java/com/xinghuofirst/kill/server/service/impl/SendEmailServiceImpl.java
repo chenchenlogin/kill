@@ -55,9 +55,9 @@ public class SendEmailServiceImpl implements SendEmailService {
                 personAndActivity.setActivityId(activityId);
                 personAndActivity.setEmail(info.getEmail());
                 personAndActivity.setUserId(personId);
-               /* personAndActivity.setBusinessId(personId);
+               // personAndActivity.setBusinessId(personId);
                 //TODO:添加秒杀编号（通过秒杀编号和商户id给鑫管家分配用户）
-                personAndActivity.setOrderNo(orderNo);*/
+               // personAndActivity.setOrderNo(orderNo);
                 if (info!=null){
                     //TODO:rabbitmq发送消息的逻辑
                     rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());

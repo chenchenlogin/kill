@@ -69,7 +69,7 @@ public class ReceiverEmailServiceImpl implements ReceiverEmailService {
             log.info("秒杀异步邮件通知-接收消息:{}",info);
 
             //TODO:分配用户
-           /* killSuccessService.assignPerson(info);*/
+           // killSuccessService.assignPerson(info);
         }catch (Exception e){
             log.error("秒杀异步邮件通知-接收消息-发生异常：",e.fillInStackTrace());
         }
