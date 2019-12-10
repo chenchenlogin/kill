@@ -46,7 +46,7 @@ public class KillSuccessController {
         /** 判断是否有参加本次活动的资格**/
        KillSuccess killSuccesses =  killSuccessService.kiiSuccesById(personId);
        while(source != 0){
-           if(killSuccesses.getActivityId()==null){
+           if(killSuccesses.getActivity().getActivityId()==null){
                /** 查询用户的剩余资源 **/
                killSuccessService.updateSurpus(activityId);
                /** 更新做标记，轮空**/

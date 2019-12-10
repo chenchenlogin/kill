@@ -63,6 +63,6 @@ public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integ
      *@Param:
      *@Return:
      */
-    /*//TODO:
+    /*
     KillSuccess selectBusinessByPersonIdActiviityId();*/
 }
