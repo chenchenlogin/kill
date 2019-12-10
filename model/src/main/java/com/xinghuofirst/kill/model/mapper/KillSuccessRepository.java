@@ -25,20 +25,44 @@ import java.util.List;
 @Repository
 public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integer> {
     /**
-    *@Author:Yuyue
-    *@Description:剩余库存-1
-    *@Date:12:02  2019/12/9
-    *@Param:
-    *@Return:
-    */
-    int updateSurpus(@Param("killId") Integer activityId);
+     *@Author:Yuyue
+     *@Description:查询该鑫管家在活动中抢购的数量 @
+     *@Date:12:58  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    int countByActivityPersonId(@Param("activityId") Integer activityId, @Param("personId") Integer personId);
 
     /**
-    *@Author:Yuyue
-    *@Description:鑫管家查询秒杀成功用户列表
-    *@Date:12:44  2019/12/9
-    *@Param: 
-    *@Return: 
-    */
+     *@Author:Yuyue
+     *@Description:剩余库存-1 @
+     *@Date:12:02  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    int updateSurpus(@Param("activityId") Integer activityId);
+
+    /**
+     *@Author:Yuyue
+     *@Description:鑫管家查询秒杀成功商户列表 @
+     *@Date:12:44  2019/12/9
+     *@Param:
+     *@Return:
+     */
     List<KillSuccess> selectKillSuccessByPersonId(Integer personId);
+
+    /** 通过用户id查询秒杀成功分配表**/
+    KillSuccess kiiSuccesById(Integer personId);
+    /** 查询用户资源 **/
+    Integer selectBusiness();
+
+    /**
+     *@Author:Yuyue
+     *@Description:查看某次活动中被秒杀的商户信息
+     *@Date:19:46  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    /*//TODO:
+    KillSuccess selectBusinessByPersonIdActiviityId();*/
 }

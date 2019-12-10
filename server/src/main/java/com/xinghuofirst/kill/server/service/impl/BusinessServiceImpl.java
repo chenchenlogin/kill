@@ -10,9 +10,12 @@ package com.xinghuofirst.kill.server.service.impl;
 
 import com.xinghuofirst.kill.model.entity.Business;
 import com.xinghuofirst.kill.model.mapper.BusinessRepository;
+import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @description:
@@ -21,7 +24,20 @@ import org.springframework.stereotype.Service;
  * @version: V1.0
  */
 @Service
-public class BusinessServiceImpl {
+public class BusinessServiceImpl implements BusinessService{
+    @Autowired
+    @Resource
+    private BusinessRepository businessRepository;
 
+    /**
+     *
+     * @param business
+     * @return解析excel，向数据库中添加
+     * duanlian
+     */
+    @Override
+    public int insertWhiteBusiness(Business business) {
 
+        return businessRepository.insertWhiteBusiness(business);
+    }
 }

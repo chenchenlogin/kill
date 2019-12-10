@@ -6,7 +6,7 @@ dependencies {
     compile ('joda-time:joda-time:2.9.2')
 
     /*基本依赖*/
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.1.RELEASE'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.2.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-test-autoconfigure', version: '2.2.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-autoconfigure', version: '2.2.1.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '2.2.1.RELEASE'
@@ -16,8 +16,20 @@ dependencies {
     compile group: 'com.jcraft', name: 'jsch', version: '0.1.53'//为了ssh Util
 
 
-
-
-
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: '2.1.1.RELEASE'
+    compile ('org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE')
+    compile("org.springframework.boot:spring-boot-starter-log4j2:2.1.1.RELEASE")
+    
+    /**导入的相关依赖 **/
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '3.8'
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi
+    compile group: 'org.apache.poi', name: 'poi', version: '3.8'
+    //du_peng rabbit
+    compile 'org.springframework.amqp:spring-rabbit:2.2.1.RELEASE'
+    //du_peng  mail
+    compile 'javax.mail:javax.mail-api:1.6.2'
 }
 

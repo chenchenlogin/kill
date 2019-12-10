@@ -8,10 +8,15 @@
  */
 package com.xinghuofirst.kill.server.controller;
 
+import com.xinghuofirst.kill.enums.StatusCode;
+import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @description:
@@ -22,12 +27,29 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping
 public class ActivityController  {
-
+    @Autowired
+    private ActivityService activityService;
     @RequestMapping("/admin")
     public String get(){
         return "success";
     }
 
+    /**
+     * duanlian
+     * 判断归属地是否相同  单线程版
+     *
+     * **/
+    @RequestMapping("/isProvince" )
+    private BaseResponse isProvince(HttpServletRequest request,Integer activityId) {
+        String activityProvince = activityService.isProvince(activityId);
+        Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
+        String personProvince = maps.get("province");
+        if (!personProvince.equals(activityProvince)) {
+            return new BaseResponse(600, "您的归属地，不在本次活动范围内，请期待后续活动");
+        }else{
+            return new BaseResponse(200,"进入成功");
+        }
+    }
 
 
 }

@@ -2,29 +2,130 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xinghuofirst.kill.model.mapper.KillSuccessRepository" >
 
-    <resultMap id="BaseResultMap" type="com.xinghuofirst.kill.model.entity.KillSuccess" >
+    <resultMap id="BaseResultMapKillSuccess" type="com.xinghuofirst.kill.model.entity.KillSuccess" >
         <id column="kill_id" property="killId" jdbcType="INTEGER" />
         <result column="kill_number" property="killNumber" jdbcType="VARCHAR" />
-        <result column="person_id" property="personId" jdbcType="INTEGER" />
+        <!--<result column="person_id" property="personId" jdbcType="INTEGER" />
         <result column="business_id" property="businessId" jdbcType="INTEGER" />
-        <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+        <result column="activity_id" property="activityId" jdbcType="INTEGER" />-->
         <result column="bus_phone" property="busPhone" jdbcType="VARCHAR" />
         <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
+        <association property="person" javaType="com.xinghuofirst.kill.model.entity.Person">
+            <id column="person_id" property="userId" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="role" property="role" jdbcType="INTEGER" />
+            <result column="personprovince" property="province" jdbcType="VARCHAR" />
+            <result column="email" property="email" jdbcType="VARCHAR" />
+        </association>
+        <association property="business" javaType="com.xinghuofirst.kill.model.entity.Business">
+            <id column="business_id" property="businessId" jdbcType="INTEGER" />
+            <result column="business_number" property="businessNumber" jdbcType="VARCHAR" />
+            <result column="phone" property="phone" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+            <result column="sex" property="sex" jdbcType="CHAR" />
+            <result column="businessprovince" property="province" jdbcType="VARCHAR" />
+            <result column="install_status" property="installStatus" jdbcType="INTEGER" />
+            <result column="silent_status" property="silentStatus" jdbcType="INTEGER" />
+            <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+        </association>
+        <association property="activity" javaType="com.xinghuofirst.kill.model.entity.Activity">
+            <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+            <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+            <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+            <result column="activityprovince" property="province" jdbcType="VARCHAR" />
+            <result column="description" property="description" jdbcType="VARCHAR" />
+            <result column="quentity" property="quentity" jdbcType="INTEGER" />
+            <result column="surplus" property="surplus" jdbcType="INTEGER" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        </association>
     </resultMap>
+    <!--鑫管家查询秒杀成功商户列表 于悦-->
+    <select id="selectKillSuccessByPersonId" parameterType="java.lang.Integer" resultMap="BaseResultMapKillSuccess">
+        select
+        business.business_number as business_number,
+        business.name as name,
+        business.phone as phone,
+        business.province as businessprovince,
+        business.sex as sex,
+        business.idcard as idcard,
+        person_id,
+        kill_time
+        from kill_success,business
+        WHERE business.business_id=kill_success.business_id
+        AND person_id=#{personId} ORDER BY activity_id DESC,kill_time DESC
+    </select>
 
-    <!--抢购商品，剩余数量减一-->
-    <update id="updateSurpus" parameterType="java.lang.Integer">
-    UPDATE activity
-    SET surplus = surplus - 1
-    WHERE
-        activity_id= #{activityId}
-  </update>
+    <resultMap id="SendEmailResult" type="com.xinghuofirst.kill.model.entity.KillSuccess" >
+       <!-- <id column="kill_id" property="killId" jdbcType="INTEGER" />-->
+        <result column="kill_number" property="killNumber" jdbcType="VARCHAR" />
+        <!--<result column="person_id" property="personId" jdbcType="INTEGER" />
+        <result column="business_id" property="businessId" jdbcType="INTEGER" />
+        <result column="activity_id" property="activityId" jdbcType="INTEGER" />-->
+        <result column="bus_phone" property="busPhone" jdbcType="VARCHAR" />
+        <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
+        <association property="person" javaType="com.xinghuofirst.kill.model.entity.Person">
+            <id column="person_id" property="userId" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+            <result column="role" property="role" jdbcType="INTEGER" />
+            <result column="personprovince" property="province" jdbcType="VARCHAR" />
+            <result column="email" property="email" jdbcType="VARCHAR" />
+        </association>
+        <association property="business" javaType="com.xinghuofirst.kill.model.entity.Business">
+            <id column="business_id" property="businessId" jdbcType="INTEGER" />
+            <result column="business_number" property="businessNumber" jdbcType="VARCHAR" />
+            <result column="phone" property="phone" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+            <result column="sex" property="sex" jdbcType="CHAR" />
+            <result column="businessprovince" property="province" jdbcType="VARCHAR" />
+            <result column="install_status" property="installStatus" jdbcType="INTEGER" />
+            <result column="silent_status" property="silentStatus" jdbcType="INTEGER" />
+            <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+        </association>
+        <association property="activity" javaType="com.xinghuofirst.kill.model.entity.Activity">
+            <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+  <!--  &lt;!&ndash;查看某次活动中被秒杀的商户信息 于悦&ndash;&gt;
+    <select id="selectBusinessByPersonIdActiviityId" parameterType="java.lang.Integer" resultMap="SendEmailResult">
+        select
+        business.business_number as business_number,
+        business.business_id as business_id,
+        business.`name` as businessname,
+        business.phone as phone,
+        business.province as businessprovince,
+        business.sex as sex,
+        business.idcard as idcard,
+        person.email as email,
+		person.user_name as user_name,
+        kill_time,
+        kill_number,
+        person_id
+        from kill_success,business,person
+        WHERE business.business_id=kill_success.business_id
+		AND kill_success.person_id=person.user_id
+        AND person_id = 1
+        AND activity_id = 1
 
+    </select>
+-->
 
-    <sql id="Base_Column_List" >
-        `kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`
-    </sql>
+    <!--查询该鑫管家在活动中抢购的数量   于悦-->
+    <select id="countByActivityPersonId" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT COUNT(1) AS killCount
+        FROM kill_success
+        WHERE
+        person_id = #{personId}
+        AND activity_id = #{activityId}
+    </select>
 
+    <!--抢购商品，剩余数量减1  于悦一-->
+    <update id="updateSurpus"  parameterType="java.lang.Integer">
+        UPDATE activity
+        SET surplus = surplus - 1
+        WHERE
+            activity_id= #{activityId}
+            AND surplus > 0
+    </update>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
         delete from `kill_success`
@@ -38,20 +139,26 @@
     </insert>
 
 
-    <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" >
+    <insert id="insertSelective" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess">
         insert into `kill_success`
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="killNumber != null" >
                 `kill_number`,
             </if>
-            <if test="personId != null or personId == 0" >
+            <if test="person != null">
+                <if test="person.userId !=null ">
                 `person_id`,
+                </if>
             </if>
-            <if test="businessId != null or businessId == 0" >
+            <if test="business != null">
+                <if test="business.businessId != null">
                 `business_id`,
+                </if>
             </if>
-            <if test="activityId != null or activityId == 0" >
-                `activity_id`,
+            <if test="activity != null">
+                <if test="activity.activityId != null ">
+                    `activity_id`,
+                </if>
             </if>
             <if test="busPhone != null" >
                 `bus_phone`,
@@ -64,14 +171,20 @@
             <if test="killNumber != null" >
                 #{killNumber,jdbcType=VARCHAR},
             </if>
-            <if test="personId != null or personId == 0" >
-                #{personId,jdbcType=INTEGER},
+            <if test="person != null">
+                <if test="person.userId !=null ">
+                    #{person.userId,jdbcType=INTEGER},
+                </if>
             </if>
-            <if test="businessId != null or businessId == 0" >
-                #{businessId,jdbcType=INTEGER},
+            <if test="business != null">
+                <if test="business.businessId != null">
+                #{business.businessId,jdbcType=INTEGER},
+                </if>
             </if>
-            <if test="activityId != null or activityId == 0" >
-                #{activityId,jdbcType=INTEGER},
+            <if test="activity != null">
+                <if test="activity.activityId != null ">
+                #{activity.activityId,jdbcType=INTEGER},
+                </if>
             </if>
             <if test="busPhone != null" >
                 #{busPhone,jdbcType=VARCHAR},
@@ -121,7 +234,28 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <resultMap id="KillSuccess" type="com.xinghuofirst.kill.model.entity.KillSuccess" >
+        <id column="kill_id" property="killId" jdbcType="INTEGER" />
+        <result column="kill_number" property="killNumber" jdbcType="VARCHAR" />
+        <result column="bus_phone" property="busPhone" jdbcType="VARCHAR" />
+        <result column="kill_time" property="killTime" jdbcType="TIMESTAMP" />
+        <association property="person" javaType="com.xinghuofirst.kill.model.entity.Person">
+            <id column="person_id" property="userId" jdbcType="INTEGER" />
+        </association>
+        <association property="business" javaType="com.xinghuofirst.kill.model.entity.Business">
+            <id column="business_id" property="businessId" jdbcType="INTEGER" />
+        </association>
+        <association property="activity" javaType="com.xinghuofirst.kill.model.entity.Activity">
+            <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        `kill_id`,`kill_number`,`person_id`,`business_id`,`activity_id`,`bus_phone`,`kill_time`
+    </sql>
+
+
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="KillSuccess" >
         select
         <include refid="Base_Column_List" />
         from  `kill_success`
@@ -300,7 +434,7 @@
     </sql>
 
 
-    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+    <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMapKillSuccess" >
         select
         <include refid="Base_Column_List" />
         from  `kill_success`
@@ -309,7 +443,7 @@
     </select>
 
 
-    <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+    <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMapKillSuccess" >
         select
         <include refid="Base_Column_List" />
         from  `kill_success`
@@ -318,7 +452,7 @@
     </select>
 
 
-    <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+    <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMapKillSuccess" >
         select
         <include refid="Base_Column_List" />
         from  `kill_success`
@@ -334,7 +468,7 @@
         <include refid="findPageWithWhere" />
     </select>
 
-    <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMap" >
+    <select id="findPageWithResultLike" parameterType="com.xinghuofirst.kill.model.entity.KillSuccess" resultMap="BaseResultMapKillSuccess" >
         select
         <include refid="Base_Column_List" />
         from  `kill_success`
