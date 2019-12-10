@@ -8,7 +8,6 @@
  */
 package com.xinghuofirst.kill.model.mapper;
 
-import com.xinghuofirst.kill.model.entity.Business;
 import com.xinghuofirst.kill.model.entity.KillSuccess;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -52,6 +51,11 @@ public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integ
      */
     List<KillSuccess> selectKillSuccessByPersonId(Integer personId);
 
+    /** 通过用户id查询秒杀成功分配表**/
+    KillSuccess kiiSuccesById(Integer personId);
+    /** 查询用户资源 **/
+    Integer selectBusiness();
+
     /**
      *@Author:Yuyue
      *@Description:查看某次活动中被秒杀的商户信息
@@ -59,5 +63,6 @@ public interface KillSuccessRepository extends BaseRepository<KillSuccess, Integ
      *@Param:
      *@Return:
      */
-    KillSuccess selectBusinessByPersonIdActiviityId(Integer personId,Integer activityId);
+    /*//TODO:
+    KillSuccess selectBusinessByPersonIdActiviityId();*/
 }

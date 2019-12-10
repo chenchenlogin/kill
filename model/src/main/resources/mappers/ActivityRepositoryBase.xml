@@ -23,6 +23,18 @@
         </where>
     </select>
 
+    <!--查询上一场活动  于悦-->
+    <select id="selectLastActivity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <where>
+            AND now()  &gt; end_time
+            ORDER BY end_time DESC  LIMIT 1
+        </where>
+    </select>
+
+
     <!--查询下一场活动  于悦-->
     <select id="selectNextActivity" resultMap="BaseResultMap" >
         select
@@ -176,7 +188,7 @@
     </update>
 
 
-    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    <select id="selectById" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
         from  `activity`
