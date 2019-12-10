@@ -8,7 +8,6 @@
  */
 package com.xinghuofirst.kill.server.service.impl;
 
-import com.xinghuofirst.kill.model.entity.Business;
 import com.xinghuofirst.kill.model.mapper.BusinessRepository;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.BusinessService;
@@ -19,11 +18,19 @@ import javax.annotation.Resource;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:21
  * @version: V1.0
  */
 @Service
+
+public class BusinessServiceImpl implements BusinessService {
+    @Autowired
+    private BusinessRepository businessRepository;
+
+    @Override
+    public Integer selectBusinessByProvinceService(String province) {
+        return businessRepository.selectBusinessByProvince(province);
 public class BusinessServiceImpl implements BusinessService{
     @Autowired
     @Resource
@@ -37,7 +44,6 @@ public class BusinessServiceImpl implements BusinessService{
      */
     @Override
     public int insertWhiteBusiness(Business business) {
-
         return businessRepository.insertWhiteBusiness(business);
     }
 }

@@ -16,11 +16,18 @@ import java.util.List;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:25
  * @version: V1.0
  */
 public interface KillSuccessService  {
+
+    /**
+     *@Description:鑫管家查询秒杀成功用户列表
+     *@Return: 秒杀成功的信息
+     */
+    List<KillSuccess> selectKillSuccessByPersonIdService(Integer personId);
+
 
 
     /** 查询用户资源* duanlian*/

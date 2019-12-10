@@ -34,7 +34,6 @@
         </where>
     </select>
 
-
     <!--查询下一场活动  于悦-->
     <select id="selectNextActivity" resultMap="BaseResultMap" >
         select
@@ -354,6 +353,7 @@
     </sql>
 
 
+
     <sql id="findPageWithOrder">
         <if test="null != orders" >
             ORDER BY
@@ -392,6 +392,35 @@
         </if>
     </sql>
 
+    <sql id="findPageWithWhereLike" >
+        <where>
+            <if test="activityId != null or activityId == 0" >
+                and `activity_id` like concat('%', #{activityId}, '%')
+            </if>
+            <if test="startTime != null" >
+                and `start_time` like concat('%', #{startTime}, '%')
+            </if>
+            <if test="endTime != null" >
+                and `end_time` like concat('%', #{endTime}, '%')
+            </if>
+            <if test="province != null and province !='' " >
+                and `province` like concat('%', #{province}, '%')
+            </if>
+            <if test="description != null" >
+                and `description` like concat('%', #{description}, '%')
+            </if>
+            <if test="quentity != null or quentity == 0" >
+                and `quentity` like concat('%', #{quentity}, '%')
+            </if>
+            <if test="surplus != null or surplus == 0" >
+                and `surplus` like concat('%', #{surplus}, '%')
+            </if>
+            <if test="createTime != null" >
+                and `create_time` like concat('%', #{createTime}, '%')
+            </if>
+        </where>
+    </sql>
+
 
     <select id="findOne" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
         select
@@ -405,10 +434,10 @@
     <select id="findAllWithResult" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >
         select
         <include refid="Base_Column_List" />
-        from  `activity`
-        <include refid="findPageWithWhere" />
-        <include refid="findPageWithOrder" />
+        from activity
+        <include refid="findPageWithWhereLike" />
     </select>
+
 
 
     <select id="findPageWithResult" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultMap="BaseResultMap" >

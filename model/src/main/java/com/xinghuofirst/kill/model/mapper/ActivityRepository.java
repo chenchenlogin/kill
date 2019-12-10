@@ -70,13 +70,22 @@ public interface ActivityRepository extends BaseRepository<Activity, Integer> {
     int selectActivitySurplus(Integer activityId);
 
     /**
-    *@Author:Yuyue
+     *@Author:Yuyue
+     *@Description:查询上一场活动 @
+     *@Date:11:47  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    Activity selectLastActivity();
+
+    /**@Author:Yuyue
     *@Description:查询该鑫管家在活动中抢购的数量
     *@Date:12:58  2019/12/9
     *@Param:
     *@Return:
     */
     int countByActivityPersonId(@Param("activityId") Integer activityId, @Param("personId") Integer personId);
+
 
 
 
