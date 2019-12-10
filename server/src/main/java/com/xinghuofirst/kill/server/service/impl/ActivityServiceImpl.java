@@ -35,4 +35,9 @@ public class ActivityServiceImpl implements ActivityService {
     public Activity showNextService() {
         return activityRepository.selectNextActivity();
     }
+
+    @Override
+    public Activity showBeforeLastService() {
+        return null;
+    }
 }

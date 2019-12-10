@@ -14,4 +14,5 @@ public interface ActivityService  {
     Integer insertActivity(Activity activity);
     List<Activity> showAll();
     Activity showNextService();
+    Activity showBeforeLastService();
 }

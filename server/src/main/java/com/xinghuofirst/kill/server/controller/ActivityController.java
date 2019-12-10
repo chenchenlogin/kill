@@ -67,7 +67,10 @@ public class ActivityController  {
     @PostMapping("enterActivity")
     public BaseResponse enterActivityController(Activity activity) {
         if (DateUtil.isEffectiveDate(new Date(),activity)){
-            return new BaseResponse(StatusCode.Success.getCode(),"您已进入活动页面");
+            return new BaseResponse(StatusCode.Success.getCode(),"成功进入活动页面");
+        }
+        if (activityService.showNextService() == null) {
+
         }
         return new BaseResponse(StatusCode.Success.getCode(),"未到活动时间");
     }
