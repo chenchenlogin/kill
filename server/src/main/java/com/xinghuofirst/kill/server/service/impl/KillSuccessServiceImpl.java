@@ -13,6 +13,9 @@ import com.xinghuofirst.kill.model.mapper.KillSuccessRepository;
 import com.xinghuofirst.kill.server.service.KillSuccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -22,7 +25,13 @@ import org.springframework.stereotype.Service;
  * @version: V1.0
  */
 @Service
-public class KillSuccessServiceImpl {
+public class KillSuccessServiceImpl implements KillSuccessService {
 
-
+    @Autowired
+    private KillSuccessRepository killSuccessRepository;
+    @Override
+    @Transactional(readOnly = true)
+    public List<KillSuccess> selectKillSuccessByPersonIdService(Integer personId) {
+        return killSuccessRepository.selectKillSuccessByPersonId(personId);
+    }
 }

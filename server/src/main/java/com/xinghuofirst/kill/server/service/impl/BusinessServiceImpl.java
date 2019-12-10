@@ -8,7 +8,6 @@
  */
 package com.xinghuofirst.kill.server.service.impl;
 
-import com.xinghuofirst.kill.model.entity.Business;
 import com.xinghuofirst.kill.model.mapper.BusinessRepository;
 import com.xinghuofirst.kill.server.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,12 @@ import org.springframework.stereotype.Service;
  * @version: V1.0
  */
 @Service
-public class BusinessServiceImpl {
+public class BusinessServiceImpl implements BusinessService {
+    @Autowired
+    private BusinessRepository businessRepository;
 
-
+    @Override
+    public Integer selectBusinessByProvinceService(String province) {
+        return businessRepository.selectBusinessByProvince(province);
+    }
 }

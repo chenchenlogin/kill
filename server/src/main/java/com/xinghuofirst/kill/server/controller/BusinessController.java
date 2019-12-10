@@ -8,9 +8,11 @@
  */
 package com.xinghuofirst.kill.server.controller;
 
-import com.xinghuofirst.kill.model.entity.Business;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.xinghuofirst.kill.enums.StatusCode;
+import com.xinghuofirst.kill.response.BaseResponse;
+import com.xinghuofirst.kill.server.service.BusinessService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @description:
@@ -21,6 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/")
 public class BusinessController  {
+    @Autowired
+    private BusinessService businessService;
 
+    @PostMapping("/getCount")
+    public BaseResponse getLocalCount(String province) {
+        int countnum = businessService.selectBusinessByProvinceService(province);
+        if (countnum <= 0) {
+            return  new BaseResponse(StatusCode.Fail.getCode(),"该地区无沉默用户信息",0);
+        }
+        return new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",countnum);
+    }
 
 }

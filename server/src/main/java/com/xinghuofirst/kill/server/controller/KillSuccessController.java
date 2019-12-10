@@ -8,19 +8,32 @@
  */
 package com.xinghuofirst.kill.server.controller;
 
+import com.xinghuofirst.kill.enums.StatusCode;
+import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.response.BaseResponse;
+import com.xinghuofirst.kill.server.service.KillSuccessService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:25
  * @version: V1.0
  */
 @RestController
 @RequestMapping("/")
 public class KillSuccessController {
-
-
+    @Autowired
+    private KillSuccessService killSuccessService;
+    @PostMapping("/getKillSuccess")
+    public BaseResponse getKillSuccessMethod(Integer personId) {
+        List<KillSuccess> killSuccesses = killSuccessService.selectKillSuccessByPersonIdService(personId);
+        if (killSuccesses.size() == 0 ) {
+            return  new BaseResponse(StatusCode.Fail.getCode(),"暂无秒杀到的用户信息",null);
+        }
+        return new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",killSuccesses);
+    }
 }
