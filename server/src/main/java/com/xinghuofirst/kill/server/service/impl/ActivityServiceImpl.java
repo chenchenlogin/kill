@@ -23,7 +23,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Integer insertActivity(Activity activity) {
-        return null;
+        return activityRepository.insert(activity);
     }
 
     @Override
