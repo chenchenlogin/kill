@@ -114,11 +114,15 @@ public class KillServiceImpl  implements KillService {
     private void commonRecordKillSuccessInfo(Integer activityId,Integer personId) throws Exception{
         //TODO:记录抢购成功后生成的秒杀记录
         KillSuccess entity=new KillSuccess();
+        Activity activity = new Activity();
+        activity.setActivityId(activityId);
+        Person person = new Person();
+        person.setUserId(personId);
         String orderNo=String.valueOf(snowFlake.nextId());
         //TODO:使用雪花算法生成秒杀编码
         entity.setKillNumber(orderNo);
-        entity.setActivity(new Activity().setActivityId(activityId));
-        entity.setPerson(new Person().setUserId(personId));
+        entity.setActivity(activity);
+        entity.setPerson(person);
         entity.setKillTime(DateTime.now().toDate());
         //TODO:判断当前鑫管家是否已经抢购过用户
         if (killSuccessRepository.countByActivityPersonId(activityId,personId) <= 0){
