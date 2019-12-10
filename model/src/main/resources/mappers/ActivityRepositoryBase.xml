@@ -22,7 +22,16 @@
             AND now() &lt; start_time
         </where>
     </select>
-
+    <!--查询上一场活动  于悦-->
+    <select id="selectLastActivity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <where>
+            AND now()  &gt; end_time
+            ORDER BY end_time DESC  LIMIT 1
+        </where>
+    </select>
     <!--查询下一场活动  于悦-->
     <select id="selectNextActivity" resultMap="BaseResultMap" >
         select

@@ -65,14 +65,21 @@ public class ActivityController  {
     }
 
     @PostMapping("enterActivity")
-    public BaseResponse enterActivityController(Activity activity) {
-        if (DateUtil.isEffectiveDate(new Date(),activity)){
-            return new BaseResponse(StatusCode.Success.getCode(),"成功进入活动页面");
+    public BaseResponse enterActivityController() {
+        if (activityService.showNextService() == null &&
+                DateUtil.isEffectiveDate(new Date(),activityService.showBeforeLastService())) {
+            return new BaseResponse(StatusCode.Success.getCode(),"成功进入活动",activityService.showBeforeLastService());
         }
-        if (activityService.showNextService() == null) {
-
+        if (activityService.showNextService() == null && activityService.showBeforeLastService() == null) {
+            return new BaseResponse(StatusCode.Success.getCode(),"暂无活动信息");
         }
-        return new BaseResponse(StatusCode.Success.getCode(),"未到活动时间");
+        if (activityService.showNextService() == null && activityService.showBeforeLastService() != null) {
+            return new BaseResponse(StatusCode.Success.getCode(),"抱歉，本场活动已结束",activityService.showBeforeLastService());
+        }
+        if (activityService.showNextService() != null) {
+            return new BaseResponse(StatusCode.Success.getCode(),"“活动还未到开启时间",activityService.showNextService());
+        }
+        return new BaseResponse(StatusCode.Fail.getCode(),"系统出差了,请等候专业人员维护");
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: 姜爽
  * @date: 2019/12/08 17:24
  * @version: V1.0
  */
@@ -38,6 +38,6 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity showBeforeLastService() {
-        return null;
+        return activityRepository.selectLastActivity();
     }
 }
