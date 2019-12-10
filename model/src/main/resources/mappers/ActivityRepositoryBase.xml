@@ -12,6 +12,49 @@
         <result column="surplus" property="surplus" jdbcType="INTEGER" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+
+    <!--查询当前时间之后的活动,不包括正在进行的活动 于悦-->
+    <select id="selectAfterActivity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <where>
+            AND now() &lt; start_time
+        </where>
+    </select>
+
+    <!--查询下一场活动  于悦-->
+    <select id="selectNextActivity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <where>
+            AND now() &lt; start_time
+            ORDER BY start_time ASC  LIMIT 1
+        </where>
+    </select>
+
+    <!--查询正在进行的活动 于悦-->
+    <select id="selectNowActivity" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from  `activity`
+        <where>
+            AND now() BETWEEN start_time AND end_time ORDER BY start_time ASC  LIMIT 1
+        </where>
+    </select>
+
+    <!--查询活动库存  于悦-->
+    <select id="selectActivitySurplus" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+        select
+        surplus
+        from  `activity`
+        <where>
+            AND activity_id = #{activityId}
+        </where>
+    </select>
+
+
     <!--根据秒杀活动跟鑫管家Id查询抢购数量  于悦-->
     <select id="countByActivityPersonId" resultType="java.lang.Integer">
         SELECT

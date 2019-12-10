@@ -60,7 +60,7 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
         password: root
-        url: jdbc:mysql://60.205.230.70:3306/second_kill?useUnicode=true&amp;characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+        url: jdbc:mysql://60.205.230.70:3306/second_kill?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
         username: root
         dbcp2:
             #数据库连接池的最小维持连接数
