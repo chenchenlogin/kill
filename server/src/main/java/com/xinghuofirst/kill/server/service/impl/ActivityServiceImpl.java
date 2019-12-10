@@ -8,8 +8,14 @@
  */
 package com.xinghuofirst.kill.server.service.impl;
 
+import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.model.mapper.ActivityRepository;
+import com.xinghuofirst.kill.server.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -19,7 +25,21 @@ import org.springframework.stereotype.Service;
  * @version: V1.0
  */
 @Service
-public class ActivityServiceImpl   {
+public class ActivityServiceImpl  implements ActivityService {
+    @Autowired
+    @Resource
+    ActivityRepository activityRepository;
+
+    /**
+     *
+     * @param activityId
+     * @return duanlian  省份是否相同
+     */
+    @Override
+    public String isProvince(Integer activityId){
+        return activityRepository.isProvince(activityId);
+    }
+
 
 
 }

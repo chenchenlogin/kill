@@ -9,8 +9,10 @@
 package com.xinghuofirst.kill.model.mapper;
 
 import com.xinghuofirst.kill.model.entity.Business;
+import com.xinghuofirst.kill.model.entity.KillSuccess;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @description:
@@ -22,7 +24,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
-
+    /**
+     *@Author:Yuyue
+     *@Description:添加白名单
+     *@Date:12:04  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    int insertWhiteBusiness(Business business);
     /**
      *@Author:Yuyue
      *@Description:按照省份查询用户资源

@@ -38,7 +38,7 @@ public class Business implements Serializable {
     private String phone;
     /** 商户姓名 **/
     private String name;
-    /** 性别0男1女 **/
+    /** 性别0男1女  未知，默认男**/
     private String sex;
     /** 省份 **/
     private String province;

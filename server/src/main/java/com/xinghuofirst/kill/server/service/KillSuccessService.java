@@ -12,6 +12,8 @@ package com.xinghuofirst.kill.server.service;
 
 import com.xinghuofirst.kill.model.entity.KillSuccess;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: zhangleying<zhang_yy2@suixingpay.com>
@@ -19,4 +21,8 @@ import com.xinghuofirst.kill.model.entity.KillSuccess;
  * @version: V1.0
  */
 public interface KillSuccessService  {
+    Integer selectBusiness();
+    KillSuccess kiiSuccesById(Integer personId);
+    /** 查询用户剩余资源**/
+    Integer updateSurpus  (Integer activityId);
 }

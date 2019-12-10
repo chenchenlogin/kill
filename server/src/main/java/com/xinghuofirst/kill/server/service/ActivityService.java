@@ -9,6 +9,9 @@
 package com.xinghuofirst.kill.server.service;
 
 import com.xinghuofirst.kill.model.entity.Activity;
+import com.xinghuofirst.kill.model.entity.KillSuccess;
+
+import java.util.List;
 
 /**
  * @description:
@@ -17,4 +20,7 @@ import com.xinghuofirst.kill.model.entity.Activity;
  * @version: V1.0
  */
 public interface ActivityService  {
+     String isProvince(Integer activityId);
+
+
 }

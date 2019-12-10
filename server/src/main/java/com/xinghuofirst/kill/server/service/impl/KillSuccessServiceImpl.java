@@ -14,6 +14,9 @@ import com.xinghuofirst.kill.server.service.KillSuccessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 
 /**
  * @description:
@@ -22,7 +25,28 @@ import org.springframework.stereotype.Service;
  * @version: V1.0
  */
 @Service
-public class KillSuccessServiceImpl {
+public class KillSuccessServiceImpl implements KillSuccessService {
+    @Autowired
+    @Resource
+    KillSuccessRepository killSuccessRepository;
 
+    /** 查询用户资源**/
+    @Override
+    public Integer selectBusiness() {
+        killSuccessRepository.selectBusiness();
+        return null;
+    }
 
+    /** 通过用户id查询秒杀成功分配表**/
+    @Override
+    public KillSuccess kiiSuccesById(Integer personId) {
+        killSuccessRepository.kiiSuccesById(personId);
+        return null;
+    }
+
+    @Override
+    public Integer updateSurpus(Integer activityId) {
+        killSuccessRepository.updateSurpus(activityId);
+        return null;
+    }
 }
