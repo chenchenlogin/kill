@@ -24,7 +24,14 @@ import org.springframework.web.multipart.MultipartFile;
 @Repository
 public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
-
+    /**
+     *@Author:Yuyue
+     *@Description:添加白名单
+     *@Date:12:04  2019/12/9
+     *@Param:
+     *@Return:
+     */
+    int insertWhiteBusiness(Business business);
     /**
      *@Author:Yuyue
      *@Description:按照省份查询用户资源
