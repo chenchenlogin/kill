@@ -45,4 +45,60 @@ public class KillSuccess  implements Serializable {
     private String busPhone;
     /** 秒杀时间 **/
     private Date killTime;
+
+    public Integer getKillId() {
+        return killId;
+    }
+
+    public void setKillId(Integer killId) {
+        this.killId = killId;
+    }
+
+    public String getKillNumber() {
+        return killNumber;
+    }
+
+    public void setKillNumber(String killNumber) {
+        this.killNumber = killNumber;
+    }
+
+    public Integer getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(Integer personId) {
+        this.personId = personId;
+    }
+
+    public Integer getBusinessId() {
+        return businessId;
+    }
+
+    public void setBusinessId(Integer businessId) {
+        this.businessId = businessId;
+    }
+
+    public Integer getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
+    }
+
+    public String getBusPhone() {
+        return busPhone;
+    }
+
+    public void setBusPhone(String busPhone) {
+        this.busPhone = busPhone;
+    }
+
+    public Date getKillTime() {
+        return killTime;
+    }
+
+    public void setKillTime(Date killTime) {
+        this.killTime = killTime;
+    }
 }
