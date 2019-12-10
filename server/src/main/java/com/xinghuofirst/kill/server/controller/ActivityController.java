@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -39,6 +40,9 @@ public class ActivityController  {
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
         BaseResponse baseResponses = null;
+        if (activity.getEndTime() == null) {
+            activity.setEndTime(DateUtil.addThreeMin(activity.getStartTime()));
+        }
         if (activity == null || activity.getStartTime() == null ||activity.getProvince() == null ||activity.getEndTime() ==null ||activity.getQuentity() == null) {
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"请输入准确的活动信息");
             return baseResponses;
