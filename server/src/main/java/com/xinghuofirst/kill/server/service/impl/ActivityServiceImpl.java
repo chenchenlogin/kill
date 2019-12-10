@@ -8,6 +8,7 @@
  */
 package com.xinghuofirst.kill.server.service.impl;
 
+import com.xinghuofirst.kill.model.entity.Activity;
 import com.xinghuofirst.kill.model.entity.KillSuccess;
 import com.xinghuofirst.kill.model.mapper.ActivityRepository;
 import com.xinghuofirst.kill.server.service.ActivityService;
@@ -32,13 +33,14 @@ public class ActivityServiceImpl  implements ActivityService {
 
     /**
      *
-     * @param activityId
+     * @param
      * @return duanlian  省份是否相同
      */
     @Override
-    public String isProvince(Integer activityId){
-        return activityRepository.isProvince(activityId);
+    public Activity selectNowActivity(){
+        return activityRepository.selectNowActivity();
     }
+
 
 
 

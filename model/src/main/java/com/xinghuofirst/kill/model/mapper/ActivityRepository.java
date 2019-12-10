@@ -78,8 +78,7 @@ public interface ActivityRepository extends BaseRepository<Activity, Integer> {
     */
     int countByActivityPersonId(@Param("activityId") Integer activityId, @Param("personId") Integer personId);
 
-    /** 根据活动id，查询活动的归属地 **/
-    String isProvince(Integer activityId);
+
 
 
 

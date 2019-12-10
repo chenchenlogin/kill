@@ -9,6 +9,7 @@
 package com.xinghuofirst.kill.server.controller;
 
 import com.xinghuofirst.kill.enums.StatusCode;
+import com.xinghuofirst.kill.model.entity.Activity;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,12 +38,13 @@ public class ActivityController  {
 
     /**
      * duanlian
-     * 判断归属地是否相同  单线程版
+     * 判断归属地是否相同
      *
      * **/
     @RequestMapping("/isProvince" )
-    private BaseResponse isProvince(HttpServletRequest request,Integer activityId) {
-        String activityProvince = activityService.isProvince(activityId);
+    private BaseResponse isProvince(HttpServletRequest request) {
+        Activity activity = activityService.selectNowActivity();
+        String activityProvince = activity.getProvince();
         Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
         String personProvince = maps.get("province");
         if (!personProvince.equals(activityProvince)) {

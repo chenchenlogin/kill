@@ -21,8 +21,13 @@ import java.util.List;
  * @version: V1.0
  */
 public interface KillSuccessService  {
-    Integer selectBusiness();
-    KillSuccess kiiSuccesById(Integer personId);
-    /** 查询用户剩余资源**/
-    Integer updateSurpus  (Integer activityId);
+
+
+    /** 查询用户资源* duanlian*/
+    int selectActivitySurplus(Integer activityId);
+    /** 判断是否有参加本次活动的资格 duanlian**/
+    int countByActivityPersonId(Integer personId,Integer activityId);
+    /** 查询用户剩余资源 duanlian**/
+    int updateSurpus  (Integer activityId);
+
 }

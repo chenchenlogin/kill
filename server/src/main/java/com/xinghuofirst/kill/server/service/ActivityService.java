@@ -20,7 +20,8 @@ import java.util.List;
  * @version: V1.0
  */
 public interface ActivityService  {
-     String isProvince(Integer activityId);
+     /** 判断归属地是否相同  duanlian**/
+     Activity selectNowActivity();
 
 
 }

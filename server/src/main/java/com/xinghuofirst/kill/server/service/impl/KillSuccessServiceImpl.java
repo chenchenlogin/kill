@@ -9,6 +9,7 @@
 package com.xinghuofirst.kill.server.service.impl;
 
 import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.model.mapper.ActivityRepository;
 import com.xinghuofirst.kill.model.mapper.KillSuccessRepository;
 import com.xinghuofirst.kill.server.service.KillSuccessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,24 +30,28 @@ public class KillSuccessServiceImpl implements KillSuccessService {
     @Autowired
     @Resource
     KillSuccessRepository killSuccessRepository;
+    @Autowired
+    @Resource
+    ActivityRepository activityRepository;
 
-    /** 查询用户资源**/
+    /** 查询用户资源* duanlian*/
     @Override
-    public Integer selectBusiness() {
-        killSuccessRepository.selectBusiness();
-        return null;
+    public int selectActivitySurplus(Integer activityId) {
+
+        return  activityRepository.selectActivitySurplus(activityId);
     }
 
-    /** 通过用户id查询秒杀成功分配表**/
+    /** 判断是否有参加本次活动的资格 duanlian**/
     @Override
-    public KillSuccess kiiSuccesById(Integer personId) {
-        killSuccessRepository.kiiSuccesById(personId);
-        return null;
+    public int countByActivityPersonId(Integer personId,Integer activityId) {
+
+        return killSuccessRepository.countByActivityPersonId(personId,activityId);
     }
 
+    /** 查询用户剩余资源 duanlian**/
     @Override
-    public Integer updateSurpus(Integer activityId) {
-        killSuccessRepository.updateSurpus(activityId);
-        return null;
+    public int updateSurpus(Integer activityId) {
+
+        return killSuccessRepository.updateSurpus(activityId);
     }
 }
