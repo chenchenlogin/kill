@@ -132,7 +132,7 @@
     </select>
 
 
-    <sql id="findPageWithWhere" >
+    <sql id="findPageWithWhereLike" >
         <where> 1=1
             <if test="businessId != null or businessId == 0" >
                 and `business_id` = #{businessId,jdbcType=INTEGER}
@@ -248,7 +248,7 @@
         </where>
     </sql>
 
-    <sql id="findPageWithWhereLike" >
+    <sql id="findPageWithWhere" >
         <where> 1=1
             <if test="businessId != null or businessId == 0" >
                 and `business_id` like concat('%', #{businessId,jdbcType=INTEGER}, '%')

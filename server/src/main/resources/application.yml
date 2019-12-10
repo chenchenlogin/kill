@@ -1,4 +1,5 @@
-
+server:
+    port: 8080
 #logging:
 #    file: kill
 #    level:
@@ -52,9 +53,6 @@ mybatis:
         map-underscore-to-camel-case: true
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
         cache-enabled: false
-redis:
-    config:
-        host: redis://60.205.230.70:6379
 scheduler:
     expire:
         orders:
@@ -68,7 +66,8 @@ spring:
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver
         password: root
-        url: jdbc:mysql://60.205.230.70:3306/second_kill?useUnicode=true&amp;characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+        url: jdbc:mysql://60.205.230.70:3306/second_kill?useUnicode=true&amp
+        #;characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
         username: root
         dbcp2:
             #数据库连接池的最小维持连接数
@@ -96,26 +95,25 @@ spring:
 #                        enable: true
 #                        required: true
 #        username: 1974544863@qq.com
-    rabbitmq:
-        host: 60.205.230.70
-        listener:
-            simple:
-                concurrency: 5
-                max-concurrency: 15
-                prefetch: 10
-        password: root
-        port: 5672
-        username: root
-        virtual-host: /
+#    rabbitmq:
+#        host: 60.205.230.70
+#        listener:
+#            simple:
+#                concurrency: 5
+#                max-concurrency: 15
+#                prefetch: 10
+#        password: root
+#        port: 5672
+#        username: root
+#        virtual-host: /
     redis:
-        host: 60.203.205.70
+        host: 60.205.230.70
         port: 6379
         password: root
-        username: root
         database: 1
-        pool:
+
             # 连接超时时间 单位 ms（毫秒）
-            timeout: 3000
+        timeout: 3000
             #max-active: 2000
             #max-idle: 8
             #max-wait: -1
@@ -132,9 +130,9 @@ pagehelper:
     params: count=countSq
 visualPath : http://60.205.230.70/
 savepath : /usr/share/nginx/html/public/
-zk:
-    host: 127.0.0.1:2181
-    namespace: kill
+#zk:
+#    host: 127.0.0.1:2181
+#    namespace: kill
 
 
 

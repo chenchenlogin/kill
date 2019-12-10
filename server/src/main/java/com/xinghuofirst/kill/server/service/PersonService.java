@@ -19,4 +19,10 @@ import com.xinghuofirst.kill.model.entity.Person;
  * @version: V1.0
  */
 public interface PersonService {
+
+    /*zhou_gc  用户登陆*/
+    public  Person userLogin(Person person);
+    /*zhou_gc 用户注销*/
+    public void userLoginOut(Person person);
+
 }

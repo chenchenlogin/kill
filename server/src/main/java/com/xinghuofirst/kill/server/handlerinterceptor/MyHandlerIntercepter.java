@@ -30,10 +30,11 @@ public class MyHandlerIntercepter implements HandlerInterceptor {
        try {
            Map<String,String> map = TokenUtil.verifyToken(token);
            /*判断当前redis中的此用户是否处于登陆状态 否则 则强制重新登陆*/
-           if(!RedisUtil.hasKey(map.get("username")))  return false;
-           /*token验证成功后将token中的信息封装到request域中*/
-           request.setAttribute("request_parameters",map);
+           if(!RedisUtil.hasKey(map.get("userid")))  return false;
+           /*token验证成功后将token中的信息封装到request域中 不允许操作*/
+          // request.setAttribute("request_parameters",map);
        }catch (Exception e){
+           System.out.println(e);
             returnJson(response,"no_token_use");//用户需要重新登陆
            return false;
        }

@@ -21,5 +21,8 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface PersonRepository extends BaseRepository<Person, Integer> {
+
+    /*zhou_gc  根据用户信息查询用户是否存在*/
+     public Person findOne(Person person);
 }
 
