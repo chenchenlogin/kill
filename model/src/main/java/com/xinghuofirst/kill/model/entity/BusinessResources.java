@@ -26,4 +26,34 @@ public class BusinessResources implements Serializable {
     private Integer beKillCount;
     /*省份名称*/
     private String provinceName;
+
+    public Integer getSilentCount() {
+        return silentCount;
+    }
+
+    public BusinessResources(Integer silentCount, Integer beKillCount, String provinceName) {
+        this.silentCount = silentCount;
+        this.beKillCount = beKillCount;
+        this.provinceName = provinceName;
+    }
+
+    public void setSilentCount(Integer silentCount) {
+        this.silentCount = silentCount;
+    }
+
+    public Integer getBeKillCount() {
+        return beKillCount;
+    }
+
+    public void setBeKillCount(Integer beKillCount) {
+        this.beKillCount = beKillCount;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
 }

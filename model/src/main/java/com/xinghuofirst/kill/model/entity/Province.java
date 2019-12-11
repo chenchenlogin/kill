@@ -36,4 +36,34 @@ public class Province implements Serializable {
     private String provinceNumber;
     /** 省份 **/
     private String provinceName;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Province(Integer id, String provinceNumber, String provinceName) {
+        this.id = id;
+        this.provinceNumber = provinceNumber;
+        this.provinceName = provinceName;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getProvinceNumber() {
+        return provinceNumber;
+    }
+
+    public void setProvinceNumber(String provinceNumber) {
+        this.provinceNumber = provinceNumber;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
 }
