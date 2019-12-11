@@ -2,12 +2,17 @@ package com.xinghuofirst.kill.server.controller;
 
 import com.xinghuofirst.kill.enums.StatusCode;
 import com.xinghuofirst.kill.model.entity.Activity;
+import com.xinghuofirst.kill.model.entity.Province;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.ActivityService;
 import com.xinghuofirst.kill.server.service.BusinessService;
+import com.xinghuofirst.kill.server.service.ProvinceService;
 import com.xinghuofirst.kill.server.utils.DateKit;
 import com.xinghuofirst.kill.server.utils.DateUtil;
 import com.xinghuofirst.kill.server.utils.TokenUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,18 +29,18 @@ import java.util.Map;
 /**
  * @description:
  * @author: 姜爽
- * @date: 2019/12/08 17:24
+ * @date: 2019/12/08 17:25
  * @version: V1.0
  */
 @RestController
 @Slf4j
 public class ActivityController  {
-
-
-
+    
     @Autowired
     private BusinessService businessService;
 
+    @Autowired
+    ProvinceService provinceService;
 
     @Autowired
     private ActivityService activityService;
@@ -48,6 +53,15 @@ public class ActivityController  {
 
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
+        try {
+            int provinceId = Integer.valueOf(activity.getProvince());
+            Province province = provinceService.showProvinceById(provinceId);
+            activity.setProvince(province.getProvinceName());
+        } catch (Exception e) {
+            log.info("省份ID违法");
+            activity.setProvince(null);
+        }
+        List<Activity> activityss = activityService.showAll();
         BaseResponse baseResponses = null;
         Boolean flag = true;
         String flaseMess = "";
@@ -74,10 +88,14 @@ public class ActivityController  {
         if (activity.getEndTime() == null || activity.getEndTime().equals("")) {
             activity.setEndTime(DateUtil.addThreeMin(activity.getStartTime()));
         }
-        if (activity.getEndTime().before(activity.getStartTime())){
+        if (activity.getStartTime().before(new Date())){
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动开始时间必须晚于当前时间");
+            return  baseResponses;
+        }else if (activity.getEndTime().before(activity.getStartTime())){
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");
             return  baseResponses;
-        } else if (false == DateKit.timeCompany(activity,activityService.showAll())) {
+        } else if (true == /*DateKit.timeCompany(activity,activityService.showAll())*/
+                activityService.showAll().stream().anyMatch((t)->(activity.getStartTime().before(t.getEndTime())&&activity.getEndTime().after(t.getStartTime())))) {
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"该时间已有活动，请重新选择时间");
             return baseResponses;
         } else if (activity.getQuentity() > businessService.selectBusinessByProvinceService(activity.getProvince())) {
