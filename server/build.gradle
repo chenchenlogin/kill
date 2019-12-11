@@ -29,7 +29,6 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi', version: '3.8'
     //du_peng rabbit
     compile 'org.springframework.amqp:spring-rabbit:2.2.1.RELEASE'
-    //du_peng  mail
-    compile 'javax.mail:javax.mail-api:1.6.2'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.1.1.RELEASE'
 }
 
