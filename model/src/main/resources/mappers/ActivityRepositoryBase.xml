@@ -76,6 +76,11 @@
         AND person_id = #{personId}
   </select>
 
+    <!--查询每个省份的活动库存和  于悦-->
+    <select id="selectSurplusCountByProvince" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select SUM(surplus) from activity where province=#{province}
+    </select>
+
     <sql id="Base_Column_List" >
         `activity_id`,`start_time`,`end_time`,`province`,`description`,`quentity`,`surplus`,`create_time`
     </sql>
