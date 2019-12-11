@@ -30,4 +30,9 @@ public class ProvinceServiceImpl  implements ProvinceService {
     public List<Province> showAllProcince() {
         return provinceRepository.findAllWithResult(null);
     }
+
+    @Override
+    public Province showProvinceById(Integer provinceId) {
+        return provinceRepository.selectById(provinceId);
+    }
 }

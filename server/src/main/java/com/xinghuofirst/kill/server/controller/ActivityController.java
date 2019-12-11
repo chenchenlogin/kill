@@ -2,9 +2,11 @@ package com.xinghuofirst.kill.server.controller;
 
 import com.xinghuofirst.kill.enums.StatusCode;
 import com.xinghuofirst.kill.model.entity.Activity;
+import com.xinghuofirst.kill.model.entity.Province;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.ActivityService;
 import com.xinghuofirst.kill.server.service.BusinessService;
+import com.xinghuofirst.kill.server.service.ProvinceService;
 import com.xinghuofirst.kill.server.utils.DateKit;
 import com.xinghuofirst.kill.server.utils.DateUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +32,8 @@ import java.util.Map;
 @Slf4j
 public class ActivityController  {
 
-
+    @Autowired
+    ProvinceService provinceService;
    
     @Autowired
     private BusinessService businessService;
@@ -47,6 +50,13 @@ public class ActivityController  {
 
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
+        try {
+            int provinceId = Integer.valueOf(activity.getProvince());
+            Province province = provinceService.showProvinceById(provinceId);
+            activity.setProvince(province.getProvinceName());
+        } catch (Exception e) {
+            log.info("省份ID违法");
+        }
         BaseResponse baseResponses = null;
         Boolean flag = true;
         String flaseMess = "";
