@@ -3,8 +3,10 @@ package com.xinghuofirst.kill.server.controller;
 
 import com.xinghuofirst.kill.enums.StatusCode;
 
+import com.xinghuofirst.kill.model.entity.BusinessResources;
 import com.xinghuofirst.kill.model.entity.Province;
 import com.xinghuofirst.kill.response.BaseResponse;
+import com.xinghuofirst.kill.server.service.BusinessRepositoryService;
 import com.xinghuofirst.kill.server.service.BusinessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 /**
  * @description:
@@ -30,7 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class BusinessController  {
     @Autowired
     private BusinessService businessService;
-
+    @Autowired
+    private BusinessRepositoryService businessRepositoryService;
 
     @RequestMapping("/insertWhiteBusiness")
     public BaseResponse insertWhiteBusiness(Business business){
@@ -56,6 +61,12 @@ public class BusinessController  {
             return baseResponses;
         }
         baseResponses =  new BaseResponse(StatusCode.Success.getCode(),"该地区存在沉默用户",countnum);
+        return baseResponses;
+    }
+    @RequestMapping("getUserResource")
+    public BaseResponse getUserResourceController(){
+        BaseResponse  baseResponses = null;
+        baseResponses =  new BaseResponse(StatusCode.Success.getCode(),"获取各个地区的用户资源",businessRepositoryService.selectBusinessService());
         return baseResponses;
     }
 

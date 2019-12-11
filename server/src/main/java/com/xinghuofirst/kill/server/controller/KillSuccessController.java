@@ -8,15 +8,20 @@
  */
 package com.xinghuofirst.kill.server.controller;
 
+import com.xinghuofirst.kill.enums.StatusCode;
 import com.xinghuofirst.kill.model.entity.Activity;
 import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.model.entity.Person;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.KillSuccessService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**

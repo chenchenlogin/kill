@@ -56,6 +56,7 @@ public class ActivityController  {
             activity.setProvince(province.getProvinceName());
         } catch (Exception e) {
             log.info("省份ID违法");
+            activity.setProvince(null);
         }
         BaseResponse baseResponses = null;
         Boolean flag = true;
