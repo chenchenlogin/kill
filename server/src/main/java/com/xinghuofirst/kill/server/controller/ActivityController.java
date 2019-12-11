@@ -34,7 +34,6 @@ import java.util.Map;
  */
 @RestController
 @Slf4j
-@Api(value = "活动的相关类")
 public class ActivityController  {
     
     @Autowired
@@ -53,8 +52,7 @@ public class ActivityController  {
 
 
     @RequestMapping("addActivity")
-    @ApiOperation(value = "添加新的活动")
-    public BaseResponse addactive(@ApiParam(value = "活动") @RequestBody Activity activity) {
+    public BaseResponse addactive(@RequestBody Activity activity) {
         try {
             int provinceId = Integer.valueOf(activity.getProvince());
             Province province = provinceService.showProvinceById(provinceId);
