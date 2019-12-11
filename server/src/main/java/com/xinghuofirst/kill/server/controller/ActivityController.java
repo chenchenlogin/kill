@@ -10,15 +10,11 @@ import com.xinghuofirst.kill.server.service.ProvinceService;
 import com.xinghuofirst.kill.server.utils.DateKit;
 import com.xinghuofirst.kill.server.utils.DateUtil;
 import com.xinghuofirst.kill.server.utils.TokenUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
@@ -58,7 +54,7 @@ public class ActivityController  {
             Province province = provinceService.showProvinceById(provinceId);
             activity.setProvince(province.getProvinceName());
         } catch (Exception e) {
-            log.info("省份ID违法");
+            //log.info("省份ID违法");
             activity.setProvince(null);
         }
         List<Activity> activityss = activityService.showAll();

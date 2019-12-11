@@ -1,8 +1,8 @@
 package com.xinghuofirst.kill.server.service;
 
-import com.xinghuofirst.kill.server.dto.PersonAndActivity;
+import com.xinghuofirst.kill.model.entity.Person;
 
 public interface ReceiverEmailService {
 
-    void consumeEmailMsg(PersonAndActivity info);
+    void consumeEmailMsg(Person info);
 }

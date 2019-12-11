@@ -87,13 +87,7 @@ spring:
                     starttls:
                         enable: true
                         required: true
-        send:
-            from: 1913261064@qq.com
-        kill:
-            item:
-                success:
-                    content: '鑫管家<strong style="color: red">%s</strong>您好，您已成功秒杀到用户，点击或复制该链接并在浏览器采用新的页面打开，即可查看用户详情：${system.domain.url}/kill/record/detail/?activityId=%s&personId=%s'
-                    subject: 用户抢购成功
+
     rabbitmq:
         host: 60.205.230.70
         listener:
@@ -117,7 +111,14 @@ spring:
             #max-idle: 8
             #max-wait: -1
             #min-idle: 2
-
+mail:
+    send:
+        from: 1913261064@qq.com
+    kill:
+        item:
+            success:
+                content: '鑫管家<strong style="color: red">%s</strong>您好，您已成功秒杀到用户，详情请登录网站观看！'
+                subject: 用户抢购成功
 #logging:
 #    level: debug
 

@@ -11,6 +11,7 @@ package com.xinghuofirst.kill.server.service;
 
 
 import com.xinghuofirst.kill.model.entity.KillSuccess;
+import com.xinghuofirst.kill.model.entity.Person;
 
 import java.util.List;
 
@@ -21,6 +22,12 @@ import java.util.List;
  * @version: V1.0
  */
 public interface KillSuccessService  {
+
+    /**
+     * 鑫管家分配用户
+     * @param info
+     */
+    void assignPerson(Person info, String orderNo) throws Exception;
 
     /**
      *@Description:鑫管家查询秒杀成功用户列表

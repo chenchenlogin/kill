@@ -33,12 +33,6 @@ public class KillServiceImpl  implements KillService {
 
     private SnowFlake snowFlake=new SnowFlake(2,3);
 
-    /*@Autowired
-    private ItemKillSuccessMapper itemKillSuccessMapper;*/
-
-    /*@Autowired
-    private ItemKillMapper itemKillMapper;*/
-
     @Autowired
     private ActivityRepository activityRepository;
 
@@ -50,58 +44,6 @@ public class KillServiceImpl  implements KillService {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
-
-
-    /**
-     * @description: TODO 用户秒杀核心业务逻辑的处理-redis的分布式锁
-     * @param activityId  活动id
-     * @param personId  鑫管家id
-     * @return 是否成功
-     * @throws Exception
-     * @author: dupeng
-     * @date: 2019-12-09 14:25
-     */
-     /*@Override
-   public Boolean killItem(Integer activityId, Integer personId) throws Exception {
-        Boolean result=false;
-        //TODO:判断当前鑫管家是否已经抢购过用户
-        if (killSuccessRepository.countByActivityPersonId(activityId,personId) <= 0){
-            //TODO:借助Redis的原子操作实现分布式锁-对共享操作-资源进行控制
-            ValueOperations valueOperations=stringRedisTemplate.opsForValue();
-            final String key=new StringBuffer().append(activityId).append(personId).append("-RedisLock").toString();
-            final String value= RandomUtil.generateOrderCode();
-            //luna脚本提供“分布式锁服务”，就可以写在一起
-            Boolean cacheRes=valueOperations.setIfAbsent(key,value);
-            //TODO:redis部署节点宕机了
-            if (cacheRes){
-                stringRedisTemplate.expire(key,30, TimeUnit.SECONDS);
-                try {
-                    //TODO:判断当前活动用户是否可以被秒杀
-                    Integer i = activityRepository.selectActivitySurplus(activityId);
-                    if (i!=null && i>0){
-                        //TODO:扣减库存-减一
-                        int res=killSuccessRepository.updateSurpus(activityId);
-                        if (res>0){
-                            //TODO:扣减是否成功?是-通知用户秒杀成功的消息
-                            commonRecordKillSuccessInfo(activityId,personId);
-                            result=true;
-                        }
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                    throw new Exception("还没到抢购日期、已过了抢购时间或已被抢购完毕！");
-
-                }finally {
-                    if (value.equals(valueOperations.get(key).toString())){
-                        stringRedisTemplate.delete(key);
-                    }
-                }
-            }
-        }else{
-            throw new Exception("Redis-您已经抢购过该商品了!");
-        }
-        return result;
-    }*/
 
 
     /**
@@ -135,9 +77,8 @@ public class KillServiceImpl  implements KillService {
         }
     }
 
-
     /**
-     * @description: TODO 压测---用户秒杀核心业务逻辑的处理
+     * @description: TODO 用户秒杀核心业务逻辑的处理
      * @param activityId
      * @param personId
      * @return
@@ -149,32 +90,26 @@ public class KillServiceImpl  implements KillService {
     public Boolean killItem(Integer activityId, Integer personId) throws Exception {
         Boolean result=false;
         //TODO:判断当前鑫管家是否已经抢购过用户
+        log.info("用户抢购数量"+killSuccessRepository.countByActivityPersonId(activityId,personId));
         if (killSuccessRepository.countByActivityPersonId(activityId,personId) <= 0){
             //TODO:借助Redis的原子操作实现分布式锁-对共享操作-资源进行控制
             ValueOperations valueOperations=stringRedisTemplate.opsForValue();
             final String key=new StringBuffer().append(activityId).append(personId).append("-RedisLock").toString();
             final String value= RandomUtil.generateOrderCode();
-            //luna脚本提供“分布式锁服务”，就可以写在一起
             Boolean cacheRes=valueOperations.setIfAbsent(key,value);
-            //TODO:redis部署节点宕机了
             if (cacheRes){
                 stringRedisTemplate.expire(key,30, TimeUnit.SECONDS);
                 try {
-                    //TODO:判断当前活动用户是否可以被秒杀
-                    Integer i = activityRepository.selectActivitySurplus(activityId);
-                    if (i!=null && i>0){
-                        //TODO:扣减库存-减一
-                        int res=killSuccessRepository.updateSurpus(activityId);
-                        if (res>0){
-                            //TODO:扣减是否成功?是-通知用户秒杀成功的消息
-                            commonRecordKillSuccessInfo(activityId,personId);
-                            result=true;
-                        }
+                    //TODO:扣减库存-减一
+                    int res=killSuccessRepository.updateSurpus(activityId);
+                    if (res>0){
+                        //TODO:扣减是否成功?是-通知用户秒杀成功的消息
+                        commonRecordKillSuccessInfo(activityId,personId);
+                        result=true;
                     }
                 }catch (Exception e){
                     e.printStackTrace();
                     throw new Exception("还没到抢购日期、已过了抢购时间或已被抢购完毕！");
-
                 }finally {
                     if (value.equals(valueOperations.get(key).toString())){
                         stringRedisTemplate.delete(key);
@@ -182,11 +117,10 @@ public class KillServiceImpl  implements KillService {
                 }
             }
         }else{
-            throw new Exception("Redis-您已经抢购过该商品了!");
+            throw new Exception("您已经抢购过该商品了!");
         }
         return result;
     }
-
 
 
 }

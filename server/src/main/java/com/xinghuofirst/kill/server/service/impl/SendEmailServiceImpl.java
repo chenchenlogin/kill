@@ -4,6 +4,7 @@ import	java.lang.ref.Reference;
 import com.xinghuofirst.kill.model.entity.Person;
 import com.xinghuofirst.kill.model.mapper.PersonRepository;
 import com.xinghuofirst.kill.server.dto.PersonAndActivity;
+import com.xinghuofirst.kill.server.service.KillSuccessService;
 import com.xinghuofirst.kill.server.service.SendEmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,7 @@ public class SendEmailServiceImpl implements SendEmailService {
     private Environment env;
 
     @Autowired
-
+    private KillSuccessService killSuccessService;
     @Resource
     private PersonRepository personRepository;
 
@@ -55,21 +56,14 @@ public class SendEmailServiceImpl implements SendEmailService {
             if (personId!=null){
                 //TODO:获取鑫管家信息
                 Person info = personRepository.selectById(personId);
-                PersonAndActivity personAndActivity = new PersonAndActivity();
-                personAndActivity.setUserName(info.getUserName());
-                personAndActivity.setActivityId(activityId);
-                personAndActivity.setEmail(info.getEmail());
-                personAndActivity.setUserId(personId);
-               // personAndActivity.setBusinessId(personId);
-                //TODO:添加秒杀编号（通过秒杀编号和商户id给鑫管家分配用户）
-               // personAndActivity.setOrderNo(orderNo);
+
                 if (info!=null){
                     //TODO:rabbitmq发送消息的逻辑
                     rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
                     rabbitTemplate.setExchange(env.getProperty("mq.kill.item.success.email.exchange"));
                     rabbitTemplate.setRoutingKey(env.getProperty("mq.kill.item.success.email.routing.key"));
                     //TODO：将info充当消息发送至队列
-                    rabbitTemplate.convertAndSend(personAndActivity, new MessagePostProcessor() {
+                    rabbitTemplate.convertAndSend(info, new MessagePostProcessor() {
                         @Override
                         public Message postProcessMessage(Message message) throws AmqpException {
                             MessageProperties messageProperties=message.getMessageProperties();
@@ -78,6 +72,8 @@ public class SendEmailServiceImpl implements SendEmailService {
                             return message;
                         }
                     });
+                    //TODO:将商户分配给鑫管家
+                    killSuccessService.assignPerson(info,orderNo);
                 }
             }
         }catch (Exception e){
