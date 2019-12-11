@@ -7,6 +7,7 @@ import com.xinghuofirst.kill.server.service.ActivityService;
 import com.xinghuofirst.kill.server.service.BusinessService;
 import com.xinghuofirst.kill.server.utils.DateKit;
 import com.xinghuofirst.kill.server.utils.DateUtil;
+import com.xinghuofirst.kill.server.utils.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -94,12 +95,22 @@ public class ActivityController  {
      * 判断归属地是否相同
      *
      * **/
-    @RequestMapping("/isProvince")
-    private BaseResponse isProvince(HttpServletRequest request) {
+
+    @RequestMapping("/isProvince" )
+    public BaseResponse isProvince(HttpServletRequest request) throws Exception {
+        BaseResponse  baseResponses = null;
+        /** 查询现在的活动**/
         Activity activity = activityService.selectNowActivity();
+        if(activity ==null) {
+            return  new BaseResponse(404, "未查到活动！");
+        }
+        /** 得到开始的活动的省份**/
         String activityProvince = activity.getProvince();
-        Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
-        String personProvince = maps.get("province");
+        String token = request.getHeader("token");
+        Map<String,String> map = TokenUtil.verifyToken(token);
+        /** 从token中得到person的省份**/
+
+        String personProvince = map.get("province");
         if (!personProvince.equals(activityProvince)) {
             return new BaseResponse(600, "您的归属地，不在本次活动范围内，请期待后续活动");
         }else{

@@ -3,7 +3,6 @@ package com.xinghuofirst.kill.server.controller;
 import com.xinghuofirst.kill.model.entity.Business;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.ExcelService;
-import com.xinghuofirst.kill.server.service.impl.ExcelServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +20,9 @@ public class ExcelController {
      * 文件导入，白名单、沉默用户
      * **/
     @RequestMapping(value="/uploadExceltWhite",method = RequestMethod.POST)
-    public BaseResponse uploadExcelN(@RequestParam(value="file") MultipartFile file, HttpServletRequest request, HttpServletResponse response, Integer silentStatus /*Business business*/){
-        /*String result = excelService.readExcelFile(file,business.getSilentStatus());*/
-        String result = excelService.readExcelFile(file,silentStatus);
+    public BaseResponse uploadExcelN(@RequestParam(value="file") MultipartFile file, HttpServletRequest request, HttpServletResponse response, Business business){
+        String result = excelService.readExcelFile(file,business.getSilentStatus());
+
 
         return new BaseResponse(200,result);
     }
