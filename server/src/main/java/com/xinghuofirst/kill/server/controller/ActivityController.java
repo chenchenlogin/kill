@@ -63,6 +63,7 @@ public class ActivityController  {
             log.info("省份ID违法");
             activity.setProvince(null);
         }
+        List<Activity> activityss = activityService.showAll();
         BaseResponse baseResponses = null;
         Boolean flag = true;
         String flaseMess = "";
@@ -89,10 +90,14 @@ public class ActivityController  {
         if (activity.getEndTime() == null || activity.getEndTime().equals("")) {
             activity.setEndTime(DateUtil.addThreeMin(activity.getStartTime()));
         }
-        if (activity.getEndTime().before(activity.getStartTime())){
+        if (activity.getStartTime().before(new Date())){
+            baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动开始时间必须晚于当前时间");
+            return  baseResponses;
+        }else if (activity.getEndTime().before(activity.getStartTime())){
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"活动结束时间必须晚于开始时间");
             return  baseResponses;
-        } else if (false == DateKit.timeCompany(activity,activityService.showAll())) {
+        } else if (true == /*DateKit.timeCompany(activity,activityService.showAll())*/
+                activityService.showAll().stream().anyMatch((t)->(activity.getStartTime().before(t.getEndTime())&&activity.getEndTime().after(t.getStartTime())))) {
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"该时间已有活动，请重新选择时间");
             return baseResponses;
         } else if (activity.getQuentity() > businessService.selectBusinessByProvinceService(activity.getProvince())) {
