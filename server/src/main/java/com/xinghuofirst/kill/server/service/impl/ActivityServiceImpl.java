@@ -25,6 +25,7 @@ import java.util.List;
 public class ActivityServiceImpl implements ActivityService {
 
     @Autowired
+    @Resource
     private ActivityRepository activityRepository;
 
     @Override

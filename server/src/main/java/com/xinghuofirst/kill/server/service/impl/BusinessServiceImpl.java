@@ -27,6 +27,7 @@ import javax.annotation.Resource;
 
 public class BusinessServiceImpl implements BusinessService {
     @Autowired
+    @Resource
     private BusinessRepository businessRepository;
 
     @Override
@@ -41,7 +42,7 @@ public class BusinessServiceImpl implements BusinessService {
      */
     @Override
     public int insertWhiteBusiness(Business business) {
-        return businessRepository.insertWhiteBusiness(business);
+        return businessRepository.insertSelective(business);
     }
 
 

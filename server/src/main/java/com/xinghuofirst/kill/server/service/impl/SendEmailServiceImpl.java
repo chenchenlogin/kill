@@ -1,4 +1,5 @@
 package com.xinghuofirst.kill.server.service.impl;
+import	java.lang.ref.Reference;
 
 import com.xinghuofirst.kill.model.entity.Person;
 import com.xinghuofirst.kill.model.mapper.PersonRepository;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.amqp.core.*;
+
+import javax.annotation.Resource;
 
 
 /**
@@ -33,6 +36,8 @@ public class SendEmailServiceImpl implements SendEmailService {
     private Environment env;
 
     @Autowired
+
+    @Resource
     private PersonRepository personRepository;
 
     /**

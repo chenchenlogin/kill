@@ -23,6 +23,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BusinessRepository extends BaseRepository<Business, Integer> {
 
+
+
+
     /**
      *@Author:Yuyue
      *@Description:按照省份查询用户资源

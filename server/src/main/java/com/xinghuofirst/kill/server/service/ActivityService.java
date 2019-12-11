@@ -13,7 +13,9 @@ import java.util.List;
  * @date: 2019/12/08 17:24
  * @version: V1.0
  */
+
 public interface ActivityService  {
+
 
     Integer insertActivity(Activity activity);
     List<Activity> showAll();
