@@ -54,6 +54,11 @@ public class ActivityServiceImpl implements ActivityService {
         return activityRepository.selectNowActivity();
     }
 
+    @Override
+    public Integer showNumByPro(String province) {
+        return activityRepository.selectSurplusCountByProvince(province);
+    }
+
 
     @Override
     public Activity showBeforeLastService() {

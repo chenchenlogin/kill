@@ -49,6 +49,7 @@ public class ActivityController  {
 
     @RequestMapping("addActivity")
     public BaseResponse addactive(@RequestBody Activity activity) {
+        int counter;
         try {
             int provinceId = Integer.valueOf(activity.getProvince());
             Province province = provinceService.showProvinceById(provinceId);
@@ -56,6 +57,11 @@ public class ActivityController  {
         } catch (Exception e) {
             //log.info("省份ID违法");
             activity.setProvince(null);
+        }
+        if (activityService.showNumByPro(activity.getProvince()) == null ||activityService.showNumByPro(activity.getProvince()).equals("")) {
+            counter = 0;
+        }else {
+            counter = activityService.showNumByPro(activity.getProvince());
         }
         List<Activity> activityss = activityService.showAll();
         BaseResponse baseResponses = null;
@@ -94,7 +100,7 @@ public class ActivityController  {
                 activityService.showAll().stream().anyMatch((t)->(activity.getStartTime().before(t.getEndTime())&&activity.getEndTime().after(t.getStartTime())))) {
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"该时间已有活动，请重新选择时间");
             return baseResponses;
-        } else if (activity.getQuentity() > businessService.selectBusinessByProvinceService(activity.getProvince())) {
+        } else if (activity.getQuentity() > (businessService.selectBusinessByProvinceService(activity.getProvince()) - counter)) {
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"库存用户信息不足请重新输入");
             return baseResponses;
         }

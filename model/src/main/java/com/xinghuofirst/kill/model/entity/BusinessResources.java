@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Accessors(chain = true)
 public class BusinessResources implements Serializable {
     /*沉默用户数*/

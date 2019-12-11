@@ -27,7 +27,7 @@ import java.lang.String;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 @Accessors(chain = true)
 public class Province implements Serializable {
     /** 省份id **/
