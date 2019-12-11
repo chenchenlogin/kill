@@ -37,15 +37,7 @@ public class BusinessController  {
     @Autowired
     private BusinessRepositoryService businessRepositoryService;
 
-    @RequestMapping("/insertWhiteBusiness")
-    public BaseResponse insertWhiteBusiness(Business business){
-        int result = businessService.insertWhiteBusiness(business);
-        if(result >0) {
-            return new BaseResponse(200, "白名单添加成功！");
-        }else{
-            return  new BaseResponse(601,"未添加成功");
-        }
-    }
+
 
 
     @PostMapping("/getCount")

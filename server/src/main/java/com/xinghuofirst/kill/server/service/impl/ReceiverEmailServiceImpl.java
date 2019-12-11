@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 /**
  * @description: TODO 接收邮件
  * @author: dupeng
@@ -32,6 +34,7 @@ public class ReceiverEmailServiceImpl implements ReceiverEmailService {
     private Environment env;
 
     @Autowired
+    @Resource
     private PersonRepository personRepository;
 
     /**
@@ -69,7 +72,7 @@ public class ReceiverEmailServiceImpl implements ReceiverEmailService {
             log.info("秒杀异步邮件通知-接收消息:{}",info);
 
             //TODO:分配用户
-           // killSuccessService.assignPerson(info);
+           //killSuccessService.assignPerson(info);
         }catch (Exception e){
             log.error("秒杀异步邮件通知-接收消息-发生异常：",e.fillInStackTrace());
         }

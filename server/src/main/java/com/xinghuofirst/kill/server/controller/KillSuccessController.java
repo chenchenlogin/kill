@@ -14,6 +14,7 @@ import com.xinghuofirst.kill.model.entity.KillSuccess;
 import com.xinghuofirst.kill.model.entity.Person;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.KillSuccessService;
+import com.xinghuofirst.kill.server.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,28 +60,49 @@ public class KillSuccessController {
      */
 
     @RequestMapping("/isKill")
-    private BaseResponse isKill(HttpServletRequest request, Activity activity){
-        /** 查询用户资源**/
-        Integer source =  killSuccessService.selectActivitySurplus(activity.getActivityId());
-        Map<String, String> maps = (Map<String, String>) request.getAttribute("request_parameters");
-        Integer personId = Integer.parseInt(maps.get("userId")) ;
-        /** 判断是否有参加本次活动的资格**/
+    private BaseResponse isKill(HttpServletRequest request, Activity activity) throws Exception {
+        String token = request.getHeader("token");
+        Map<String, String> map = TokenUtil.verifyToken(token);
+        Integer personId = Integer.parseInt(map.get("userId")) ;
         int killSuccesses =  killSuccessService.countByActivityPersonId(personId,activity.getActivityId());
-        while(source != 0){
-            if(killSuccesses  < 1){
-                /** 查询用户的剩余资源 **/
-                killSuccessService.updateSurpus(activity.getActivityId());
-                /** 更新做标记，轮空**/
-
-                /** 秒杀相关在此处写代码**/
-                return new BaseResponse(200,"成功参加活动");
-
-            }else{
-                return new BaseResponse(200,"已参加，等待结果公布");
-            }
+        /** 判断是否有参加本次活动的资格**/
+        if(killSuccesses >0){
+            return new BaseResponse(200,"已参加，等待结果公布");
         }
-        return new BaseResponse(200,"用户资源不充足");
-    }
+        /** 判断用户的剩余资源，即库存 **/
+        int stock =  killSuccessService.updateSurpus(activity.getActivityId());
+        if(stock <=0){
+            return new BaseResponse(602,"秒杀失败");
+        }
+        /** 秒杀代码写在**/
+        /** 减库存**/
 
+        return new BaseResponse(200, "成功参加活动");
+
+       /* String token = request.getHeader("token");
+        Map<String, String> map = TokenUtil.verifyToken(token);
+        *//** 查询用户资源**//*
+        Integer source =  killSuccessService.selectActivitySurplus(activity.getActivityId());
+        Integer personId = Integer.parseInt(map.get("userId")) ;
+        *//** 判断是否有参加本次活动的资格**//*
+       int killSuccesses =  killSuccessService.countByActivityPersonId(personId,activity.getActivityId());
+       while(source != 0){
+           if(killSuccesses  < 1){
+               *//** 查询用户的剩余资源 **//*
+              int stock =  killSuccessService.updateSurpus(activity.getActivityId());
+               *//** 更新做标记，轮空**//*
+               if(stock <=0){
+                    return new BaseResponse(602,"秒杀失败");
+               }else {
+                    *//** 秒杀代码写在这里**//*
+
+                   return new BaseResponse(200, "成功参加活动");
+               }
+           }else{
+               return new BaseResponse(200,"已参加，等待结果公布");
+           }
+       }
+        return new BaseResponse(200,"用户资源不充足");*/
+    }
 
 }

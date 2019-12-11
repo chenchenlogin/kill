@@ -67,10 +67,10 @@
             <if test="province != null" >
                 `province`,
             </if>
-            <if test="installStatus != null or installStatus == 0" >
+            <if test="installStatus != null" >
                 `install_status`,
             </if>
-            <if test="silentStatus != null or silentStatus == 0" >
+            <if test="silentStatus != null" >
                 `silent_status`,
             </if>
             <if test="idcard != null" >
@@ -93,10 +93,10 @@
             <if test="province != null" >
                 #{province,jdbcType=VARCHAR},
             </if>
-            <if test="installStatus != null or installStatus == 0" >
+            <if test="installStatus != null" >
                 #{installStatus,jdbcType=INTEGER},
             </if>
-            <if test="silentStatus != null or silentStatus == 0" >
+            <if test="silentStatus != null" >
                 #{silentStatus,jdbcType=INTEGER},
             </if>
             <if test="idcard != null" >
