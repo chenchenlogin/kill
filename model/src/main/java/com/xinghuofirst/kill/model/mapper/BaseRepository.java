@@ -2,7 +2,13 @@ package com.xinghuofirst.kill.model.mapper;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+*@Author:Yuyue
+*@Description:封装的mapper
+*@Date:14:47  2019/12/11
+*@Param:
+*@Return:
+*/
 public interface BaseRepository<T, ID extends Serializable> {
     int deleteByPrimaryKey(ID var1);
 

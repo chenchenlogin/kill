@@ -1,7 +1,7 @@
 /**
  * All rights Reserved, Designed By Suixingpay.
  *
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: yuyue<yuyue@suixingpay.com>
  * @date: 2019/12/09 09:46
  * @Copyright: 2019 Suixingpay. All rights reserved.
  * 注意：本内容仅限于随行付支付有限公司内部传阅，禁止外泄以及用于其他的商业用途。
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: yuyue<yuyue@suixingpay.com>
  * @date: 2019/12/09 09:46
  * @version: V1.0
  */
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends BaseRepository<Person, Integer> {
 
-    /*zhou_gc  根据用户信息查询用户是否存在*/
-     public Person findOne(Person person);
+    /*zhou_gc  根据用户信息查询用户是否存在*//*
+    Person findOne(Person person);*/
 }
 
