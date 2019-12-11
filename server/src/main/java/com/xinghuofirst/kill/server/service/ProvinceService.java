@@ -25,4 +25,9 @@ public interface ProvinceService {
     *@Param: 顯示所有的省份信息
     */
     List<Province> showAllProcince();
+    /**
+     * @Description:根据省份Id查询省份
+     * @Author 姜爽
+     */
+    Province showProvinceById(Integer provinceId);
 }
