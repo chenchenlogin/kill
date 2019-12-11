@@ -27,14 +27,6 @@
         ORDER BY t1.business_id LIMIT 1;
     </select>
 
-    <!--按照省份查询用户资源 于悦-->
-    <select id="selectBusinessByProvince" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select COUNT(*) from business
-        WHERE silent_status=0
-        AND install_status &lt; 2
-        AND province like concat('%', #{province,jdbcType=VARCHAR}, '%')
-    </select>
-
     <!--被秒杀后修改商户安装状态2 于悦-->
     <update id="updateBusinessInstallStatus" parameterType="java.lang.Integer" >
         update business

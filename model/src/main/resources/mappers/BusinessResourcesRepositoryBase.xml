@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xinghuofirst.kill.model.mapper.BusinessResourcesRepository" >
+
+    <resultMap id="BaseResultMap" type="com.xinghuofirst.kill.model.entity.BusinessResources" >
+        <result column="silentCount" property="silentCount" jdbcType="INTEGER" />
+        <result column="beKillCount" property="beKillCount" jdbcType="INTEGER" />
+        <result column="provinceName" property="provinceName" jdbcType="VARCHAR" />
+    </resultMap>
+    <select id="selectBusinessResources" resultMap="BaseResultMap">
+        select silentCount,beKillCount,killbusiness.b2province as provinceName
+        from
+        (select COUNT(*) as silentCount,province as b1province from business   WHERE  install_status &lt; 2 GROUP BY b1province)
+        as silentbusiness,
+        (select COUNT(*) as  beKillCount,province as b2province from business  WHERE silent_status=0  AND install_status &lt; 2 GROUP BY b2province)
+        as killbusiness
+        where silentbusiness.b1province=killbusiness.b2province
+    </select>
+
+</mapper>
