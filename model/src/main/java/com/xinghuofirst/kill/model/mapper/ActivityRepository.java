@@ -80,8 +80,14 @@ public interface ActivityRepository extends BaseRepository<Activity, Integer> {
     int countByActivityPersonId(@Param("activityId") Integer activityId, @Param("personId") Integer personId);
 
 
-
-
+    /**
+    *@Author:Yuyue
+    *@Description:查询每个省份的活动库存和
+     *@Date:20:33  2019/12/11
+    *@Param:
+    *@Return:
+    */
+    Integer selectSurplusCountByProvince(String province);
 
 
 
