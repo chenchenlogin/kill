@@ -19,13 +19,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: jiangshuang
  * @date: 2019/12/08 17:23
  * @version: V1.0
  */
 @RestController
 @RequestMapping("/")
 public class ProvinceController {
+    @Autowired
+    ProvinceService provinceService;
+    @RequestMapping("showAllprovince")
+    public List<Province> showAllPro () {
+        return provinceService.showAllProcince();
+    }
 }

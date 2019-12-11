@@ -8,9 +8,13 @@
  */
 package com.xinghuofirst.kill.server.service.impl;
 
+import com.xinghuofirst.kill.model.entity.Province;
+import com.xinghuofirst.kill.model.mapper.ProvinceRepository;
+import com.xinghuofirst.kill.server.service.ProvinceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 /**
  * @description:
@@ -19,7 +23,11 @@ import org.springframework.stereotype.Service;
  * @version: V1.0
  */
 @Service
-public class ProvinceServiceImpl   {
-
-
+public class ProvinceServiceImpl  implements ProvinceService {
+    @Autowired
+    ProvinceRepository provinceRepository;
+    @Override
+    public List<Province> showAllProcince() {
+        return provinceRepository.findAllWithResult(null);
+    }
 }

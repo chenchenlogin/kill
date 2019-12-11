@@ -11,11 +11,18 @@ package com.xinghuofirst.kill.server.service;
 
 import com.xinghuofirst.kill.model.entity.Province;
 
+import java.util.List;
+
 /**
  * @description:
- * @author: zhangleying<zhang_yy2@suixingpay.com>
+ * @author: jiansghuang
  * @date: 2019/12/08 17:23
  * @version: V1.0
  */
 public interface ProvinceService {
+    /**
+    *@Author:jiangshuang
+    *@Param: 顯示所有的省份信息
+    */
+    List<Province> showAllProcince();
 }
