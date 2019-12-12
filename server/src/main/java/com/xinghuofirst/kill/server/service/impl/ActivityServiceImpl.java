@@ -55,8 +55,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public Integer showNumByPro(String province) {
-        return activityRepository.selectSurplusCountByProvince(province);
+    public Integer showNumByPro(Activity activity) {
+        return activityRepository.selectSurplusCountByProvince(activity);
     }
 
 

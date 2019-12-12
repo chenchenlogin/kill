@@ -26,7 +26,7 @@ public interface ActivityService  {
      /** 判断归属地是否相同  duanlian**/
      Activity selectNowActivity();
 
-    Integer showNumByPro(String province);
+    Integer showNumByPro(Activity activity);
 
 
 

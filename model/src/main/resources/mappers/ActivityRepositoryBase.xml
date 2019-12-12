@@ -77,8 +77,8 @@
   </select>
 
     <!--查询每个省份的活动库存和  于悦-->
-    <select id="selectSurplusCountByProvince" parameterType="java.lang.String" resultType="java.lang.Integer">
-        select SUM(surplus) from activity where province=#{province}
+    <select id="selectSurplusCountByProvince" parameterType="com.xinghuofirst.kill.model.entity.Activity" resultType="java.lang.Integer">
+        select SUM(surplus) from activity where province=#{province} and start_time > #{createTime}
     </select>
 
     <sql id="Base_Column_List" >

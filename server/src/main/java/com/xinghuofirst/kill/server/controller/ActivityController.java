@@ -58,18 +58,21 @@ public class ActivityController  {
             //log.info("省份ID违法");
             activity.setProvince(null);
         }
-        if (activityService.showNumByPro(activity.getProvince()) == null ||activityService.showNumByPro(activity.getProvince()).equals("")) {
-            counter = 0;
-        }else {
-            counter = activityService.showNumByPro(activity.getProvince());
-        }
-        List<Activity> activityss = activityService.showAll();
+
         BaseResponse baseResponses = null;
         Boolean flag = true;
         String flaseMess = "";
         if (activity.getProvince() == null || activity.getProvince().equals("")) {
             flag = false;
             flaseMess += "省份，";
+        }
+        Activity activitytemp = new Activity();
+        activitytemp.setProvince(activity.getProvince());
+        activitytemp.setCreateTime(new Date());
+        if (activityService.showNumByPro(activitytemp) == null ||activityService.showNumByPro(activitytemp).equals("")) {
+            counter = 0;
+        }else {
+            counter = activityService.showNumByPro(activitytemp);
         }
         if (activity.getQuentity() == null || activity.getQuentity().equals("")) {
             flag = false;

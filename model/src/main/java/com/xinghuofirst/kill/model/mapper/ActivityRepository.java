@@ -87,7 +87,7 @@ public interface ActivityRepository extends BaseRepository<Activity, Integer> {
     *@Param:
     *@Return:
     */
-    Integer selectSurplusCountByProvince(String province);
+    Integer selectSurplusCountByProvince(Activity activity);
 
 
 
