@@ -9,6 +9,7 @@ public enum StatusCode {
     Fail(-1,"失败"),
     InvalidParams(201,"非法的参数!"),
     UserNotLogin(202,"用户没登录"),
+    MessageSend(1,"您已秒杀成功，请查收邮件")
 
     ;
 

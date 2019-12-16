@@ -53,12 +53,6 @@ subprojects {
         compile 'org.springframework.boot:spring-boot-starter-data-redis:2.2.1.RELEASE'
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
         compile("org.springframework.boot:spring-boot-starter-log4j2:2.1.0.RELEASE")
-
-         
-
-
-
-
     }
     configurations {
         compile.exclude module: 'spring-boot-starter-logging'

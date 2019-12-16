@@ -20,10 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -46,8 +43,17 @@ public class KillSuccessController {
     @Autowired
     private KillService killService;
 
-    @PostMapping("/getKillSuccess")
-    public BaseResponse getKillSuccessMethod(@RequestBody Person person, HttpServletRequest request) {
+    @GetMapping("/getKillSuccess")
+    public BaseResponse getKillSuccessMethod(HttpServletRequest request) {
+        Person person = new Person();
+        String token = request.getHeader("token");
+        try {
+            Map<String,String> map = TokenUtil.verifyToken(token);
+            person.setUserId(Integer.valueOf(map.get("userid")));
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
         BaseResponse baseResponses = null;
         if (person.getUserId() == null ||person.getUserId().equals("")) {
             baseResponses =  new BaseResponse(StatusCode.Fail.getCode(),"登录失效了，请重新登录");
@@ -69,7 +75,7 @@ public class KillSuccessController {
      */
 
     @PostMapping("/seckill")
-    public BaseResponse iskill(HttpServletRequest request, ActivityDto activityDto, BindingResult result) throws Exception {
+    public BaseResponse iskill(HttpServletRequest request,@RequestBody ActivityDto activityDto, BindingResult result) throws Exception {
         //String token = request.getHeader("token");
        // Map<String, String> map = TokenUtil.verifyToken(token);
         //Integer personId = Integer.parseInt(map.get("userId")) ;
@@ -78,20 +84,23 @@ public class KillSuccessController {
             return new BaseResponse(StatusCode.InvalidParams);
         }
 
-        BaseResponse response=new BaseResponse(StatusCode.Success);
+        BaseResponse response=new BaseResponse(StatusCode.MessageSend);
         try {
-            int killSuccesses =  killSuccessService.countByActivityPersonId(activityDto.getPersonId(),activityDto.getActivityId());
+            String token = request.getHeader("token");
+            System.out.println(token);
+            Map<String,String> map = TokenUtil.verifyToken(token);
+
+            Integer personId = Integer.parseInt(map.get("userid")) ;
+            int killSuccesses =  killSuccessService.countByActivityPersonId(personId,activityDto.getActivityId());
             //TODO 判断鑫管家是否已经参加过秒杀
-            log.info("健康快乐进口量就骷髅精灵"+killSuccesses);
             if(killSuccesses <1){
                 //TODO 判断秒杀商户剩余数量
                 int killNumber = killSuccessService.selectActivitySurplus(activityDto.getActivityId());
                 if(killNumber >0){
-                    Integer userId=activityDto.getPersonId();
                     //TODO:基于Redis的分布式锁进行控制
-                    Boolean res=killService.killItem(activityDto.getActivityId(),userId);
+                    Boolean res=killService.killItem(activityDto.getActivityId(),personId);
                     if (!res){
-                        return new BaseResponse(StatusCode.Fail.getCode(),"商品已抢购完毕或者不在抢购时间段哦!");
+                        return new BaseResponse(StatusCode.Fail.getCode(),"商户户秒杀失败!");
                     }
                 }else{
                     return new BaseResponse(602,"商户已抢完，欢迎下次秒杀");
@@ -104,7 +113,6 @@ public class KillSuccessController {
             response=new BaseResponse(StatusCode.Fail.getCode(),e.getMessage());
         }
         return response;
-
 
     }
 

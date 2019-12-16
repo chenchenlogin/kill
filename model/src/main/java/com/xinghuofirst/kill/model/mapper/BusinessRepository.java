@@ -11,6 +11,7 @@ package com.xinghuofirst.kill.model.mapper;
 import com.xinghuofirst.kill.model.entity.Business;
 import com.xinghuofirst.kill.model.entity.KillSuccess;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -51,7 +52,7 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
     *@Param:
     *@Return:
     */
-    Integer updateKillSuccess(String killNumber,Integer businessId);
+    Integer updateKillSuccess(@Param("killNumber") String killNumber,@Param("businessId") Integer businessId);
 
    /**
    *@Author:Yuyue
@@ -60,6 +61,6 @@ public interface BusinessRepository extends BaseRepository<Business, Integer> {
    *@Param:
    *@Return:
    */
-    Integer updateBusinessInstallStatus(Integer businessId);
+    Integer updateBusinessInstallStatus(@Param("businessId") Integer businessId);
 }
 

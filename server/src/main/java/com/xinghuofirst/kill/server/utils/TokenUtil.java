@@ -20,7 +20,7 @@ import java.util.Map;
 public class TokenUtil {
 
     private static final String SECRET = "SECRETOPENLOCK";//还可以使用其他单映射加密算法进行生成加密性更高的密钥以实现密钥随机性
-    private static final long DEFAULT_EXPIRE_TIME=900000L; //默认过期时间为15分钟
+    private static final long DEFAULT_EXPIRE_TIME=1800000L; //默认过期时间为30分钟
     private  static  final String ISSUER="TokenUtil";
 
     /**
@@ -67,10 +67,9 @@ public class TokenUtil {
             return resultMap;
         }catch ( JWTVerificationException  e)
         {
+            System.out.println(e);
             throw new Exception("token失效");
         }
-
-
     }
 
 

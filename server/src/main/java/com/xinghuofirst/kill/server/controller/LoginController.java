@@ -26,7 +26,7 @@ public class LoginController {
     private  final String CANNOTLOGINAGAIN="您已经登陆不可重复登陆";
     private final String   OK="success";
     private final String NOUSER="当前用户不存在";
-    private  final  Long TOKEN_TIME=900L;//token 过期时间为15分钟
+    private  final  Long TOKEN_TIME=1800L;//token 过期时间为30分钟
 
     @Autowired
     private PersonService personService;

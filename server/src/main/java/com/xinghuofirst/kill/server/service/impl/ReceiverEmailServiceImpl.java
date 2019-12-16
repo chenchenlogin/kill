@@ -40,7 +40,7 @@ public class ReceiverEmailServiceImpl implements ReceiverEmailService {
      * @date: 2019-12-10 14:51
      */
     @Override
-    @RabbitListener(queues = {"${mq.kill.item.success.email.queue}"},containerFactory = "singleListenerContainer")
+    @RabbitListener(queues = {"${mq.kill.item.success.email.queue}"},containerFactory = "multiListenerContainer")
     public void consumeEmailMsg(Person info){
         try {
             log.info("秒杀异步邮件通知-接收消息:{}",info);

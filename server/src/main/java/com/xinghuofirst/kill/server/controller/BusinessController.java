@@ -8,6 +8,7 @@ import com.xinghuofirst.kill.model.entity.Province;
 import com.xinghuofirst.kill.response.BaseResponse;
 import com.xinghuofirst.kill.server.service.BusinessRepositoryService;
 import com.xinghuofirst.kill.server.service.BusinessService;
+import com.xinghuofirst.kill.server.utils.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -41,7 +43,16 @@ public class BusinessController  {
 
 
     @PostMapping("/getCount")
-    public BaseResponse getLocalCount(@RequestBody Province province, HttpServletRequest request) {
+    public BaseResponse getLocalCount(HttpServletRequest request) {
+        Province province = new Province();
+        String token = request.getHeader("token");
+        try {
+            Map<String,String> map = TokenUtil.verifyToken(token);
+            province.setProvinceName(map.get("province"));
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
         BaseResponse  baseResponses = null;
         if (province.getProvinceName() == null ||province.getProvinceName().equals("")){
             baseResponses = new BaseResponse(StatusCode.Fail.getCode(),"省份不能为空");
