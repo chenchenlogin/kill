@@ -1,6 +1,5 @@
 
 dependencies {
-    compile project(':api')
+    compile project(':common')
     compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.1.1'
-
 }

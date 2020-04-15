@@ -2,7 +2,7 @@
 
 
 allprojects {
-    group = 'com.xinghuofirst.kill'
+    group = 'com.chenchen.garbage'
     version = '1.0.1'
     apply plugin: 'idea'
 
